@@ -1,8 +1,18 @@
 package com.codesquad.blackjack;
 
+import com.codesquad.blackjack.domain.Game;
+import com.codesquad.blackjack.domain.card.Deck;
+import com.codesquad.blackjack.view.InputView;
+
 public class BlackjackConsole {
 
     public static void main(String[] args) {
-        System.out.println("블랙잭 콘솔게임");
+        Game game = new Game();
+        boolean nextGame = true;
+
+        while(nextGame) {
+            game.play(Deck.auto());
+            nextGame = InputView.isContinue();
+        }
     }
 }

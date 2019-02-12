@@ -1,4 +1,8 @@
 package com.codesquad.blackjack.domain;
 
-public class Suit {
+public enum Suit {
+    DIAMOND,
+    CLUB,
+    SPADE,
+    HEART
 }
