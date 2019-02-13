@@ -34,6 +34,10 @@ public class BlackjackConsole {
                 }
             }
 
+            game.dealerTurn(deck);
+            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+
+            OutputView.printEnd(game.end());
 
             game.initializeGame();
             nextGame = InputView.isContinue();

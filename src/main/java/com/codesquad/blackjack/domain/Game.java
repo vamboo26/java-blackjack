@@ -15,7 +15,7 @@ public class Game {
     private Chip totalBet = Chip.of(0);
 
     public Game play(Deck deck, int bettingChip) {
-        this.totalBet = Chip.of(bettingChip);
+        this.totalBet = Chip.of(bettingChip * 2);
         drawInitCards(deck);
 
         return null;
@@ -41,6 +41,20 @@ public class Game {
 
         if(getWinner().equals(player)) {
             player.winPrize(totalBet.blackjack());
+            return player;
+        }
+
+        return dealer;
+    }
+
+    public User end() {
+        if(isTie()) {
+            player.winPrize(totalBet.half());
+            return null;
+        }
+
+        if(getWinner().equals(player)) {
+            player.winPrize(totalBet);
             return player;
         }
 
@@ -83,5 +97,11 @@ public class Game {
 
     public Card hit(Deck deck) {
         return player.receiveCard(deck.draw());
+    }
+
+    public void dealerTurn(Deck deck) {
+        while(dealer.getTotal() < 17) {
+            dealer.receiveCard(deck.draw());
+        }
     }
 }

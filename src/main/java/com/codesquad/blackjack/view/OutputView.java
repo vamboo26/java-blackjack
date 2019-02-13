@@ -21,10 +21,18 @@ public class OutputView {
             System.out.println("*** 무승부입니다(블랙잭)");
         }
 
-        System.out.println(endByBlackjack + "의 승리입니다.");
+        System.out.println("블랙잭으로 " + endByBlackjack + "의 승리입니다.");
     }
 
     public static void printCard(Card card) {
         System.out.println("*** 플레이어의 카드 : " + card);
+    }
+
+    public static void printEnd(User end) {
+        if(end == null) {
+            System.out.println("*** 무승부입니다");
+        }
+
+        System.out.println("합산결과 " + end + "의 승리입니다.");
     }
 }
