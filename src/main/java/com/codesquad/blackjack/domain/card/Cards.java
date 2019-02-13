@@ -12,6 +12,14 @@ public class Cards {
         cards.add(card);
     }
 
+    public int calculateTotal() {
+        int sum = 0;
+        for (Card card : cards) {
+            sum += card.getNumber();
+        }
+        return sum;
+    }
+
     public CardsDto _toCardsDto() {
         return new CardsDto(cards);
     }

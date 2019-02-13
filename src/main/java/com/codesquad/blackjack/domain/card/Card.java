@@ -3,8 +3,8 @@ package com.codesquad.blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private int number;
-    private String suit;
+    private final int number;
+    private final String suit;
 
     private Card(int number, String suit) {
         this.number = number;
@@ -13,6 +13,14 @@ public class Card {
 
     public static Card of(int number, String suit) {
         return new Card(number, suit);
+    }
+//
+//    public int sum(Card target) {
+//        return this.number + target.number;
+//    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override

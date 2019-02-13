@@ -11,12 +11,24 @@ public class User {
     private Cards cards = new Cards();
     private Chip chip = Chip.of(DEFAULT_CHIP_AMOUNT);
 
-    public void receiveCard(Card card) {
+    public Card receiveCard(Card card) {
         cards.add(card);
+        return card;
     }
 
     public CardsDto getCardsDto() {
         return cards._toCardsDto();
     }
 
+    public int getTotal() {
+        return cards.calculateTotal();
+    }
+
+    public void winPrize(Chip prize) {
+        chip.sum(prize);
+    }
+
+    public void initializeCards() {
+        this.cards = new Cards();
+    }
 }

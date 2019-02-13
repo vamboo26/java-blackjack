@@ -14,4 +14,9 @@ public class InputView {
         System.out.println("*** 1. continue  2. quit");
         return sc.nextInt() == 1;
     }
+
+    public static boolean isHit() {
+        System.out.println("*** 1. hit       2. stand");
+        return sc.nextInt() == 1;
+    }
 }

@@ -1,27 +1,68 @@
 package com.codesquad.blackjack.domain;
 
 import com.codesquad.blackjack.domain.card.Card;
+import com.codesquad.blackjack.domain.card.Cards;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 
 import java.util.List;
 
 public class Game {
+    private static final int BLACKJACK_NUMBER = 21;
+
     private User dealer = new User();
     private User player = new User();
     private Chip totalBet = Chip.of(0);
 
     public Game play(Deck deck, int bettingChip) {
-
         this.totalBet = Chip.of(bettingChip);
+        drawInitCards(deck);
 
+        return null;
+    }
+
+    private void endByTie() {
+
+    }
+
+    private void drawInitCards(Deck deck) {
         for (int i = 0; i < 2; i++) {
             dealer.receiveCard(deck.draw());
             player.receiveCard(deck.draw());
         }
-
-        return null;
     }
+
+
+    public User endByBlackjack() {
+        if(isTie()) {
+            player.winPrize(totalBet.half());
+            return null;
+        }
+
+        if(getWinner().equals(player)) {
+            player.winPrize(totalBet.blackjack());
+            return player;
+        }
+
+        return dealer;
+    }
+
+    public User getWinner() {
+        return dealer.getTotal() > player.getTotal() ? dealer : player;
+    }
+
+    public boolean isTie() {
+        return dealer.getTotal() == player.getTotal();
+    }
+
+    public boolean isBlackjack() {
+        return isBlackjackUser(dealer) || isBlackjackUser(player);
+    }
+
+    public boolean isBlackjackUser(User user) {
+        return user.getTotal() == BLACKJACK_NUMBER;
+    }
+
 
     public Card getDealerInitCard() {
         return dealer.getCardsDto().getCards().get(0);
@@ -29,5 +70,18 @@ public class Game {
 
     public List<Card> getPlayerCards() {
         return player.getCardsDto().getCards();
+    }
+
+    public List<Card> getDealerCards() {
+        return dealer.getCardsDto().getCards();
+    }
+
+    public void initializeGame() {
+        player.initializeCards();
+        dealer.initializeCards();
+    }
+
+    public Card hit(Deck deck) {
+        return player.receiveCard(deck.draw());
     }
 }
