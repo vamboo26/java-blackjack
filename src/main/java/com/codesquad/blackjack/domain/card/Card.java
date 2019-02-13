@@ -14,10 +14,6 @@ public class Card {
     public static Card of(int number, String suit) {
         return new Card(number, suit);
     }
-//
-//    public int sum(Card target) {
-//        return this.number + target.number;
-//    }
 
     public int getNumber() {
         return number;

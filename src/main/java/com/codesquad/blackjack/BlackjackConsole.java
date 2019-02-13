@@ -4,7 +4,6 @@ import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.view.InputView;
 import com.codesquad.blackjack.view.OutputView;
-import org.springframework.data.domain.PageRequest;
 
 public class BlackjackConsole {
 
@@ -15,6 +14,7 @@ public class BlackjackConsole {
         while(nextGame) {
             int bettingChip = InputView.inputBettingChip();
             Deck deck = Deck.auto();
+            boolean flag = true;
 
             game.play(deck, bettingChip);
             OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
@@ -22,26 +22,44 @@ public class BlackjackConsole {
             if(game.isBlackjack()) {
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
                 OutputView.printEndByBlackjack(game.endByBlackjack());
+                flag = false;
             }
 
             boolean hit = true;
-            while(hit) {
+            while(hit && flag) {
                 hit = InputView.isHit();
 
                 if(hit) {
                     game.hit(deck);
                     OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
                 }
+
+                if(game.isPlayerBurst()) {
+                    OutputView.printEndByBurst();
+
+                    flag = false;
+                }
+
             }
 
-            game.dealerTurn(deck);
-            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+            while(flag) {
+                game.dealerTurn(deck);
 
-            OutputView.printEnd(game.end());
+                if(game.isDealerBurst()) {
+                    game.endByDealerBurst();
+                    OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+                    OutputView.printEndByDealerBurst();
+                    break;
+                }
+
+                OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+                OutputView.printEnd(game.end());
+
+                flag = false;
+            }
 
             game.initializeGame();
             nextGame = InputView.isContinue();
-
         }
     }
 }

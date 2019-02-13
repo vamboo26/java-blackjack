@@ -1,7 +1,6 @@
 package com.codesquad.blackjack.domain;
 
 import com.codesquad.blackjack.domain.card.Card;
-import com.codesquad.blackjack.domain.card.Cards;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 
@@ -19,10 +18,6 @@ public class Game {
         drawInitCards(deck);
 
         return null;
-    }
-
-    private void endByTie() {
-
     }
 
     private void drawInitCards(Deck deck) {
@@ -61,11 +56,16 @@ public class Game {
         return dealer;
     }
 
-    public User getWinner() {
+    public User endByDealerBurst() {
+        player.winPrize(totalBet);
+        return player;
+    }
+
+    private User getWinner() {
         return dealer.getTotal() > player.getTotal() ? dealer : player;
     }
 
-    public boolean isTie() {
+    private boolean isTie() {
         return dealer.getTotal() == player.getTotal();
     }
 
@@ -73,7 +73,7 @@ public class Game {
         return isBlackjackUser(dealer) || isBlackjackUser(player);
     }
 
-    public boolean isBlackjackUser(User user) {
+    private boolean isBlackjackUser(User user) {
         return user.getTotal() == BLACKJACK_NUMBER;
     }
 
@@ -103,5 +103,17 @@ public class Game {
         while(dealer.getTotal() < 17) {
             dealer.receiveCard(deck.draw());
         }
+    }
+
+    public boolean isPlayerBurst() {
+        return isBurstUser(player);
+    }
+
+    public boolean isDealerBurst() {
+        return isBurstUser(dealer);
+    }
+
+    private boolean isBurstUser(User user) {
+        return user.getTotal() > BLACKJACK_NUMBER;
     }
 }
