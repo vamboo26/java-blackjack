@@ -2,19 +2,24 @@ package com.codesquad.blackjack.view;
 
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.user.User;
-
-import java.util.List;
+import com.codesquad.blackjack.dto.CardsDto;
 
 public class OutputView {
 
-    public static void printInitCards(Card dealerCard, List<Card> playerCards) {
+    public static void printInitCards(Card dealerCard, CardsDto playerCards) {
         System.out.println("*** 딜러의 카드 : " + dealerCard);
         System.out.println("*** 플레이어의 카드 : " + playerCards);
+        System.out.println("*** 플레이어의 합산결과 : " + playerCards.getTotal());
     }
 
-    public static void printAllCardsOnTable(List<Card> dealerCards, List<Card> playerCards) {
+    public static void printAllCardsOnTable(CardsDto dealerCards, CardsDto playerCards) {
+        System.out.println("------------------------------------------------------------------------------------------------------");
         System.out.println("*** 딜러의 카드 : " + dealerCards);
-        System.out.println("*** 플레이어의 카드 : " + playerCards);    }
+        System.out.println("*** 딜러의 합산결과 : " + dealerCards.getTotal());
+        System.out.println("*** 플레이어의 카드 : " + playerCards);
+        System.out.println("*** 플레이어의 합산결과 : " + playerCards.getTotal());
+        System.out.println("------------------------------------------------------------------------------------------------------");
+    }
 
     public static void printEndByBlackjack(User endByBlackjack) {
         if(endByBlackjack == null) {

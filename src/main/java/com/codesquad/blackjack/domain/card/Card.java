@@ -3,20 +3,39 @@ package com.codesquad.blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final int number;
-    private final String suit;
+    private int number;
+    private String suit;
+    private String name;
 
     private Card(int number, String suit) {
-        this.number = number;
+        this.number = numberToValidNumber(number);
         this.suit = suit;
+        this.name = numberToName(number);
     }
 
     public static Card of(int number, String suit) {
         return new Card(number, suit);
     }
 
-    public int getNumber() {
+    private String numberToName(int number) {
+        if(number == 1) return "A";
+        if(number == 11) return "J";
+        if(number == 12) return "Q";
+        if(number == 13) return "K";
+
+        return String.valueOf(number);
+    }
+
+    private int numberToValidNumber(int number) {
+        return (number > 10) ? 10 : number;
+    }
+
+    int getNumber() {
         return number;
+    }
+
+    public boolean isAce() {
+        return this.number == 1;
     }
 
     @Override

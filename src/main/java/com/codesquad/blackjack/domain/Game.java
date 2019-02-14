@@ -3,6 +3,7 @@ package com.codesquad.blackjack.domain;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
+import com.codesquad.blackjack.dto.CardsDto;
 
 import java.util.List;
 
@@ -79,15 +80,15 @@ public class Game {
 
 
     public Card getDealerInitCard() {
-        return dealer.getCardsDto().getCards().get(0);
+        return dealer.getCardsDto().getFirst();
     }
 
-    public List<Card> getPlayerCards() {
-        return player.getCardsDto().getCards();
+    public CardsDto getPlayerCards() {
+        return player.getCardsDto();
     }
 
-    public List<Card> getDealerCards() {
-        return dealer.getCardsDto().getCards();
+    public CardsDto getDealerCards() {
+        return dealer.getCardsDto();
     }
 
     public void initializeGame() {
@@ -115,5 +116,9 @@ public class Game {
 
     private boolean isBurstUser(User user) {
         return user.getTotal() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isPlayerBlackjack() {
+        return isBlackjackUser(player);
     }
 }

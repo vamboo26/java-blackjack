@@ -14,7 +14,7 @@ public class BlackjackConsole {
         while(nextGame) {
             int bettingChip = InputView.inputBettingChip();
             Deck deck = Deck.auto();
-            boolean flag = true;
+            boolean gameProgress = true;
 
             game.play(deck, bettingChip);
             OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
@@ -22,11 +22,11 @@ public class BlackjackConsole {
             if(game.isBlackjack()) {
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
                 OutputView.printEndByBlackjack(game.endByBlackjack());
-                flag = false;
+                gameProgress = false;
             }
 
             boolean hit = true;
-            while(hit && flag) {
+            while(hit && gameProgress) {
                 hit = InputView.isHit();
 
                 if(hit) {
@@ -37,12 +37,15 @@ public class BlackjackConsole {
                 if(game.isPlayerBurst()) {
                     OutputView.printEndByBurst();
 
-                    flag = false;
+                    gameProgress = false;
                 }
 
+                if(game.isPlayerBlackjack()) {
+                    hit = false;
+                }
             }
 
-            while(flag) {
+            while(gameProgress) {
                 game.dealerTurn(deck);
 
                 if(game.isDealerBurst()) {
@@ -55,7 +58,7 @@ public class BlackjackConsole {
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
                 OutputView.printEnd(game.end());
 
-                flag = false;
+                gameProgress = false;
             }
 
             game.initializeGame();
