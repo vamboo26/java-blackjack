@@ -4,6 +4,7 @@ import com.codesquad.blackjack.dto.CardsDto;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Cards {
     private List<Card> cards = new LinkedList<>();
@@ -27,17 +28,29 @@ public class Cards {
         return sum;
     }
 
-    private boolean hasAce() {
+    boolean hasAce() {
         for (Card card : cards) {
             if(card.isAce()) {
                 return true;
             }
         }
-
         return false;
     }
 
     public CardsDto _toCardsDto() {
         return new CardsDto(cards, calculateTotal());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cards cards1 = (Cards) o;
+        return Objects.equals(cards, cards1.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards);
     }
 }

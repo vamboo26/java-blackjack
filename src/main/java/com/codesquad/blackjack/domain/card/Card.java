@@ -30,12 +30,20 @@ public class Card {
         return (number > 10) ? 10 : number;
     }
 
-    int getNumber() {
+    public boolean isAce() {
+        return this.number == 1;
+    }
+
+    public int getNumber() {
         return number;
     }
 
-    public boolean isAce() {
-        return this.number == 1;
+    public String getSuit() {
+        return suit;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -44,12 +52,13 @@ public class Card {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return number == card.number &&
-                Objects.equals(suit, card.suit);
+                Objects.equals(suit, card.suit) &&
+                Objects.equals(name, card.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, suit);
+        return Objects.hash(number, suit, name);
     }
 
     @Override
@@ -57,6 +66,7 @@ public class Card {
         return "Card{" +
                 "number=" + number +
                 ", suit='" + suit + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

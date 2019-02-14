@@ -1,5 +1,7 @@
 package com.codesquad.blackjack.domain;
 
+import java.util.Objects;
+
 public class Chip {
     private int amount;
 
@@ -24,5 +26,18 @@ public class Chip {
     public Chip blackjack() {
         this.amount *= 1.5;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Chip chip = (Chip) o;
+        return amount == chip.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount);
     }
 }

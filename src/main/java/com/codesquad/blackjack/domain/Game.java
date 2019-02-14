@@ -5,8 +5,6 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
-import java.util.List;
-
 public class Game {
     private static final int BLACKJACK_NUMBER = 21;
 
@@ -27,8 +25,7 @@ public class Game {
             player.receiveCard(deck.draw());
         }
     }
-
-
+    
     public User endByBlackjack() {
         if(isTie()) {
             player.winPrize(totalBet.half());

@@ -5,6 +5,8 @@ import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
 import com.codesquad.blackjack.dto.CardsDto;
 
+import java.util.Objects;
+
 public class User {
     private static final int DEFAULT_CHIP_AMOUNT = 500;
 
@@ -30,5 +32,19 @@ public class User {
 
     public void initializeCards() {
         this.cards = new Cards();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(cards, user.cards) &&
+                Objects.equals(chip, user.chip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cards, chip);
     }
 }

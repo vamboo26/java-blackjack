@@ -15,54 +15,64 @@ public class BlackjackConsole {
             int bettingChip = InputView.inputBettingChip();
             Deck deck = Deck.auto();
             boolean gameProgress = true;
-
-            game.play(deck, bettingChip);
-            OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
-
-            if(game.isBlackjack()) {
-                OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-                OutputView.printEndByBlackjack(game.endByBlackjack());
-                gameProgress = false;
-            }
-
             boolean hit = true;
-            while(hit && gameProgress) {
-                hit = InputView.isHit();
 
-                if(hit) {
-                    game.hit(deck);
-                    OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
-                }
-
-                if(game.isPlayerBurst()) {
-                    OutputView.printEndByBurst();
-
-                    gameProgress = false;
-                }
-
-                if(game.isPlayerBlackjack()) {
-                    hit = false;
-                }
-            }
-
-            while(gameProgress) {
-                game.dealerTurn(deck);
-
-                if(game.isDealerBurst()) {
-                    game.endByDealerBurst();
-                    OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-                    OutputView.printEndByDealerBurst();
-                    break;
-                }
-
-                OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-                OutputView.printEnd(game.end());
-
-                gameProgress = false;
-            }
+            gameProgress = initGame(game, bettingChip, deck, gameProgress);
+            gameProgress = playerTurnGame(game, deck, gameProgress, hit);
+            dealerTurnGame(game, deck, gameProgress);
 
             game.initializeGame();
             nextGame = InputView.isContinue();
         }
+    }
+
+    private static void dealerTurnGame(Game game, Deck deck, boolean gameProgress) {
+        while(gameProgress) {
+            game.dealerTurn(deck);
+
+            if(game.isDealerBurst()) {
+                game.endByDealerBurst();
+                OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+                OutputView.printEndByDealerBurst();
+                break;
+            }
+
+            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+            OutputView.printEnd(game.end());
+            gameProgress = false;
+        }
+    }
+
+    private static boolean playerTurnGame(Game game, Deck deck, boolean gameProgress, boolean hit) {
+        while(hit && gameProgress) {
+            hit = InputView.isHit();
+
+            if(hit) {
+                game.hit(deck);
+                OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
+            }
+
+            if(game.isPlayerBurst()) {
+                OutputView.printEndByBurst();
+                gameProgress = false;
+            }
+
+            if(game.isPlayerBlackjack()) {
+                hit = false;
+            }
+        }
+        return gameProgress;
+    }
+
+    private static boolean initGame(Game game, int bettingChip, Deck deck, boolean gameProgress) {
+        game.play(deck, bettingChip);
+        OutputView.printInitCards(game.getDealerInitCard(), game.getPlayerCards());
+
+        if(game.isBlackjack()) {
+            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+            OutputView.printEndByBlackjack(game.endByBlackjack());
+            gameProgress = false;
+        }
+        return gameProgress;
     }
 }
