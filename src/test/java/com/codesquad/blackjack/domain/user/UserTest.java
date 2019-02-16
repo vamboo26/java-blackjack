@@ -14,7 +14,6 @@ public class UserTest {
     public void setUp() throws Exception {
         Card card = Card.of(1, CLUB.toString());
         user.receiveCard(card);
-
     }
 
     @Test

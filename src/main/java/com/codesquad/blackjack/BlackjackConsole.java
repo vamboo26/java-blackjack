@@ -6,7 +6,6 @@ import com.codesquad.blackjack.view.InputView;
 import com.codesquad.blackjack.view.OutputView;
 
 public class BlackjackConsole {
-
     public static void main(String[] args) {
         Game game = new Game();
         boolean nextGame = true;
@@ -30,7 +29,7 @@ public class BlackjackConsole {
 
         if(game.isBlackjack()) {
             OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-            OutputView.printEndByBlackjack(game.endByBlackjack());
+            OutputView.printEndByBlackjack(game.end(game.getBlackjackPrize()));
             game.stopGame();
         }
     }
@@ -56,14 +55,14 @@ public class BlackjackConsole {
             game.dealerTurn(deck);
 
             if(game.isDealerBurst()) {
-                game.endByPlayerWin();
+                game.endByPlayerWin(game.getNormalPrize());
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
                 OutputView.printEndByDealerBurst();
                 break;
             }
 
             OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-            OutputView.printEnd(game.end());
+            OutputView.printEnd(game.end(game.getNormalPrize()));
             game.stopGame();
         }
     }

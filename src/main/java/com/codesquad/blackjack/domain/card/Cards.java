@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.codesquad.blackjack.domain.Rule.BLACKJACK_NUMBER;
+
 public class Cards {
     private List<Card> cards = new LinkedList<>();
 
@@ -22,7 +24,7 @@ public class Cards {
         }
 
         if(hasAce()) {
-            return (sum + 10 > 21) ? sum : sum + 10;
+            return (sum + 10 > BLACKJACK_NUMBER) ? sum : sum + 10;
         }
 
         return sum;

@@ -14,12 +14,12 @@ public class Deck {
 
     private Deck(List<Card> deck) {
         this.deck = deck;
-        Collections.shuffle(deck);
     }
 
     public static Deck auto() {
         List<Card> deck = new LinkedList<>();
         generateDeck(deck);
+        Collections.shuffle(deck);
         return new Deck(deck);
     }
 

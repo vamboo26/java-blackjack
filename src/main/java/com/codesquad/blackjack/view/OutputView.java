@@ -23,8 +23,8 @@ public class OutputView {
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 
-    public static void printEndByBlackjack(User endByBlackjack) {
-        if(endByBlackjack == null) {
+    public static void printEndByBlackjack(Object endByBlackjack) {
+        if(endByBlackjack == Optional.empty()) {
             System.out.println("*** 무승부입니다(블랙잭)");
             return;
         }

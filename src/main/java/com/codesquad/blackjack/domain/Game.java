@@ -14,13 +14,6 @@ public class Game {
 
     private boolean gameProgress = true;
 
-
-
-
-
-
-
-
     public void init(Deck deck, int bettingChip) {
         this.totalBet = Chip.of(bettingChip * 2);
         drawInitCards(deck);
@@ -33,40 +26,30 @@ public class Game {
         }
     }
 
-
-
-
-
-    public User endByBlackjack() {
-        if(Rule.isTie(dealer, player)) {
-            player.winPrize(totalBet.half());
-            return null;
+    public Object end(Chip prize) {
+        if(player.getTotal() > dealer.getTotal()) {
+            return endByPlayerWin(prize);
         }
 
-        if(isPlayerWin()) {
-            player.winPrize(totalBet.blackjack());
-            return player;
-        }
-
-        return dealer;
+        return Rule.isTie(dealer, player) ? endByTie() : dealer;
     }
 
-    public User endByPlayerWin() {
-        player.winPrize(totalBet);
+    public Chip getBlackjackPrize() {
+        return totalBet.blackjack();
+    }
+
+    public Chip getNormalPrize() {
+        return totalBet;
+    }
+
+    private Object endByTie() {
+        player.winPrize(totalBet.half());
+        return Optional.empty();
+    }
+
+    public User endByPlayerWin(Chip prize) {
+        player.winPrize(prize);
         return player;
-    }
-
-    public Object end() {
-        if(Rule.isTie(dealer, player)) {
-            player.winPrize(totalBet.half());
-            return Optional.empty();
-        }
-
-        if(isPlayerWin()) {
-            return endByPlayerWin();
-        }
-
-        return dealer;
     }
 
     public void initializeGame() {
@@ -74,10 +57,6 @@ public class Game {
         dealer.initializeCards();
         gameProgress = true;
     }
-
-
-
-
 
     public Card hit(Deck deck) {
         return player.receiveCard(deck.draw());
@@ -87,11 +66,6 @@ public class Game {
         while(dealer.getTotal() < 17) {
             dealer.receiveCard(deck.draw());
         }
-    }
-
-
-    private boolean isPlayerWin() {
-        return Rule.getWinner(dealer, player).equals(player);
     }
 
     public boolean isBlackjack() {
@@ -124,5 +98,13 @@ public class Game {
 
     public CardsDto getDealerCards() {
         return dealer.getCardsDto();
+    }
+
+    public Object getPlayer() {
+        return player;
+    }
+
+    public Object getDealer() {
+        return dealer;
     }
 }
