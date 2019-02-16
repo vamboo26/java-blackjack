@@ -12,6 +12,21 @@ public class Game {
     private User player = new User();
     private Chip totalBet = Chip.of(0);
 
+    private boolean gameProgress = true;
+    private boolean hit = true;
+
+    public boolean isGameProcess() {
+        return gameProgress;
+    }
+
+    public void stopGame() {
+        this.gameProgress = false;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
     public Game play(Deck deck, int bettingChip) {
         this.totalBet = Chip.of(bettingChip * 2);
         drawInitCards(deck);
@@ -25,7 +40,7 @@ public class Game {
             player.receiveCard(deck.draw());
         }
     }
-    
+
     public User endByBlackjack() {
         if(isTie()) {
             player.winPrize(totalBet.half());
@@ -91,6 +106,8 @@ public class Game {
     public void initializeGame() {
         player.initializeCards();
         dealer.initializeCards();
+        hit = true;
+        gameProgress = true;
     }
 
     public Card hit(Deck deck) {
@@ -117,5 +134,9 @@ public class Game {
 
     public boolean isPlayerBlackjack() {
         return isBlackjackUser(player);
+    }
+
+    public void stand() {
+        this.hit = false;
     }
 }

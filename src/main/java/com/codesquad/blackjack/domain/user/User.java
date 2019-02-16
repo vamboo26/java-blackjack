@@ -18,20 +18,20 @@ public class User {
         return card;
     }
 
-    public CardsDto getCardsDto() {
-        return cards._toCardsDto();
-    }
-
-    public int getTotal() {
-        return cards.calculateTotal();
-    }
-
     public void winPrize(Chip prize) {
         chip.sum(prize);
     }
 
     public void initializeCards() {
         this.cards = new Cards();
+    }
+
+    public int getTotal() {
+        return cards.calculateTotal();
+    }
+
+    public CardsDto getCardsDto() {
+        return cards._toCardsDto();
     }
 
     @Override
