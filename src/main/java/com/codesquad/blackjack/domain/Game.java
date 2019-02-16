@@ -5,33 +5,25 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
-public class Game {
-    private static final int BLACKJACK_NUMBER = 21;
+import java.util.Optional;
 
+public class Game {
     private User dealer = new User();
     private User player = new User();
     private Chip totalBet = Chip.of(0);
 
     private boolean gameProgress = true;
-    private boolean hit = true;
 
-    public boolean isGameProcess() {
-        return gameProgress;
-    }
 
-    public void stopGame() {
-        this.gameProgress = false;
-    }
 
-    public boolean isHit() {
-        return hit;
-    }
 
-    public Game play(Deck deck, int bettingChip) {
+
+
+
+
+    public void init(Deck deck, int bettingChip) {
         this.totalBet = Chip.of(bettingChip * 2);
         drawInitCards(deck);
-
-        return null;
     }
 
     private void drawInitCards(Deck deck) {
@@ -41,13 +33,17 @@ public class Game {
         }
     }
 
+
+
+
+
     public User endByBlackjack() {
-        if(isTie()) {
+        if(Rule.isTie(dealer, player)) {
             player.winPrize(totalBet.half());
             return null;
         }
 
-        if(getWinner().equals(player)) {
+        if(isPlayerWin()) {
             player.winPrize(totalBet.blackjack());
             return player;
         }
@@ -55,60 +51,33 @@ public class Game {
         return dealer;
     }
 
-    public User end() {
-        if(isTie()) {
+    public User endByPlayerWin() {
+        player.winPrize(totalBet);
+        return player;
+    }
+
+    public Object end() {
+        if(Rule.isTie(dealer, player)) {
             player.winPrize(totalBet.half());
-            return null;
+            return Optional.empty();
         }
 
-        if(getWinner().equals(player)) {
-            player.winPrize(totalBet);
-            return player;
+        if(isPlayerWin()) {
+            return endByPlayerWin();
         }
 
         return dealer;
     }
 
-    public User endByDealerBurst() {
-        player.winPrize(totalBet);
-        return player;
-    }
-
-    private User getWinner() {
-        return dealer.getTotal() > player.getTotal() ? dealer : player;
-    }
-
-    private boolean isTie() {
-        return dealer.getTotal() == player.getTotal();
-    }
-
-    public boolean isBlackjack() {
-        return isBlackjackUser(dealer) || isBlackjackUser(player);
-    }
-
-    private boolean isBlackjackUser(User user) {
-        return user.getTotal() == BLACKJACK_NUMBER;
-    }
-
-
-    public Card getDealerInitCard() {
-        return dealer.getCardsDto().getFirst();
-    }
-
-    public CardsDto getPlayerCards() {
-        return player.getCardsDto();
-    }
-
-    public CardsDto getDealerCards() {
-        return dealer.getCardsDto();
-    }
-
     public void initializeGame() {
         player.initializeCards();
         dealer.initializeCards();
-        hit = true;
         gameProgress = true;
     }
+
+
+
+
 
     public Card hit(Deck deck) {
         return player.receiveCard(deck.draw());
@@ -120,23 +89,40 @@ public class Game {
         }
     }
 
-    public boolean isPlayerBurst() {
-        return isBurstUser(player);
+
+    private boolean isPlayerWin() {
+        return Rule.getWinner(dealer, player).equals(player);
     }
 
-    public boolean isDealerBurst() {
-        return isBurstUser(dealer);
-    }
-
-    private boolean isBurstUser(User user) {
-        return user.getTotal() > BLACKJACK_NUMBER;
+    public boolean isBlackjack() {
+        return Rule.isBlackjackUser(dealer) || Rule.isBlackjackUser(player);
     }
 
     public boolean isPlayerBlackjack() {
-        return isBlackjackUser(player);
+        return Rule.isBlackjackUser(player);
     }
 
-    public void stand() {
-        this.hit = false;
+    public boolean isPlayerBurst() {
+        return Rule.isBurstUser(player);
+    }
+
+    public boolean isDealerBurst() {
+        return Rule.isBurstUser(dealer);
+    }
+
+    public boolean isGameProcess() {
+        return gameProgress;
+    }
+
+    public void stopGame() {
+        this.gameProgress = false;
+    }
+
+    public CardsDto getPlayerCards() {
+        return player.getCardsDto();
+    }
+
+    public CardsDto getDealerCards() {
+        return dealer.getCardsDto();
     }
 }

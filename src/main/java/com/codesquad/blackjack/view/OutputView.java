@@ -4,10 +4,12 @@ import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
+import java.util.Optional;
+
 public class OutputView {
 
-    public static void printInitCards(Card dealerCard, CardsDto playerCards) {
-        System.out.println("*** 딜러의 카드 : " + dealerCard);
+    public static void printInitCards(CardsDto dealerCards, CardsDto playerCards) {
+        System.out.println("*** 딜러의 카드 : " + dealerCards.getFirst());
         System.out.println("*** 플레이어의 카드 : " + playerCards);
         System.out.println("*** 플레이어의 합산결과 : " + playerCards.getTotal());
     }
@@ -30,8 +32,8 @@ public class OutputView {
         System.out.println("*** 블랙잭으로 " + endByBlackjack + "의 승리입니다.");
     }
 
-    public static void printEnd(User end) {
-        if(end == null) {
+    public static void printEnd(Object end) {
+        if(end == Optional.empty()) {
             System.out.println("*** 무승부입니다");
             return;
         }
