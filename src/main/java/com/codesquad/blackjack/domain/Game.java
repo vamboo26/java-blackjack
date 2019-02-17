@@ -12,7 +12,6 @@ public class Game {
     private User dealer = new User(DEALER_NAME);
     private User player;
     private Chip totalBet = Chip.of(0);
-
     private boolean gameProgress = true;
 
     public Game(String playerName) {
@@ -21,6 +20,7 @@ public class Game {
 
     public void init(Deck deck, int bettingChip) {
         this.totalBet = Chip.of(bettingChip * 2);
+        player.betChip(bettingChip);
         drawInitCards(deck);
     }
 
@@ -54,9 +54,6 @@ public class Game {
 
     public String endByPlayerWin(Chip prize) {
         player.winPrize(prize);
-
-//        TODO : 아래 두 라인에 유의미한 차이가 있는가?
-//        return player.getName();
         return player._toUserDto().getName();
     }
 

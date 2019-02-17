@@ -15,9 +15,14 @@ public class InputView {
         return sc.nextInt() == 1;
     }
 
-    public static boolean isHit() {
+    public static int isDouble() {
+        System.out.println("*** 1. hit       2. stand        3. double");
+        return sc.nextInt();
+    }
+
+    public static int isHit() {
         System.out.println("*** 1. hit       2. stand");
-        return sc.nextInt() == 1;
+        return sc.nextInt();
     }
 
     public static String inputPlayerName() {

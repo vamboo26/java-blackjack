@@ -68,4 +68,8 @@ public class User {
                 "name='" + name + '\'' +
                 '}';
     }
+
+    public void betChip(int bettingChip) {
+        chip.substract(bettingChip);
+    }
 }

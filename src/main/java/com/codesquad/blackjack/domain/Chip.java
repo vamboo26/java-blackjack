@@ -23,6 +23,10 @@ public class Chip {
         return this;
     }
 
+    public void substract(int bettingChip) {
+        this.amount -= bettingChip;
+    }
+
     public Chip blackjack() {
         this.amount *= 1.5;
         return this;
