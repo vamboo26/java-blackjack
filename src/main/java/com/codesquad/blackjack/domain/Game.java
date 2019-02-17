@@ -4,6 +4,7 @@ import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
+import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
     public static final String DEALER_NAME = "dealer";
@@ -13,6 +14,7 @@ public class Game {
     private User player;
     private Chip totalBet = Chip.of(0);
     private boolean gameProgress = true;
+
 
     public Game(String playerName) {
         this.player = new User(playerName);
@@ -31,12 +33,12 @@ public class Game {
         }
     }
 
-    public String end(Chip prize) {
+    public Object end(Chip prize) {
         if(player.getTotal() > dealer.getTotal()) {
             return endByPlayerWin(prize);
         }
 
-        return Rule.isTie(dealer, player) ? endByTie() : dealer._toUserDto().getName();
+        return Rule.isTie(dealer, player) ? endByTie() : dealer._toUserDto();
     }
 
     public Chip getBlackjackPrize() {
@@ -47,14 +49,14 @@ public class Game {
         return totalBet;
     }
 
-    private String endByTie() {
+    private Object endByTie() {
         player.winPrize(totalBet.half());
         return TIE;
     }
 
-    public String endByPlayerWin(Chip prize) {
+    public UserDto endByPlayerWin(Chip prize) {
         player.winPrize(prize);
-        return player._toUserDto().getName();
+        return player._toUserDto();
     }
 
     public void initializeGame() {
@@ -109,11 +111,15 @@ public class Game {
         return dealer.getCardsDto();
     }
 
-    public Object getPlayer() {
-        return player;
+    public UserDto getPlayerDto() {
+        return player._toUserDto();
     }
 
-    public Object getDealer() {
-        return dealer;
+    public UserDto getDealerDto() {
+        return dealer._toUserDto();
+    }
+
+    public boolean playerHasNoMoney() {
+        return player.is거지();
     }
 }

@@ -25,6 +25,11 @@ public class BlackjackConsole {
 
             game.initializeGame();
             nextGame = InputView.isContinue();
+
+            if(game.playerHasNoMoney()) {
+                OutputView.printNoChip();
+                return;
+            }
         }
     }
 
@@ -54,7 +59,7 @@ public class BlackjackConsole {
             OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
 
             if (game.isPlayerBurst()) {
-                OutputView.printEndByBurst();
+                OutputView.printEndByBurst(game.getPlayerDto(), game.getPlayerDto());
                 game.stopGame();
                 return;
             }
@@ -80,7 +85,7 @@ public class BlackjackConsole {
             if (game.isDealerBurst()) {
                 game.endByPlayerWin(game.getNormalPrize());
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
-                OutputView.printEndByDealerBurst();
+                OutputView.printEndByBurst(game.getDealerDto(), game.getPlayerDto());
                 break;
             }
 

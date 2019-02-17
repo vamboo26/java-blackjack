@@ -41,7 +41,7 @@ public class User {
     }
 
     public UserDto _toUserDto() {
-        return new UserDto(name);
+        return new UserDto(name, chip);
     }
 
     @Override
@@ -71,5 +71,9 @@ public class User {
 
     public void betChip(int bettingChip) {
         chip.substract(bettingChip);
+    }
+
+    public boolean is거지() {
+        return chip.is없어();
     }
 }

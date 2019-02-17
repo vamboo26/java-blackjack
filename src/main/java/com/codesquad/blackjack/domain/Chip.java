@@ -48,4 +48,15 @@ public class Chip {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    @Override
+    public String toString() {
+        return "Chip{" +
+                "amount=" + amount +
+                '}';
+    }
+
+    public boolean is없어() {
+        return this.amount <= 0;
+    }
 }
