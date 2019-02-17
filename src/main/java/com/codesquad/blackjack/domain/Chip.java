@@ -40,4 +40,8 @@ public class Chip {
     public int hashCode() {
         return Objects.hash(amount);
     }
+
+    public boolean isOver(int bettingChip) {
+        return amount >= bettingChip;
+    }
 }

@@ -5,14 +5,19 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
-import java.util.Optional;
-
 public class Game {
-    private User dealer = new User();
-    private User player = new User();
+    public static final String DEALER_NAME = "dealer";
+    public static final String TIE = "무승부";
+
+    private User dealer = new User(DEALER_NAME);
+    private User player;
     private Chip totalBet = Chip.of(0);
 
     private boolean gameProgress = true;
+
+    public Game(String playerName) {
+        this.player = new User(playerName);
+    }
 
     public void init(Deck deck, int bettingChip) {
         this.totalBet = Chip.of(bettingChip * 2);
@@ -26,12 +31,12 @@ public class Game {
         }
     }
 
-    public Object end(Chip prize) {
+    public String end(Chip prize) {
         if(player.getTotal() > dealer.getTotal()) {
             return endByPlayerWin(prize);
         }
 
-        return Rule.isTie(dealer, player) ? endByTie() : dealer;
+        return Rule.isTie(dealer, player) ? endByTie() : dealer._toUserDto().getName();
     }
 
     public Chip getBlackjackPrize() {
@@ -42,20 +47,27 @@ public class Game {
         return totalBet;
     }
 
-    private Object endByTie() {
+    private String endByTie() {
         player.winPrize(totalBet.half());
-        return Optional.empty();
+        return TIE;
     }
 
-    public User endByPlayerWin(Chip prize) {
+    public String endByPlayerWin(Chip prize) {
         player.winPrize(prize);
-        return player;
+
+//        TODO : 아래 두 라인에 유의미한 차이가 있는가?
+//        return player.getName();
+        return player._toUserDto().getName();
     }
 
     public void initializeGame() {
         player.initializeCards();
         dealer.initializeCards();
         gameProgress = true;
+    }
+
+    public boolean hasPlayerEnoughChip(int bettingChip) {
+        return player.checkChip(bettingChip);
     }
 
     public Card hit(Deck deck) {

@@ -10,6 +10,7 @@ public class InputView {
         return sc.nextInt();
     }
 
+
     public static boolean isContinue() {
         System.out.println("*** 1. continue  2. quit");
         return sc.nextInt() == 1;
@@ -18,5 +19,10 @@ public class InputView {
     public static boolean isHit() {
         System.out.println("*** 1. hit       2. stand");
         return sc.nextInt() == 1;
+    }
+
+    public static String inputPlayerName() {
+        System.out.println("*** 플레이어의 이름을 입력해주세요.");
+        return sc.nextLine();
     }
 }

@@ -7,11 +7,16 @@ import com.codesquad.blackjack.view.OutputView;
 
 public class BlackjackConsole {
     public static void main(String[] args) {
-        Game game = new Game();
+        Game game = new Game(InputView.inputPlayerName());
         boolean nextGame = true;
 
         while(nextGame) {
             int bettingChip = InputView.inputBettingChip();
+
+            while(!game.hasPlayerEnoughChip(bettingChip)) {
+                bettingChip = InputView.inputBettingChip();
+            }
+
             Deck deck = Deck.auto();
 
             initGame(game, bettingChip, deck);
@@ -45,7 +50,7 @@ public class BlackjackConsole {
             }
 
             if(game.isPlayerBlackjack()) {
-                game.stopGame();
+                return;
             }
         }
     }
