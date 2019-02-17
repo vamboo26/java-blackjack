@@ -1,40 +1,38 @@
 package com.codesquad.blackjack.domain.card;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.codesquad.blackjack.domain.Suit.CLUB;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CardsTest {
-    private Cards hasAceOver21 = new Cards();
-    private Cards hasAceUnder21 = new Cards();
-    private Cards noAce = new Cards();
+    public static final Cards HAS_ACE_OVER_21 = new Cards();
+    public static final Cards HAS_ACE_UNDER_21 = new Cards();
+    public static final Cards NO_ACE = new Cards();
 
-    @Before
-    public void setUp() throws Exception {
-        hasAceOver21.add(Card.of(1, CLUB.toString()));
-        hasAceOver21.add(Card.of(2, CLUB.toString()));
-        hasAceOver21.add(Card.of(10, CLUB.toString()));
+    static {
+        HAS_ACE_OVER_21.add(Card.of(1, CLUB.toString()));
+        HAS_ACE_OVER_21.add(Card.of(2, CLUB.toString()));
+        HAS_ACE_OVER_21.add(Card.of(10, CLUB.toString()));
 
-        hasAceUnder21.add(Card.of(1, CLUB.toString()));
-        hasAceUnder21.add(Card.of(2, CLUB.toString()));
+        HAS_ACE_UNDER_21.add(Card.of(1, CLUB.toString()));
+        HAS_ACE_UNDER_21.add(Card.of(2, CLUB.toString()));
 
-        noAce.add(Card.of(5, CLUB.toString()));
-        noAce.add(Card.of(10, CLUB.toString()));
+        NO_ACE.add(Card.of(5, CLUB.toString()));
+        NO_ACE.add(Card.of(10, CLUB.toString()));
     }
 
     @Test
     public void hasAce() {
-        assertThat(hasAceOver21.hasAce()).isTrue();
-        assertThat(hasAceUnder21.hasAce()).isTrue();
-        assertThat(noAce.hasAce()).isFalse();
+        assertThat(HAS_ACE_OVER_21.hasAce()).isTrue();
+        assertThat(HAS_ACE_UNDER_21.hasAce()).isTrue();
+        assertThat(NO_ACE.hasAce()).isFalse();
     }
 
     @Test
     public void calculateTotalTest() {
-        assertThat(hasAceOver21.calculateTotal()).isEqualTo(13);
-        assertThat(hasAceUnder21.calculateTotal()).isEqualTo(13);
-        assertThat(noAce.calculateTotal()).isEqualTo(15);
+        assertThat(HAS_ACE_OVER_21.calculateTotal()).isEqualTo(13);
+        assertThat(HAS_ACE_UNDER_21.calculateTotal()).isEqualTo(13);
+        assertThat(NO_ACE.calculateTotal()).isEqualTo(15);
     }
 }

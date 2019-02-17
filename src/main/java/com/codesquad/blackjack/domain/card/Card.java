@@ -30,19 +30,15 @@ public class Card {
         return (number > 10) ? 10 : number;
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return this.number == 1;
     }
 
-    public int getNumber() {
+    int getNumber() {
         return number;
     }
 
-    public String getSuit() {
-        return suit;
-    }
-
-    public String getName() {
+    String getName() {
         return name;
     }
 

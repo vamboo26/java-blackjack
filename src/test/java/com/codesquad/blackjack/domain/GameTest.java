@@ -68,11 +68,4 @@ public class GameTest {
 
         assertThat(newGame.end(Chip.of(200))).isEqualTo("무승부");
     }
-
 }
-
-//    public void dealerTurn(Deck deck) {
-//        while(dealer.getTotal() < 17) {
-//            dealer.receiveCard(deck.draw());
-//        }
-//    }

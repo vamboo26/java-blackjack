@@ -6,38 +6,37 @@ import static com.codesquad.blackjack.domain.Suit.CLUB;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CardTest {
+    public static final Card ACE_CLUB_CARD = Card.of(1, CLUB.toString());
+    public static final Card JACK_CLUB_CARD = Card.of(11, CLUB.toString());
+    public static final Card QUEEN_CLUB_CARD = Card.of(12, CLUB.toString());
+    public static final Card KING_CLUB_CARD = Card.of(13, CLUB.toString());
 
     @Test
     public void ofATest() {
-        Card card = Card.of(1, CLUB.toString());
-        assertThat(card.getName()).isEqualTo("A");
-        assertThat(card.getNumber()).isEqualTo(1);
+        assertThat(ACE_CLUB_CARD.getName()).isEqualTo("A");
+        assertThat(ACE_CLUB_CARD.getNumber()).isEqualTo(1);
     }
 
     @Test
     public void ofJTest() {
-        Card card = Card.of(11, CLUB.toString());
-        assertThat(card.getName()).isEqualTo("J");
-        assertThat(card.getNumber()).isEqualTo(10);
+        assertThat(JACK_CLUB_CARD.getName()).isEqualTo("J");
+        assertThat(JACK_CLUB_CARD.getNumber()).isEqualTo(10);
     }
 
     @Test
     public void ofQTest() {
-        Card card = Card.of(12, CLUB.toString());
-        assertThat(card.getName()).isEqualTo("Q");
-        assertThat(card.getNumber()).isEqualTo(10);
+        assertThat(QUEEN_CLUB_CARD.getName()).isEqualTo("Q");
+        assertThat(QUEEN_CLUB_CARD.getNumber()).isEqualTo(10);
     }
 
     @Test
     public void ofKTest() {
-        Card card = Card.of(13, CLUB.toString());
-        assertThat(card.getName()).isEqualTo("K");
-        assertThat(card.getNumber()).isEqualTo(10);
+        assertThat(KING_CLUB_CARD.getName()).isEqualTo("K");
+        assertThat(KING_CLUB_CARD.getNumber()).isEqualTo(10);
     }
 
     @Test
     public void isAceTest() {
-        Card card = Card.of(1, CLUB.toString());
-        assertThat(card.isAce()).isTrue();
+        assertThat(ACE_CLUB_CARD.isAce()).isTrue();
     }
 }

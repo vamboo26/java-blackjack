@@ -28,6 +28,10 @@ public class Chip {
         return this;
     }
 
+    public boolean isOver(int bettingChip) {
+        return amount >= bettingChip;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,9 +43,5 @@ public class Chip {
     @Override
     public int hashCode() {
         return Objects.hash(amount);
-    }
-
-    public boolean isOver(int bettingChip) {
-        return amount >= bettingChip;
     }
 }

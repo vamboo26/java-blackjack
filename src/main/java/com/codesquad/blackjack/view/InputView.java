@@ -10,7 +10,6 @@ public class InputView {
         return sc.nextInt();
     }
 
-
     public static boolean isContinue() {
         System.out.println("*** 1. continue  2. quit");
         return sc.nextInt() == 1;
