@@ -9,6 +9,9 @@ import com.codesquad.blackjack.dto.UserDto;
 public class Game {
     public static final String DEALER_NAME = "dealer";
     public static final String TIE = "무승부";
+    public static final int HIT_SELECTION = 1;
+    public static final int STAND_SELECTION = 2;
+    public static final int DOUBLE_SELECTION = 3;
 
     private User dealer = new User(DEALER_NAME);
     private User player;
@@ -120,6 +123,6 @@ public class Game {
     }
 
     public boolean playerHasNoMoney() {
-        return player.is거지();
+        return player.isBankruptcy();
     }
 }

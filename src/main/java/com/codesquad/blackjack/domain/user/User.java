@@ -44,6 +44,18 @@ public class User {
         return new UserDto(name, chip);
     }
 
+    public boolean checkChip(int bettingChip) {
+        return chip.isOver(bettingChip);
+    }
+
+    public void betChip(int bettingChip) {
+        chip.substract(bettingChip);
+    }
+
+    public boolean isBankruptcy() {
+        return chip.zero();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,10 +63,6 @@ public class User {
         User user = (User) o;
         return Objects.equals(cards, user.cards) &&
                 Objects.equals(chip, user.chip);
-    }
-
-    public boolean checkChip(int bettingChip) {
-        return chip.isOver(bettingChip);
     }
 
     @Override
@@ -67,13 +75,5 @@ public class User {
         return "User{" +
                 "name='" + name + '\'' +
                 '}';
-    }
-
-    public void betChip(int bettingChip) {
-        chip.substract(bettingChip);
-    }
-
-    public boolean is거지() {
-        return chip.is없어();
     }
 }

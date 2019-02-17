@@ -56,7 +56,7 @@ public class Chip {
                 '}';
     }
 
-    public boolean is없어() {
+    public boolean zero() {
         return this.amount <= 0;
     }
 }

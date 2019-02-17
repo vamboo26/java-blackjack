@@ -5,6 +5,10 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.view.InputView;
 import com.codesquad.blackjack.view.OutputView;
 
+import static com.codesquad.blackjack.domain.Game.DOUBLE_SELECTION;
+import static com.codesquad.blackjack.domain.Game.HIT_SELECTION;
+import static com.codesquad.blackjack.domain.Game.STAND_SELECTION;
+
 public class BlackjackConsole {
     public static void main(String[] args) {
         Game game = new Game(InputView.inputPlayerName());
@@ -13,9 +17,7 @@ public class BlackjackConsole {
         while (nextGame) {
             int bettingChip = InputView.inputBettingChip();
 
-            while (!game.hasPlayerEnoughChip(bettingChip)) {
-                bettingChip = InputView.inputBettingChip();
-            }
+            bettingChip = verifyPlayerChip(game, bettingChip);
 
             Deck deck = Deck.auto();
 
@@ -33,6 +35,13 @@ public class BlackjackConsole {
         }
     }
 
+    private static int verifyPlayerChip(Game game, int bettingChip) {
+        while (!game.hasPlayerEnoughChip(bettingChip)) {
+            bettingChip = InputView.inputBettingChip();
+        }
+        return bettingChip;
+    }
+
     private static void initGame(Game game, int bettingChip, Deck deck) {
         game.init(deck, bettingChip);
         OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
@@ -46,15 +55,9 @@ public class BlackjackConsole {
 
     private static void playerTurnGame(Game game, int bettingChip, Deck deck) {
         int turn = 0;
-        if (game.isGameProcess()) {
-            if (game.hasPlayerEnoughChip(bettingChip)) {
-                turn = InputView.isDouble();
-            } else {
-                turn = InputView.isHit();
-            }
-        }
+        turn = selectTurn(game, bettingChip, turn);
 
-        while (game.isGameProcess() && turn != 2) {
+        while (game.isGameProcess() && turn != STAND_SELECTION) {
             game.hit(deck);
             OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
 
@@ -64,18 +67,25 @@ public class BlackjackConsole {
                 return;
             }
 
-            if (game.isPlayerBlackjack()) {
+            if (game.isPlayerBlackjack() || turn == DOUBLE_SELECTION) {
                 return;
             }
 
-            if (turn == 3) {
-                return;
-            }
-
-            if (turn == 1) {
+            if (turn == HIT_SELECTION) {
                 turn = InputView.isHit();
             }
         }
+    }
+
+    private static int selectTurn(Game game, int bettingChip, int turn) {
+        if (game.isGameProcess()) {
+            if (game.hasPlayerEnoughChip(bettingChip)) {
+                turn = InputView.isDouble();
+            } else {
+                turn = InputView.isHit();
+            }
+        }
+        return turn;
     }
 
     private static void dealerTurnGame(Game game, Deck deck) {

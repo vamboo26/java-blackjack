@@ -1,11 +1,8 @@
 package com.codesquad.blackjack.view;
 
-import com.codesquad.blackjack.domain.card.Card;
-import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.UserDto;
 
-import java.util.Optional;
 
 import static com.codesquad.blackjack.domain.Game.TIE;
 
