@@ -18,7 +18,6 @@ public class Game {
     private Chip totalBet = Chip.of(0);
     private boolean gameProgress = true;
 
-
     public Game(String playerName) {
         this.player = new User(playerName);
     }

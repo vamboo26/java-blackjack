@@ -25,5 +25,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtime 'com.h2database:h2'
+	runtime 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.assertj:assertj-core:3.10.0'
 }
