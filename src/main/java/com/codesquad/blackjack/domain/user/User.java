@@ -3,6 +3,7 @@ package com.codesquad.blackjack.domain.user;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
+import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.UserDto;
 
@@ -34,7 +35,7 @@ public class User {
     }
 
     public void winPrize(Chip prize) {
-        chip.sum(prize);
+        this.chip = chip.sum(prize);
     }
 
     public int getTotal() {
@@ -60,6 +61,43 @@ public class User {
     public boolean isBankruptcy() {
         return chip.isZero();
     }
+
+
+
+
+    public boolean isWinner(User target) {
+        return this.cards.isBigger(target.cards);
+    }
+
+    public boolean isTie(User target) {
+        return this.cards.isTie(target.cards);
+    }
+
+    public boolean isBurst() {
+        return this.cards.isBurst();
+    }
+
+    public boolean isBlackjack() {
+        return this.cards.isBlackjack();
+    }
+
+
+
+
+
+
+    public Card hit(Deck deck) {
+        return receiveCard(deck.draw());
+    }
+
+    public void dealerTurn(Deck deck) {
+        while(getTotal() < 17) {
+            hit(deck);
+        }
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,12 +1,13 @@
 package com.codesquad.blackjack.domain.card;
 
+import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.codesquad.blackjack.domain.Rule.BLACKJACK_NUMBER;
+import static com.codesquad.blackjack.domain.Game.BLACKJACK_NUMBER;
 
 public class Cards {
     private List<Card> cards = new LinkedList<>();
@@ -41,6 +42,22 @@ public class Cards {
 
     public CardsDto _toCardsDto() {
         return new CardsDto(cards, calculateTotal());
+    }
+
+    public boolean isTie(Cards target) {
+        return this.calculateTotal() == target.calculateTotal();
+    }
+
+    public boolean isBurst() {
+        return calculateTotal() > BLACKJACK_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return calculateTotal() == BLACKJACK_NUMBER;
+    }
+
+    public boolean isBigger(Cards target) {
+        return calculateTotal() > target.calculateTotal();
     }
 
     @Override

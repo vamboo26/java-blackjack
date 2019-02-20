@@ -61,13 +61,13 @@ public class BlackjackConsole {
             game.hit(deck);
             OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
 
-            if (game.isPlayerBurst()) {
+            if (game.isBurst()) {
                 OutputView.printEndByBurst(game.getDealerDto(), game.getPlayerDto());
                 game.stopGame();
                 return;
             }
 
-            if (game.isPlayerBlackjack() || turn == DOUBLE_SELECTION) {
+            if (game.isBlackjack() || turn == DOUBLE_SELECTION) {
                 return;
             }
 
@@ -92,7 +92,7 @@ public class BlackjackConsole {
         while (game.isGameProcess()) {
             game.dealerTurn(deck);
 
-            if (game.isDealerBurst()) {
+            if (game.isBurst()) {
                 game.endByPlayerWin(game.getNormalPrize());
                 OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
                 OutputView.printEndByBurst(game.getPlayerDto(), game.getPlayerDto());

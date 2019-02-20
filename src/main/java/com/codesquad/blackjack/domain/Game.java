@@ -7,6 +7,7 @@ import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
+    public static final int BLACKJACK_NUMBER = 21;
     public static final String DEALER_NAME = "dealer";
     public static final String TIE = "무승부";
     public static final int HIT_SELECTION = 1;
@@ -36,11 +37,11 @@ public class Game {
     }
 
     public Object end(Chip prize) {
-        if(player.getTotal() > dealer.getTotal()) {
+        if(player.isWinner(dealer)) {
             return endByPlayerWin(prize);
         }
 
-        return Rule.isTie(dealer, player) ? endByTie() : dealer._toUserDto();
+        return dealer.isTie(player) ? endByTie() : dealer._toUserDto();
     }
 
     public Chip getBlackjackPrize() {
@@ -71,31 +72,40 @@ public class Game {
         return player.checkChip(bettingChip);
     }
 
-    public Card hit(Deck deck) {
-        return player.receiveCard(deck.draw());
+
+
+
+    //return을 gameDto로해서 바로 뷰단으로 전달할수있도록 생각해보자
+    public void hit(Deck deck) {
+        player.hit(deck);
     }
 
     public void dealerTurn(Deck deck) {
-        while(dealer.getTotal() < 17) {
-            dealer.receiveCard(deck.draw());
-        }
+        dealer.dealerTurn(deck);
     }
+
+
+
 
     public boolean isBlackjack() {
-        return Rule.isBlackjackUser(dealer) || Rule.isBlackjackUser(player);
+        return dealer.isBlackjack() || player.isBlackjack();
     }
 
-    public boolean isPlayerBlackjack() {
-        return Rule.isBlackjackUser(player);
+    public boolean isBurst() {
+        return dealer.isBurst() || player.isBurst();
     }
 
-    public boolean isPlayerBurst() {
-        return Rule.isBurstUser(player);
+    public boolean playerHasNoMoney() {
+        return player.isBankruptcy();
     }
 
-    public boolean isDealerBurst() {
-        return Rule.isBurstUser(dealer);
-    }
+
+
+
+
+
+
+
 
     public boolean isGameProcess() {
         return gameProgress;
@@ -119,9 +129,5 @@ public class Game {
 
     public UserDto getDealerDto() {
         return dealer._toUserDto();
-    }
-
-    public boolean playerHasNoMoney() {
-        return player.isBankruptcy();
     }
 }
