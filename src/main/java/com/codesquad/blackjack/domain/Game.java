@@ -76,12 +76,12 @@ public class Game {
 
 
     //return을 gameDto로해서 바로 뷰단으로 전달할수있도록 생각해보자
-    public void hit(Deck deck) {
-        player.hit(deck);
+    public void hit(Card card) {
+        player.receiveCard(card);
     }
 
-    public void dealerTurn(Deck deck) {
-        dealer.dealerTurn(deck);
+    public void dealerTurn(Card card) {
+        dealer.dealerTurn(card);
     }
 
 

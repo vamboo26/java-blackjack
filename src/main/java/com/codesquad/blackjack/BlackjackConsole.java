@@ -58,7 +58,7 @@ public class BlackjackConsole {
         turn = selectTurn(game, bettingChip, turn);
 
         while (game.isGameProcess() && turn != STAND_SELECTION) {
-            game.hit(deck);
+            game.hit(deck.draw());
             OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
 
             if (game.isBurst()) {
@@ -90,7 +90,7 @@ public class BlackjackConsole {
 
     private static void dealerTurnGame(Game game, Deck deck) {
         while (game.isGameProcess()) {
-            game.dealerTurn(deck);
+            game.dealerTurn(deck.draw());
 
             if (game.isBurst()) {
                 game.endByPlayerWin(game.getNormalPrize());

@@ -85,14 +85,9 @@ public class User {
 
 
 
-
-    public Card hit(Deck deck) {
-        return receiveCard(deck.draw());
-    }
-
-    public void dealerTurn(Deck deck) {
+    public void dealerTurn(Card card) {
         while(getTotal() < 17) {
-            hit(deck);
+            receiveCard(card);
         }
     }
 
