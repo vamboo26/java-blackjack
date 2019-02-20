@@ -62,8 +62,8 @@ public class Game {
     }
 
     public void initializeGame() {
-        player.initializeCards();
-        dealer.initializeCards();
+        player = player.initialize();
+        dealer = dealer.initialize();
         gameProgress = true;
     }
 

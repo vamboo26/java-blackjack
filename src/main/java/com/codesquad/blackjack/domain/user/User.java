@@ -19,6 +19,15 @@ public class User {
         this.name = name;
     }
 
+    public User(String name, Chip chip) {
+        this.name = name;
+        this.chip = chip;
+    }
+
+    public User initialize() {
+        return new User(name, chip);
+    }
+
     public Card receiveCard(Card card) {
         cards.add(card);
         return card;
@@ -26,10 +35,6 @@ public class User {
 
     public void winPrize(Chip prize) {
         chip.sum(prize);
-    }
-
-    public void initializeCards() {
-        this.cards = new Cards();
     }
 
     public int getTotal() {
@@ -53,7 +58,7 @@ public class User {
     }
 
     public boolean isBankruptcy() {
-        return chip.zero();
+        return chip.isZero();
     }
 
     @Override

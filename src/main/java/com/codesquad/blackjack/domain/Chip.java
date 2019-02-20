@@ -34,7 +34,7 @@ public class Chip {
         return this.amount >= bettingChip;
     }
 
-    public boolean zero() {
+    public boolean isZero() {
         return this.amount <= ZERO;
     }
 
