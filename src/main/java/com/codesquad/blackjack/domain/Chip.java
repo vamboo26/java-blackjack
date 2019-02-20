@@ -3,37 +3,39 @@ package com.codesquad.blackjack.domain;
 import java.util.Objects;
 
 public class Chip {
-    private int amount;
 
-    private Chip(int amount) {
+    public static final int ZERO = 0;
+    public static final int TWO = 2;
+    public static final double ONE_POINT_FIVE = 1.5;
+
+    private final int amount;
+
+    public Chip(int amount) {
         this.amount = amount;
     }
 
-    public static Chip of(int amount) {
-        return new Chip(amount);
+    public Chip sum(Chip target) {
+        return new Chip(amount + target.amount);
+    }
+
+    public Chip substract(int bettingChip) {
+        return new Chip(amount - bettingChip);
     }
 
     public Chip half() {
-        this.amount /= 2;
-        return this;
-    }
-
-    public Chip sum(Chip target) {
-        this.amount += target.amount;
-        return this;
-    }
-
-    public void substract(int bettingChip) {
-        this.amount -= bettingChip;
+        return new Chip(amount / TWO);
     }
 
     public Chip blackjack() {
-        this.amount *= 1.5;
-        return this;
+        return new Chip((int)(amount * ONE_POINT_FIVE));
     }
 
     public boolean isOver(int bettingChip) {
-        return amount >= bettingChip;
+        return this.amount >= bettingChip;
+    }
+
+    public boolean zero() {
+        return this.amount <= ZERO;
     }
 
     @Override
@@ -54,9 +56,5 @@ public class Chip {
         return "Chip{" +
                 "amount=" + amount +
                 '}';
-    }
-
-    public boolean zero() {
-        return this.amount <= 0;
     }
 }

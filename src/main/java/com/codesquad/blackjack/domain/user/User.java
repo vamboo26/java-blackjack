@@ -13,7 +13,7 @@ public class User {
 
     private String name;
     private Cards cards = new Cards();
-    private Chip chip = Chip.of(DEFAULT_CHIP_AMOUNT);
+    private Chip chip = new Chip(DEFAULT_CHIP_AMOUNT);
 
     public User(String name) {
         this.name = name;
@@ -49,7 +49,7 @@ public class User {
     }
 
     public void betChip(int bettingChip) {
-        chip.substract(bettingChip);
+        this.chip = chip.substract(bettingChip);
     }
 
     public boolean isBankruptcy() {

@@ -15,7 +15,7 @@ public class Game {
 
     private User dealer = new User(DEALER_NAME);
     private User player;
-    private Chip totalBet = Chip.of(0);
+    private Chip totalBet = new Chip(0);
     private boolean gameProgress = true;
 
     public Game(String playerName) {
@@ -23,7 +23,7 @@ public class Game {
     }
 
     public void init(Deck deck, int bettingChip) {
-        this.totalBet = Chip.of(bettingChip * 2);
+        this.totalBet = new Chip(bettingChip * 2);
         player.betChip(bettingChip);
         drawInitCards(deck);
     }
