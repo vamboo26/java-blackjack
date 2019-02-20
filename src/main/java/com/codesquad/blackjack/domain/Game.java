@@ -24,7 +24,7 @@ public class Game {
     }
 
     public void init(Deck deck, int bettingChip) {
-        this.totalBet = new Chip(bettingChip * 2);
+        this.totalBet = new Chip(bettingChip);
         player.betChip(bettingChip);
         drawInitCards(deck);
     }
@@ -36,7 +36,29 @@ public class Game {
         }
     }
 
+    public void initializeGame() {
+        player = player.initialize();
+        dealer = dealer.initialize();
+        gameProgress = true;
+    }
+
+    public boolean isGameProcess() {
+        return gameProgress;
+    }
+
+    public void stopGame() {
+        this.gameProgress = false;
+    }
+
+
+
+
+
+
+
     public Object end(Chip prize) {
+        stopGame();
+
         if(player.isWinner(dealer)) {
             return endByPlayerWin(prize);
         }
@@ -49,11 +71,11 @@ public class Game {
     }
 
     public Chip getNormalPrize() {
-        return totalBet;
+        return totalBet.twice();
     }
 
     private Object endByTie() {
-        player.winPrize(totalBet.half());
+        player.winPrize(totalBet);
         return TIE;
     }
 
@@ -62,11 +84,11 @@ public class Game {
         return player._toUserDto();
     }
 
-    public void initializeGame() {
-        player = player.initialize();
-        dealer = dealer.initialize();
-        gameProgress = true;
-    }
+
+
+
+
+
 
     public boolean hasPlayerEnoughChip(int bettingChip) {
         return player.checkChip(bettingChip);
@@ -75,7 +97,11 @@ public class Game {
 
 
 
+
+
+
     //return을 gameDto로해서 바로 뷰단으로 전달할수있도록 생각해보자
+
     public void hit(Card card) {
         player.receiveCard(card);
     }
@@ -83,9 +109,6 @@ public class Game {
     public void dealerTurn(Card card) {
         dealer.dealerTurn(card);
     }
-
-
-
 
     public boolean isBlackjack() {
         return dealer.isBlackjack() || player.isBlackjack();
@@ -99,28 +122,15 @@ public class Game {
         return player.isBankruptcy();
     }
 
-
-
-
-    public GameDto _toGameDto() {
-        return new GameDto(dealer._toUserDto(), player._toUserDto(), totalBet);
-    }
-
-
-
-    public boolean isGameProcess() {
-        return gameProgress;
-    }
-
-    public void stopGame() {
-        this.gameProgress = false;
-    }
-
     public UserDto getPlayerDto() {
         return player._toUserDto();
     }
 
     public UserDto getDealerDto() {
         return dealer._toUserDto();
+    }
+
+    public GameDto _toGameDto() {
+        return new GameDto(dealer._toUserDto(), player._toUserDto(), totalBet);
     }
 }

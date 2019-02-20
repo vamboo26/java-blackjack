@@ -49,7 +49,6 @@ public class BlackjackConsole {
         if (game.isBlackjack()) {
             OutputView.printAllCardsOnTable(game._toGameDto());
             OutputView.printEndByBlackjack(game.end(game.getBlackjackPrize()));
-            game.stopGame();
         }
     }
 
@@ -101,7 +100,6 @@ public class BlackjackConsole {
 
             OutputView.printAllCardsOnTable(game._toGameDto());
             OutputView.printEnd(game.end(game.getNormalPrize()));
-            game.stopGame();
         }
     }
 }

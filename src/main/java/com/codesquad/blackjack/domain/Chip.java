@@ -18,16 +18,16 @@ public class Chip {
         return new Chip(amount + target.amount);
     }
 
-    public Chip substract(int bettingChip) {
+    public Chip subtract(int bettingChip) {
         return new Chip(amount - bettingChip);
     }
 
-    public Chip half() {
-        return new Chip(amount / TWO);
+    public Chip blackjack() {
+        return new Chip((int)(amount + (amount * ONE_POINT_FIVE)));
     }
 
-    public Chip blackjack() {
-        return new Chip((int)(amount * ONE_POINT_FIVE));
+    public Chip twice() {
+        return new Chip(amount * TWO);
     }
 
     public boolean isOver(int bettingChip) {

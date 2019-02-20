@@ -39,10 +39,6 @@ public class Cards {
         return false;
     }
 
-    public CardsDto _toCardsDto() {
-        return new CardsDto(cards, calculateTotal());
-    }
-
     public boolean isTie(Cards target) {
         return this.calculateTotal() == target.calculateTotal();
     }
@@ -57,6 +53,10 @@ public class Cards {
 
     public boolean isBigger(Cards target) {
         return calculateTotal() > target.calculateTotal();
+    }
+
+    public CardsDto _toCardsDto() {
+        return new CardsDto(cards, calculateTotal());
     }
 
     @Override

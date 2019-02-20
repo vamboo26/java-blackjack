@@ -3,7 +3,6 @@ package com.codesquad.blackjack.domain.user;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
-import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.UserDto;
 
@@ -55,7 +54,7 @@ public class User {
     }
 
     public void betChip(int bettingChip) {
-        this.chip = chip.substract(bettingChip);
+        this.chip = chip.subtract(bettingChip);
     }
 
     public boolean isBankruptcy() {

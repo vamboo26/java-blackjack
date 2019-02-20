@@ -14,11 +14,6 @@ public class ChipTest {
     }
 
     @Test
-    public void halfTest() {
-        assertThat(CHIP_1000.half()).isEqualTo(Chip.of(500));
-    }
-
-    @Test
     public void sumTest() {
         assertThat(CHIP_1000.sum(Chip.of(500))).isEqualTo(Chip.of(1500));
     }
