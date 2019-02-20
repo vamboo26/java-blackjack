@@ -3,7 +3,6 @@ package com.codesquad.blackjack.domain;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
-import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.UserDto;
 
@@ -25,7 +24,7 @@ public class Game {
 
     public void init(Deck deck, int bettingChip) {
         this.totalBet = new Chip(bettingChip);
-        player.betChip(bettingChip);
+        this.player.betChip(bettingChip);
         drawInitCards(deck);
     }
 
@@ -37,24 +36,18 @@ public class Game {
     }
 
     public void initializeGame() {
-        player = player.initialize();
-        dealer = dealer.initialize();
-        gameProgress = true;
+        this.player = player.initialize();
+        this.dealer = dealer.initialize();
+        this.gameProgress = true;
     }
 
     public boolean isGameProcess() {
-        return gameProgress;
+        return this.gameProgress;
     }
 
     public void stopGame() {
         this.gameProgress = false;
     }
-
-
-
-
-
-
 
     public Object end(Chip prize) {
         stopGame();
@@ -64,14 +57,6 @@ public class Game {
         }
 
         return dealer.isTie(player) ? endByTie() : dealer._toUserDto();
-    }
-
-    public Chip getBlackjackPrize() {
-        return totalBet.blackjack();
-    }
-
-    public Chip getNormalPrize() {
-        return totalBet.twice();
     }
 
     private Object endByTie() {
@@ -84,28 +69,18 @@ public class Game {
         return player._toUserDto();
     }
 
-
-
-
-
-
-
-    public boolean hasPlayerEnoughChip(int bettingChip) {
-        return player.checkChip(bettingChip);
+    public Chip getBlackjackPrize() {
+        return totalBet.blackjack();
     }
 
-
-
-
-
-
+    public Chip getNormalPrize() {
+        return totalBet.twice();
+    }
 
     //return을 gameDto로해서 바로 뷰단으로 전달할수있도록 생각해보자
-
     public void hit(Card card) {
         player.receiveCard(card);
     }
-
     public void dealerTurn(Card card) {
         dealer.dealerTurn(card);
     }
@@ -116,6 +91,10 @@ public class Game {
 
     public boolean isBurst() {
         return dealer.isBurst() || player.isBurst();
+    }
+
+    public boolean hasPlayerEnoughChip(int bettingChip) {
+        return player.checkChip(bettingChip);
     }
 
     public boolean playerHasNoMoney() {

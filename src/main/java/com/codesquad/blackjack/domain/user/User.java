@@ -6,8 +6,6 @@ import com.codesquad.blackjack.domain.card.Cards;
 import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.UserDto;
 
-import java.util.Objects;
-
 public class User {
     private static final int DEFAULT_CHIP_AMOUNT = 500;
 
@@ -28,41 +26,31 @@ public class User {
         return new User(name, chip);
     }
 
-    public Card receiveCard(Card card) {
-        cards.add(card);
-        return card;
+    public void receiveCard(Card card) {
+        this.cards.add(card);
     }
 
-    public void winPrize(Chip prize) {
-        this.chip = chip.sum(prize);
-    }
-
-    public int getTotal() {
-        return cards.calculateTotal();
-    }
-
-    public CardsDto getCardsDto() {
-        return cards._toCardsDto();
-    }
-
-    public UserDto _toUserDto() {
-        return new UserDto(name, cards._toCardsDto(), chip);
-    }
-
-    public boolean checkChip(int bettingChip) {
-        return chip.isOver(bettingChip);
+    public void dealerTurn(Card card) {
+        while(this.cards.isDealerHit()) {
+            receiveCard(card);
+        }
     }
 
     public void betChip(int bettingChip) {
         this.chip = chip.subtract(bettingChip);
     }
 
-    public boolean isBankruptcy() {
-        return chip.isZero();
+    public void winPrize(Chip prize) {
+        this.chip = chip.sum(prize);
     }
 
+    public boolean checkChip(int bettingChip) {
+        return this.chip.isOver(bettingChip);
+    }
 
-
+    public boolean isBankruptcy() {
+        return this.chip.isZero();
+    }
 
     public boolean isWinner(User target) {
         return this.cards.isBigger(target.cards);
@@ -80,37 +68,11 @@ public class User {
         return this.cards.isBlackjack();
     }
 
-
-
-
-
-    public void dealerTurn(Card card) {
-        while(getTotal() < 17) {
-            receiveCard(card);
-        }
+    public CardsDto getCardsDto() {
+        return this.cards._toCardsDto();
     }
 
-
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(cards, user.cards) &&
-                Objects.equals(chip, user.chip);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards, chip);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                '}';
+    public UserDto _toUserDto() {
+        return new UserDto(name, cards._toCardsDto(), chip);
     }
 }

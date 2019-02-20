@@ -2,14 +2,16 @@ package com.codesquad.blackjack.domain.card;
 
 import com.codesquad.blackjack.dto.CardsDto;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import static com.codesquad.blackjack.domain.card.Card.TEN;
 
 public class Cards {
+    public static final int DEALER_HIT_NUMBER = 17;
     public static final int BLACKJACK_NUMBER = 21;
 
-    private List<Card> cards = new LinkedList<>();
+    private List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         cards.add(card);
@@ -24,7 +26,7 @@ public class Cards {
         }
 
         if(hasAce()) {
-            return (sum + 10 > BLACKJACK_NUMBER) ? sum : sum + 10;
+            return (sum + TEN > BLACKJACK_NUMBER) ? sum : sum + TEN;
         }
 
         return sum;
@@ -39,16 +41,20 @@ public class Cards {
         return false;
     }
 
-    public boolean isTie(Cards target) {
-        return this.calculateTotal() == target.calculateTotal();
+    public boolean isDealerHit() {
+        return this.calculateTotal() < DEALER_HIT_NUMBER;
+    }
+
+    public boolean isBlackjack() {
+        return calculateTotal() == BLACKJACK_NUMBER;
     }
 
     public boolean isBurst() {
         return calculateTotal() > BLACKJACK_NUMBER;
     }
 
-    public boolean isBlackjack() {
-        return calculateTotal() == BLACKJACK_NUMBER;
+    public boolean isTie(Cards target) {
+        return this.calculateTotal() == target.calculateTotal();
     }
 
     public boolean isBigger(Cards target) {
@@ -57,18 +63,5 @@ public class Cards {
 
     public CardsDto _toCardsDto() {
         return new CardsDto(cards, calculateTotal());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cards cards1 = (Cards) o;
-        return Objects.equals(cards, cards1.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cards);
     }
 }

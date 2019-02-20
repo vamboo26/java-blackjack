@@ -3,10 +3,9 @@ package com.codesquad.blackjack.domain;
 import java.util.Objects;
 
 public class Chip {
-
     public static final int ZERO = 0;
-    public static final int TWO = 2;
-    public static final double ONE_POINT_FIVE = 1.5;
+    private static final int TWO = 2;
+    private static final double ONE_POINT_FIVE = 1.5;
 
     private final int amount;
 
