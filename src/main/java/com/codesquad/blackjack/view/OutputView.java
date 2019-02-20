@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.view;
 
 import com.codesquad.blackjack.dto.CardsDto;
+import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 
@@ -8,18 +9,18 @@ import static com.codesquad.blackjack.domain.Game.TIE;
 
 public class OutputView {
 
-    public static void printInitCards(CardsDto dealerCards, CardsDto playerCards) {
-        System.out.println("*** 딜러의 카드 : " + dealerCards.getFirst());
-        System.out.println("*** 플레이어의 카드 : " + playerCards);
-        System.out.println("*** 플레이어의 합산결과 : " + playerCards.getTotal());
+    public static void printInitCards(GameDto gameDto) {
+        System.out.println("*** 딜러의 카드 : " + gameDto.getDealer().getCards().getFirst());
+        System.out.println("*** 플레이어의 카드 : " + gameDto.getPlayer().getCards());
+        System.out.println("*** 플레이어의 합산결과 : " + gameDto.getPlayer().getCards().getTotal());
     }
 
-    public static void printAllCardsOnTable(CardsDto dealerCards, CardsDto playerCards) {
+    public static void printAllCardsOnTable(GameDto gameDto) {
         System.out.println("------------------------------------------------------------------------------------------------------");
-        System.out.println("*** 딜러의 카드 : " + dealerCards);
-        System.out.println("*** 딜러의 합산결과 : " + dealerCards.getTotal());
-        System.out.println("*** 플레이어의 카드 : " + playerCards);
-        System.out.println("*** 플레이어의 합산결과 : " + playerCards.getTotal());
+        System.out.println("*** 딜러의 카드 : " + gameDto.getDealer().getCards());
+        System.out.println("*** 딜러의 합산결과 : " + gameDto.getDealer().getCards().getTotal());
+        System.out.println("*** 플레이어의 카드 : " + gameDto.getPlayer().getCards());
+        System.out.println("*** 플레이어의 합산결과 : " + gameDto.getPlayer().getCards().getTotal());
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 

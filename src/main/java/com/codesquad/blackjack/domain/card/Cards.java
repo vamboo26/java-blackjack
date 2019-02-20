@@ -1,15 +1,14 @@
 package com.codesquad.blackjack.domain.card;
 
-import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.codesquad.blackjack.domain.Game.BLACKJACK_NUMBER;
-
 public class Cards {
+    public static final int BLACKJACK_NUMBER = 21;
+
     private List<Card> cards = new LinkedList<>();
 
     public void add(Card card) {

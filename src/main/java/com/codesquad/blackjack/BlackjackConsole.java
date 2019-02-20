@@ -44,10 +44,10 @@ public class BlackjackConsole {
 
     private static void initGame(Game game, int bettingChip, Deck deck) {
         game.init(deck, bettingChip);
-        OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
+        OutputView.printInitCards(game._toGameDto());
 
         if (game.isBlackjack()) {
-            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+            OutputView.printAllCardsOnTable(game._toGameDto());
             OutputView.printEndByBlackjack(game.end(game.getBlackjackPrize()));
             game.stopGame();
         }
@@ -59,7 +59,7 @@ public class BlackjackConsole {
 
         while (game.isGameProcess() && turn != STAND_SELECTION) {
             game.hit(deck.draw());
-            OutputView.printInitCards(game.getDealerCards(), game.getPlayerCards());
+            OutputView.printInitCards(game._toGameDto());
 
             if (game.isBurst()) {
                 OutputView.printEndByBurst(game.getDealerDto(), game.getPlayerDto());
@@ -94,12 +94,12 @@ public class BlackjackConsole {
 
             if (game.isBurst()) {
                 game.endByPlayerWin(game.getNormalPrize());
-                OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+                OutputView.printAllCardsOnTable(game._toGameDto());
                 OutputView.printEndByBurst(game.getPlayerDto(), game.getPlayerDto());
                 break;
             }
 
-            OutputView.printAllCardsOnTable(game.getDealerCards(), game.getPlayerCards());
+            OutputView.printAllCardsOnTable(game._toGameDto());
             OutputView.printEnd(game.end(game.getNormalPrize()));
             game.stopGame();
         }

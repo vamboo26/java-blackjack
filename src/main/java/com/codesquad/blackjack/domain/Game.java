@@ -4,10 +4,10 @@ import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.user.User;
 import com.codesquad.blackjack.dto.CardsDto;
+import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
-    public static final int BLACKJACK_NUMBER = 21;
     public static final String DEALER_NAME = "dealer";
     public static final String TIE = "무승부";
     public static final int HIT_SELECTION = 1;
@@ -102,8 +102,9 @@ public class Game {
 
 
 
-
-
+    public GameDto _toGameDto() {
+        return new GameDto(dealer._toUserDto(), player._toUserDto(), totalBet);
+    }
 
 
 
@@ -113,14 +114,6 @@ public class Game {
 
     public void stopGame() {
         this.gameProgress = false;
-    }
-
-    public CardsDto getPlayerCards() {
-        return player.getCardsDto();
-    }
-
-    public CardsDto getDealerCards() {
-        return dealer.getCardsDto();
     }
 
     public UserDto getPlayerDto() {

@@ -47,7 +47,7 @@ public class User {
     }
 
     public UserDto _toUserDto() {
-        return new UserDto(name, chip);
+        return new UserDto(name, cards._toCardsDto(), chip);
     }
 
     public boolean checkChip(int bettingChip) {
