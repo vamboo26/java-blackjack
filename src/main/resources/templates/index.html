@@ -1,77 +1,52 @@
-{{# partial "style"}}
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.css">
-    <link rel="stylesheet"
-          href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/tinymce.css">
-{{/ partial}}
+{{#partial "contents"}}
+    <div class="issues__posts mdl-grid">
+        <div class="issues-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title" style="height:80px;">
+                <h2 class="mdl-card__title-text mdl-color-text--grey-800">Issues</h2>
+            </div>
 
-{{# partial "main"}}
-    <main class="mdl-layout__content">
+            <a href="/issues/form"
 
-        <div class="issues__posts mdl-grid">
-            <div class="issues-card-wide mdl-card mdl-shadow--2dp">
-                <div class="mdl-card__title" style="height:80px;">
-                    <h2 class="mdl-card__title-text mdl-color-text--grey-800">Issues</h2>
-                </div>
-                {{# loginedUser}}
-                <a href="/issues/form"
-                   class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-modal">
-                    <i class="material-icons">add</i>
-                </a>
-                {{/ loginedUser}}
-                <div class="mdl-card__supporting-text">
-                    <ul class="issue-list mdl-list">
+               class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-modal">
+                <i class="material-icons">add</i>
+            </a>
+            <div class="mdl-card__supporting-text">
+                <ul class="issue-list mdl-list">
 
-						{{# issues}}
-                        <li class="mdl-list__item mdl-list__item--two-line">
-								<span class="mdl-list__item-primary-content">
-								    <a> 
-								         <img class="mdl-list__item-avatar" height="48" width="48"
+                    {{#issues}}
+
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                                <span class="mdl-list__item-primary-content">
+                                    <a>
+                                         <img class="mdl-list__item-avatar" height="48" width="48"
                                               src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"
                                               alt="javajigi">
-									</a> 
-									<a href="/issues/{{id}}">
-									    <strong>{{subject}}</strong>
-									</a>
-									<span class="mdl-list__item-sub-subject">
-									    #{{@index_1}} {{^ closed}}Open{{/ closed}}{{# closed}}Close{{/ closed}}
-									    <relative-time datetime="2017-01-14"
-                                                       subject="2017-01-14">{{formattedModifiedDate}}</relative-time>
-									    by <a href="" aria-label="View all issues opened by javajigi"
-                                              class="tooltipped tooltipped-s muted-link">{{writer.userId}}</a>
-									</span>
-								</span>
-                            <span class="mdl-list__item-secondary-content">
-									<span class="material-icons mdl-badge mdl-badge--overlap"
-                                          data-badge="1"></span>
-								</span>
-                        </li>
-						{{/ issues}}
+                                    </a>
 
-                    </ul>
-                </div>
+                                    <a href="/issues/{{id}}">
+                                        <strong>{{subject}}</strong>
+
+                                    </a>
+                                    <span class="mdl-list__item-sub-title">
+                                        #{{id}} {{open}}
+                                        <relative-time datetime="2017-01-14"
+                                                       title="2017-01-14">2017-01-14</relative-time>
+                                        by <a href="/users/{{writer.id}}" aria-label="View all issues opened by javajigi"
+                                              class="tooltipped tooltipped-s muted-link">{{writer.userId}}</a>
+                                    </span>
+                                </span>
+                        <span class="mdl-list__item-secondary-content">
+                                    <span class="material-icons mdl-badge mdl-badge--overlap"
+                                          data-badge="1">comment</span>
+                                </span>
+                    </li>
+
+                    {{/issues}}
+
+                </ul>
             </div>
         </div>
-        <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer--left-section">
-                <div class="mdl-logo mdl-color-text--grey-600">
-                    Proudly powered by <a href="https://github.com/Byeol">Byeol</a>
-                </div>
-            </div>
-        </footer>
-    </main>
-{{/ partial}}
-
-{{# partial "script"}}
-<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.3/dialog-polyfill.min.js"></script>
-<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
-{{/ partial}}
+    </div>
+{{/partial}}
 
 {{> base}}
