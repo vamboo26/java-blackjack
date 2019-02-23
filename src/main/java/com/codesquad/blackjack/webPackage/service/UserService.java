@@ -14,4 +14,10 @@ public class UserService {
     public User add(User user) {
         return userRepository.save(user);
     }
+
+    public User login(String userId, String password) throws Exception{
+        return userRepository.findByUserId(userId)
+                .filter(user -> user.matchPassword(password))
+                .orElseThrow(Exception::new);
+    }
 }
