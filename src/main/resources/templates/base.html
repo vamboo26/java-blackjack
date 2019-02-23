@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Issue Tracking System</title>
+
+{{# block "style"}}
+{{/ block}}
+</head>
+<comment>
+<div class="issues issues—wrap mdl-layout mdl-js-layout is-upgraded">
+
+{{# block "header"}}
+	<header class="mdl-layout__header mdl-layout__header--waterfall">
+		<div class="mdl-layout__header-row">
+			<!-- Title -->
+			<span class="mdl-layout-subject">Issue Tracking System</span>
+			<div class="mdl-layout-spacer"></div>
+			<!-- Tabs -->
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="/">Issues</a>
+				<a class="mdl-navigation__link" href="/milestones">Milestones</a>
+				<a class="mdl-navigation__link" href="/labels">Labels</a>
+				{{^ loginedUser}}
+				<a class="mdl-navigation__link" href="/users/login">Login</a>
+				<a class="mdl-navigation__link" href="/users/form">Join</a>
+				{{/ loginedUser}}
+				{{# loginedUser}}
+				<a class="mdl-navigation__link" href="/users/logout">Logout</a>
+				<a class="mdl-navigation__link" href="/users/{{id}}/form">My Info</a>
+				{{/ loginedUser}}
+			</nav>
+		</div>
+	</header>
+{{/ block}}
+
+{{# block "main"}}
+{{/ block}}
+
+	<div class="mdl-layout__obfuscator"></div>
+</div>
+
+{{#block "script"}}
+{{/ block}}
+
+</comment>
+</html>

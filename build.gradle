@@ -25,6 +25,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.hibernate:hibernate-java8'
+	implementation 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.1'
 	runtime 'com.h2database:h2'
 	runtime 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
