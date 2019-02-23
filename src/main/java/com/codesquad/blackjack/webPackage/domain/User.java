@@ -63,4 +63,8 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
+    }
 }
