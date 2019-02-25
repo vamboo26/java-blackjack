@@ -2,7 +2,7 @@ package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.dto.CardsDto;
-import com.codesquad.blackjack.dto.UserDto;
+import com.codesquad.blackjack.dto.PlayerDto;
 
 public interface Player {
 
@@ -16,5 +16,5 @@ public interface Player {
 
     CardsDto getCardsDto();
 
-    UserDto _toUserDto();
+    PlayerDto _toUserDto();
 }

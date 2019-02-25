@@ -2,17 +2,17 @@ package com.codesquad.blackjack.dto;
 
 import com.codesquad.blackjack.domain.Chip;
 
-public class UserDto {
+public class PlayerDto {
     private String name;
     private CardsDto cards;
     private Chip chip;
 
-    public UserDto(String name, CardsDto cards) {
+    public PlayerDto(String name, CardsDto cards) {
         this.name = name;
         this.cards = cards;
     }
 
-    public UserDto(String name, CardsDto cards, Chip chip) {
+    public PlayerDto(String name, CardsDto cards, Chip chip) {
         this.name = name;
         this.cards = cards;
         this.chip = chip;
@@ -32,7 +32,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "PlayerDto{" +
                 "name='" + name + '\'' +
                 ", chip=" + chip +
                 '}';

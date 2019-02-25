@@ -19,6 +19,9 @@ public abstract class AbstractPlayer implements Player {
     @Transient
     private Cards cards = new Cards();
 
+    public AbstractPlayer() {
+    }
+
     public AbstractPlayer(String name) {
         this.name = name;
     }

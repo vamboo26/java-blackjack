@@ -1,8 +1,7 @@
 package com.codesquad.blackjack.view;
 
-import com.codesquad.blackjack.dto.CardsDto;
 import com.codesquad.blackjack.dto.GameDto;
-import com.codesquad.blackjack.dto.UserDto;
+import com.codesquad.blackjack.dto.PlayerDto;
 
 
 import static com.codesquad.blackjack.domain.Game.TIE;
@@ -42,7 +41,7 @@ public class OutputView {
         System.out.println("*** 합산결과 " + end + "의 승리입니다.");
     }
 
-    public static void printEndByBurst(UserDto burstWinner, UserDto playerDto) {
+    public static void printEndByBurst(PlayerDto burstWinner, PlayerDto playerDto) {
         System.out.println("*** 버스트로 " + burstWinner.getName() + "의 승리입니다.");
         System.out.println("*** 현재 플레이어의 보유 칩 : " + playerDto);
     }
