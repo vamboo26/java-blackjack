@@ -1,12 +1,16 @@
 package com.codesquad.blackjack.dto;
 
 import com.codesquad.blackjack.domain.Chip;
-import com.codesquad.blackjack.domain.card.Cards;
 
 public class UserDto {
     private String name;
     private CardsDto cards;
     private Chip chip;
+
+    public UserDto(String name, CardsDto cards) {
+        this.name = name;
+        this.cards = cards;
+    }
 
     public UserDto(String name, CardsDto cards, Chip chip) {
         this.name = name;

@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/join")
     public String joinForm() {
-        return "user/form";
+        return "player/form";
     }
 
     @PostMapping("")
@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "user/login";
+        return "player/login";
     }
 
     @PostMapping("/login")
@@ -46,7 +46,7 @@ public class UserController {
             log.info("userId : " + userId + ", password : " + password);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀립니다. 다시 로그인 해주세요.");
-            return "user/login";
+            return "player/login";
         }
         return "redirect:/";
     }
