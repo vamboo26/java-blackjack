@@ -1,7 +1,7 @@
 package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.card.Card;
-import com.codesquad.blackjack.dto.UserDto;
+import com.codesquad.blackjack.dto.PlayerDto;
 
 public class Dealer extends AbstractPlayer {
     public static final String DEALER_NAME = "DEALER";
@@ -16,8 +16,8 @@ public class Dealer extends AbstractPlayer {
     }
 
     @Override
-    public UserDto _toUserDto() {
-        return new UserDto(DEALER_NAME, getCardsDto());
+    public PlayerDto _toUserDto() {
+        return new PlayerDto(DEALER_NAME, getCardsDto());
     }
 
     public void dealerTurn(Card card) {
@@ -26,11 +26,11 @@ public class Dealer extends AbstractPlayer {
         }
     }
 
-    public boolean isWinner(Gamer target) {
+    public boolean isWinner(User target) {
         return getCards().isBigger(target.getCards());
     }
 
-    public boolean isTie(Gamer target) {
+    public boolean isTie(User target) {
         return getCards().isTie(target.getCards());
     }
 }

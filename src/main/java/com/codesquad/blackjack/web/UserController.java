@@ -1,8 +1,8 @@
-package com.codesquad.blackjack.webPackage.web;
+package com.codesquad.blackjack.web;
 
-import com.codesquad.blackjack.webPackage.domain.User;
-import com.codesquad.blackjack.webPackage.security.HttpSessionUtils;
-import com.codesquad.blackjack.webPackage.service.UserService;
+import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.security.HttpSessionUtils;
+import com.codesquad.blackjack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/join")
     public String joinForm() {
-        return "player/form";
+        return "user/form";
     }
 
     @PostMapping("")
@@ -35,7 +35,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "player/login";
+        return "user/login";
     }
 
     @PostMapping("/login")
@@ -43,10 +43,11 @@ public class UserController {
         try {
             User user = userService.login(userId, password);
             session.setAttribute(HttpSessionUtils.USER_SESSION_KEY, user);
-            log.info("userId : " + userId + ", password : " + password);
+            log.info("*** userId : " + userId + ", password : " + password);
         } catch (Exception e) {
+            log.debug("*** error : {}, {}", e.getMessage(), e.getStackTrace());
             model.addAttribute("errorMessage", "아이디 또는 비밀번호가 틀립니다. 다시 로그인 해주세요.");
-            return "player/login";
+            return "user/login";
         }
         return "redirect:/";
     }

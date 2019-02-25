@@ -1,13 +1,21 @@
 package com.codesquad.blackjack.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Embeddable
 public class Chip {
     public static final int ZERO = 0;
     private static final int TWO = 2;
     private static final double ONE_POINT_FIVE = 1.5;
 
+    @Column
     private final int amount;
+
+    //TODO : 질문하기
+    public Chip() {
+        this.amount = 0;
+    }
 
     public Chip(int amount) {
         this.amount = amount;
@@ -35,6 +43,10 @@ public class Chip {
 
     public boolean isZero() {
         return this.amount <= ZERO;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override

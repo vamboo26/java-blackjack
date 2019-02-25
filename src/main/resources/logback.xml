@@ -7,7 +7,7 @@
         </layout>
     </appender>
 
-    <logger name="codesquad" level="DEBUG"/>
+    <logger name="com.codesquad.blackjack" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

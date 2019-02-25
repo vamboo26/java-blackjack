@@ -1,7 +1,7 @@
-package com.codesquad.blackjack.webPackage.service;
+package com.codesquad.blackjack.service;
 
-import com.codesquad.blackjack.webPackage.domain.User;
-import com.codesquad.blackjack.webPackage.domain.UserRepository;
+import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.domain.player.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,7 +15,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User login(String userId, String password) throws Exception{
+    public User login(String userId, String password) throws Exception {
         return userRepository.findByUserId(userId)
                 .filter(user -> user.matchPassword(password))
                 .orElseThrow(Exception::new);

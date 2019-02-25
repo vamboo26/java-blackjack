@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.webPackage.domain;
+package com.codesquad.blackjack.domain.player;
 
 import org.springframework.data.repository.CrudRepository;
 

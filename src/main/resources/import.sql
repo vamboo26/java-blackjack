@@ -1,2 +1,3 @@
-INSERT INTO user (id, user_id, password, name) values (1, 'finn', '1234', '동선');
-INSERT INTO user (id, user_id, password, name) values (2, 'zingo', '1234', '진산');
+
+INSERT INTO User (id, user_id, password, name, amount) values (1, 'finn', '123456', '동선', 500);
+INSERT INTO User (id, user_id, password, name, amount) values (2, 'zingo', '123456', '진산', 1000);
