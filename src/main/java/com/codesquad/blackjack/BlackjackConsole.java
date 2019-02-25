@@ -16,9 +16,7 @@ public class BlackjackConsole {
 
         while (nextGame) {
             int bettingChip = InputView.inputBettingChip();
-
             bettingChip = verifyPlayerChip(game, bettingChip);
-
             Deck deck = Deck.auto();
 
             initGame(game, bettingChip, deck);
@@ -28,7 +26,7 @@ public class BlackjackConsole {
             game.initializeGame();
             nextGame = InputView.isContinue();
 
-            if(game.playerHasNoMoney()) {
+            if(game.hasGamerNoMoney()) {
                 OutputView.printNoChip();
                 return;
             }
@@ -36,9 +34,10 @@ public class BlackjackConsole {
     }
 
     private static int verifyPlayerChip(Game game, int bettingChip) {
-        while (!game.hasPlayerEnoughChip(bettingChip)) {
+        while (!game.hasGamerEnoughChip(bettingChip)) {
             bettingChip = InputView.inputBettingChip();
         }
+
         return bettingChip;
     }
 
@@ -78,12 +77,9 @@ public class BlackjackConsole {
 
     private static int selectTurn(Game game, int bettingChip, int turn) {
         if (game.isGameProcess()) {
-            if (game.hasPlayerEnoughChip(bettingChip)) {
-                turn = InputView.isDouble();
-            } else {
-                turn = InputView.isHit();
-            }
+            turn = game.hasGamerEnoughChip(bettingChip) ? InputView.isDouble() : InputView.isHit();
         }
+
         return turn;
     }
 

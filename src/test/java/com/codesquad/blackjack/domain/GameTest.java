@@ -17,7 +17,7 @@ public class GameTest {
     @Test
     public void initTest() {
         game.init(Deck.auto(), 100);
-        assertThat(Chip.of(200)).isEqualTo(game.getNormalPrize());
+        assertThat(new Chip(200)).isEqualTo(game.getNormalPrize());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class GameTest {
         Game newGame = new Game("player");
         newGame.init(deck, 100);
 
-        assertThat(newGame.end(Chip.of(200))).isEqualTo("player");
+        assertThat(newGame.end(new Chip(200))).isEqualTo("player");
     }
 
     @Test
@@ -50,7 +50,7 @@ public class GameTest {
         Game newGame = new Game("player");
         newGame.init(deck, 100);
 
-        assertThat(newGame.end(Chip.of(200))).isEqualTo("dealer");
+        assertThat(newGame.end(new Chip(200))).isEqualTo("dealer");
     }
 
     @Test
@@ -66,6 +66,6 @@ public class GameTest {
         Game newGame = new Game("player");
         newGame.init(deck, 100);
 
-        assertThat(newGame.end(Chip.of(200))).isEqualTo("무승부");
+        assertThat(newGame.end(new Chip(200))).isEqualTo("무승부");
     }
 }
