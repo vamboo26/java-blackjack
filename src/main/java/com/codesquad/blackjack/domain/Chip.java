@@ -1,22 +1,21 @@
 package com.codesquad.blackjack.domain;
 
-import com.codesquad.blackjack.domain.player.Gamer;
-
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Embeddable
 public class Chip {
     public static final int ZERO = 0;
     private static final int TWO = 2;
     private static final double ONE_POINT_FIVE = 1.5;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @Column
     private final int amount;
+
+    //TODO : 질문하기
+    public Chip() {
+        this.amount = 0;
+    }
 
     public Chip(int amount) {
         this.amount = amount;
@@ -46,6 +45,10 @@ public class Chip {
         return this.amount <= ZERO;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,13 +67,5 @@ public class Chip {
         return "Chip{" +
                 "amount=" + amount +
                 '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 }

@@ -1,13 +1,13 @@
 package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.Chip;
-import com.codesquad.blackjack.dto.UserDto;
+import com.codesquad.blackjack.dto.PlayerDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Gamer extends AbstractPlayer {
+public class User extends AbstractPlayer {
     private static final int DEFAULT_CHIP_AMOUNT = 500;
 
     @Id
@@ -26,27 +26,29 @@ public class Gamer extends AbstractPlayer {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @OneToOne
-//    @JoinColumn(foreignKey = @ForeignKey(name = "fk_gamer_chip"))
+    @Embedded
     private Chip chip = new Chip(DEFAULT_CHIP_AMOUNT);
 
-    public Gamer(String name) {
+    public User() {
+    }
+
+    public User(String name) {
         super(name);
     }
 
-    public Gamer(String name, Chip chip) {
+    public User(String name, Chip chip) {
         super(name);
         this.chip = chip;
     }
 
     @Override
-    public Gamer initialize() {
-        return new Gamer(getName(), chip);
+    public User initialize() {
+        return new User(getName(), chip);
     }
 
     @Override
-    public UserDto _toUserDto() {
-        return new UserDto(getName(), getCardsDto(), this.chip);
+    public PlayerDto _toUserDto() {
+        return new PlayerDto(getName(), getCardsDto(), this.chip);
     }
 
     public void betChip(int bettingChip) {
@@ -63,6 +65,10 @@ public class Gamer extends AbstractPlayer {
 
     public boolean isBankruptcy() {
         return this.chip.isZero();
+    }
+
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
     }
 
     public long getId() {
