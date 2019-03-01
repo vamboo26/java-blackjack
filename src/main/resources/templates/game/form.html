@@ -1,0 +1,31 @@
+{{#partial "contents"}}
+<div class="issues-back">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon back-btn" title="go back"
+       role="button">
+        <i class="material-icons" role="presentation">arrow_back</i>
+    </a>
+</div>
+<div class="issues__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        <form action="/games" enctype="multipart/form-data" method="post">
+            <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+                <h4>Game setting</h4>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="margin:0 auto">
+                    <input class="mdl-textfield__input" type="text" id="numberOfUser" name="numberOfUser" required>
+                    <label class="mdl-textfield__label" for="numberOfUser">참여 인원</label>
+                </div>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit"
+                        style="margin:10px auto; width:200px;">Submit
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{{/partial}}
+
+{{> base}}
