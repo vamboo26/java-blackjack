@@ -5,9 +5,11 @@ import com.codesquad.blackjack.dto.PlayerDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 public class User extends AbstractPlayer {
+    public static final GuestUser GUEST_USER = new GuestUser();
     private static final int DEFAULT_CHIP_AMOUNT = 500;
 
     @Id
@@ -110,5 +112,49 @@ public class User extends AbstractPlayer {
 
     public void setChip(Chip chip) {
         this.chip = chip;
+    }
+
+    public void update(User loginUser, User target) {
+        if (!matchUserId(loginUser.userId)) {
+            throw new RuntimeException();
+        }
+
+        if (!matchPassword(target.password)) {
+            throw new RuntimeException();
+        }
+
+        this.name = target.name;
+    }
+
+    private boolean matchUserId(String userId) {
+        return this.userId.equals(userId);
+    }
+
+    public boolean isGuestUser() {
+        return false;
+    }
+
+    private static class GuestUser extends User {
+        @Override
+        public boolean isGuestUser() {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(userId, user.userId) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(chip, user.chip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, password, name, chip);
     }
 }

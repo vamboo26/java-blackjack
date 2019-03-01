@@ -1,0 +1,31 @@
+{{#partial "contents"}}
+<div class="issues-back">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon back-btn" title="go back"
+       role="button">
+        <i class="material-icons" role="presentation">arrow_back</i>
+    </a>
+</div>
+<div class="issues__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        <form action="/users/login" method="post">
+            <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+                <h4>Ranking</h4>
+            </div>
+            <div class="mdl-card__supporting-text">
+                <ul class="issue-list mdl-list">
+                    {{#users}}
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                    <span class="mdl-list__item-primary-content">
+                    <a href="/users/{{id}}"><strong>{{name}}</strong></a>
+                    </span>
+                    </li>
+                    {{/users}}
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{/partial}}
+
+{{> base }}

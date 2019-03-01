@@ -20,4 +20,24 @@ public class UserService {
                 .filter(user -> user.matchPassword(password))
                 .orElseThrow(Exception::new);
     }
+
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findById(long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User findById(User loginUser, long id) {
+        return userRepository.findById(id)
+                .filter(user -> user.equals(loginUser))
+                .orElseThrow(RuntimeException::new);
+    }
+
+    public User update(User loginUser, long id, User updatedUser) {
+        User original = findById(loginUser, id);
+        original.update(loginUser, updatedUser);
+        return userRepository.save(original);
+    }
 }

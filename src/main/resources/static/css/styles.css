@@ -1,5 +1,26 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+/*추가 CSS 항목들*/
+
+#title {
+  text-decoration:none;
+}
+
+.issues.mdl-layout .mdl-layout__header-row {
+  background-color: #232d33;
+}
+
+.mdl-color-text--grey-50 {
+     color: #212e34;
+}
+
+.mdl-button--fab {
+    margin : 0;
+    margin-left : 735px;
+}
+
+/*기존 CSS 항목들*/
+
 body .issues {
   font-family: 'Roboto', 'Helvetica', 'Noto Sans KR', sans-serif;
 }
@@ -32,15 +53,15 @@ body .issues {
   -webkit-align-items: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
-  min-height: 360px;
+  min-height: 600px;
 }
 
 .issues .mdl-card__title {
   padding: 24px;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1;
-  background-color: rgb(255,171,64);
+  flex-grow: 0;
+  background-color: #ccc;
 }
 
 .issues .mdl-card__title .material-icons {
