@@ -1,3 +1,14 @@
-
-INSERT INTO User (id, user_id, password, name, amount) values (1, 'finn', '123456', '동선', 500);
-INSERT INTO User (id, user_id, password, name, amount) values (2, 'zingo', '123456', '진산', 1000);
+INSERT INTO User (id, user_id, password, name, amount) values (1, 'finn', '123456', '동선', 10000);
+INSERT INTO User (id, user_id, password, name, amount) values (2, 'zingo', '123456', '진산', 9999);
+INSERT INTO User (id, user_id, password, name, amount) values (3, 'dom', '123456', '세훈', 9000);
+INSERT INTO User (id, user_id, password, name, amount) values (4, 'peter', '123456', '경훈', 8000);
+INSERT INTO User (id, user_id, password, name, amount) values (5, 'skill', '123456', '성렬', 7000);
+INSERT INTO User (id, user_id, password, name, amount) values (6, 'pobi', '123456', '재성', 6000);
+INSERT INTO User (id, user_id, password, name, amount) values (7, 'soop', '123456', '대숲', 5000);
+INSERT INTO User (id, user_id, password, name, amount) values (8, 'nnn', '123456', '은영', 4000);
+INSERT INTO User (id, user_id, password, name, amount) values (9, 'choising', '123456', '승민', 3000);
+INSERT INTO User (id, user_id, password, name, amount) values (10, 'forever', '123456', '태수', 2000);
+INSERT INTO User (id, user_id, password, name, amount) values (11, 'brad', '123456', '정현', 1000);
+INSERT INTO User (id, user_id, password, name, amount) values (12, 'lime', '123456', '건희', 500);
+INSERT INTO User (id, user_id, password, name, amount) values (12, 'red', '123456', '세은', 300);
+INSERT INTO User (id, user_id, password, name, amount) values (12, 'resian', '123456', '예지', 100);

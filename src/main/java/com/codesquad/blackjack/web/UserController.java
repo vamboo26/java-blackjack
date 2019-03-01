@@ -58,8 +58,9 @@ public class UserController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("users", userService.findAll());
+    public String list(@LoginUser User loginUser, Model model) {
+        model.addAttribute("userRank", userService.findRankById(loginUser));
+        model.addAttribute("users", userService.findTop10());
         return "/user/list";
     }
 

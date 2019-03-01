@@ -15,7 +15,7 @@ public class GameService {
     private GameRepository gameRepository;
 
     public Iterable<Game> findAll() {
-        log.debug("*** gameService.findAll(), 전체 게임을 반환해준다");
+        log.debug("*** gameService.findTop10(), 전체 게임을 반환해준다");
         return gameRepository.findAll();
     }
 

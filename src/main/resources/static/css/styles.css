@@ -6,6 +6,20 @@
   text-decoration:none;
 }
 
+hr {
+  margin : 0px;
+}
+
+#ranking {
+  display: flex;
+  margin-left: 20px;
+}
+
+#my_ranking {
+  display: flex;
+  margin-left: 20px;
+}
+
 .issues.mdl-layout .mdl-layout__header-row {
   background-color: #232d33;
 }
@@ -310,6 +324,7 @@ body .issues {
 
 .issue-list {
   width: 100%;
+  padding : 0px;
 }
 
 a {
