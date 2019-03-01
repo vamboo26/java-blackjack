@@ -29,12 +29,12 @@
     <header class="mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
             <!-- Title -->
-            <span class="mdl-layout-title">Blackjack Game</span>
+            <span class="mdl-layout-title"><a id="title" href="/">Blackjack Game</a></span>
             <div class="mdl-layout-spacer"></div>
             <!-- Tabs -->
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="/">Room</a>
-                <a class="mdl-navigation__link" href="/">Ranking</a>
+                <a class="mdl-navigation__link" href="/games">Room</a>
+                <a class="mdl-navigation__link" href="/users">Ranking</a>
                 {{^loginedUser}}
                 <a class="mdl-navigation__link" href="/users/join">Join</a>
                 <a class="mdl-navigation__link" href="/users/login">Login</a>
