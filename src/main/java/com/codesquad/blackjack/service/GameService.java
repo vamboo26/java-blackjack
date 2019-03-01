@@ -12,7 +12,7 @@ public class GameService {
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
     @Autowired
-    GameRepository gameRepository;
+    private GameRepository gameRepository;
 
     public Iterable<Game> findAll() {
         log.debug("*** gameService.findAll(), 전체 게임을 반환해준다");

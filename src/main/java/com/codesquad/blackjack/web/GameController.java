@@ -18,7 +18,7 @@ public class GameController {
     private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
     @Autowired
-    GameService gameService;
+    private GameService gameService;
 
     @GetMapping
     public String list(Model model) {
