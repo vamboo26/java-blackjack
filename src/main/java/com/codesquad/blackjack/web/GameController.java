@@ -22,13 +22,11 @@ public class GameController {
 
     @GetMapping
     public String list(Model model) {
-        log.debug("*** 게임 리스트를 조회");
-        model.addAttribute("games", gameService.findAll());
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping
-    public String creat(String numberOfUser) {
+    public String create(String numberOfUser) {
         log.debug("*** {}명 게임방 생성", numberOfUser);
         Game game = gameService.create(Integer.parseInt(numberOfUser));
         return "redirect:/games/" + game.getId();

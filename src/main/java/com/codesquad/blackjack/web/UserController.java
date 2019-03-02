@@ -2,15 +2,13 @@ package com.codesquad.blackjack.web;
 
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.security.HttpSessionUtils;
+import com.codesquad.blackjack.security.LoginUser;
 import com.codesquad.blackjack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -60,8 +58,9 @@ public class UserController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("users", userService.findAll());
+    public String list(@LoginUser User loginUser, Model model) {
+        model.addAttribute("userRank", userService.findRankById(loginUser));
+        model.addAttribute("users", userService.findTop10());
         return "/user/list";
     }
 
@@ -69,5 +68,18 @@ public class UserController {
     public String profile(@PathVariable long id, Model model) {
         model.addAttribute("user", userService.findById(id));
         return "/user/profile";
+    }
+
+    @GetMapping("/{id}/form")
+    public String updateForm(@LoginUser User loginUser, @PathVariable long id, Model model) {
+        log.debug("LoginUser : {}", loginUser);
+        model.addAttribute("user", userService.findById(loginUser, id));
+        return "/user/updateForm";
+    }
+
+    @PutMapping("/{id}")
+    public String update(@LoginUser User loginUser, @PathVariable long id, User target) {
+        userService.update(loginUser, id, target);
+        return "redirect:/users";
     }
 }

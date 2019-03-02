@@ -6,6 +6,7 @@ import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.PlayerDto;
+import java.util.List;
 
 import java.util.List;
 
@@ -26,6 +27,11 @@ public class Game {
 
     public Game(String playerName) {
         this.user = new User(playerName);
+
+    }
+
+    public Game(int numberOfUser) {
+        this.limitUser = numberOfUser;
     }
 
     public Game(int numberOfUser) {
@@ -127,6 +133,7 @@ public class Game {
         return id;
     }
 
-    public void setId(long l) {
+    public void setId(long id) {
+        this.id = id;
     }
 }
