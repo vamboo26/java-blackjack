@@ -149,12 +149,11 @@ public class User extends AbstractPlayer {
         return id == user.id &&
                 Objects.equals(userId, user.userId) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(name, user.name) &&
                 Objects.equals(chip, user.chip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, password, name, chip);
+        return Objects.hash(id, userId, password, chip);
     }
 }

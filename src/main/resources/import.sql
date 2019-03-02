@@ -10,5 +10,6 @@ INSERT INTO User (id, user_id, password, name, amount) values (9, 'choising', '1
 INSERT INTO User (id, user_id, password, name, amount) values (10, 'forever', '123456', '태수', 2000);
 INSERT INTO User (id, user_id, password, name, amount) values (11, 'brad', '123456', '정현', 1000);
 INSERT INTO User (id, user_id, password, name, amount) values (12, 'lime', '123456', '건희', 500);
-INSERT INTO User (id, user_id, password, name, amount) values (12, 'red', '123456', '세은', 300);
-INSERT INTO User (id, user_id, password, name, amount) values (12, 'resian', '123456', '예지', 100);
+INSERT INTO User (id, user_id, password, name, amount) values (13, 'red', '123456', '세은', 300);
+INSERT INTO User (id, user_id, password, name, amount) values (14, 'resian', '123456', '예지', 100);
+INSERT INTO User (id, user_id, password, name, amount) values (15, 'doby', '123456', '기현', 10);
