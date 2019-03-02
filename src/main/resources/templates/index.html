@@ -16,31 +16,16 @@
                 <ul class="issue-list mdl-list">
                     {{#games}}
                     <li class="mdl-list__item mdl-list__item--two-line">
-                                <span class="mdl-list__item-primary-content">
-                                    <a>
-                                         <img class="mdl-list__item-avatar" height="48" width="48"
-                                              src="https://avatars2.githubusercontent.com/u/520500?v=3&s=140"
-                                              alt="javajigi">
-                                    </a>
-
-                                    <a href="/issues/{{id}}">
-                                        <strong>{{id}}</strong>
-
-                                    </a>
-                                    <span class="mdl-list__item-sub-title">
-                                        #{{id}} {{open}}
-                                        <relative-time datetime="2017-01-14"
-                                                       title="2017-01-14">2017-01-14</relative-time>
-                                        by <a href="/users/{{writer.id}}" aria-label="View all issues opened by javajigi"
-                                              class="tooltipped tooltipped-s muted-link">{{writer.userId}}</a>
-                                    </span>
-                                </span>
-                        <span class="mdl-list__item-secondary-content">
-                                    <span class="material-icons mdl-badge mdl-badge--overlap"
-                                          data-badge="1">comment</span>
-                                </span>
+                        <span class="mdl-list__item-primary-content">
+                            {{id}}번방
+                            <a href="/games/{{id}}">
+                                <strong>[입장하기]</strong>
+                            </a>
+                            <span class="mdl-list__item-sub-title">
+                                현재 참여인원은 1명입니다.
+                            </span>
+                        </span>
                     </li>
-
                     {{/games}}
                 </ul>
             </div>
