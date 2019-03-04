@@ -5,41 +5,41 @@
         <i class="material-icons" role="presentation">arrow_back</i>
     </a>
 </div>
-<div class="issues__posts mdl-grid">
-    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-        <div class="issues__posts mdl-grid">
+
+<div class="issues__posts mdl-grid" style="display: block;">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="display: block;">
+        <div class="issues__posts mdl-grid" style="display: block;">
             <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="display:inline-block";>
-            {{#game}}
-            <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
-            <h4>{{id}}번방</h4>
-            </div>
+                {{#game}}
+                <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+                    <h4>{{id}}번방</h4>
+                </div>
 
-            <div style="display:inline-block; width: 70%; height:100%; margin:0px; background-color:#fff; border-right-style:solid 1px;">
-                <div style="height:70%;">
-                    <div id="game_box"></div>
-                </div>
-                <div class="well">
-                    <input type="text" id="log" value="" class="form-control">
-                    <button id="logSend" class="btn btn-primary">히트스탠드해</button>
-                </div>
-            </div>
+                <div class="content" data-game-id="{{id}}" data-user-name="{{eachUser.name}}" style="display:block; height:520px">
+                    <div style = "display:inline-block; width:69%;">
+                        <div id="game_box" style="display:block; height:455px; overflow:scroll; padding:10px"></div>
+                        <div class="well" style="height:55px; padding-top: 8px;">
+                            <button id="a" class="btn btn-primary">히트</button>
+                            <button id="b" class="btn btn-primary">스탠드</button>
+                            <button id="c" class="btn btn-primary">더블</button>
+                        </div>
+                    </div>
 
-            <div class="content" data-game-id="{{id}}" data-user-name="{{eachUser.name}}" style="display:inline-block; width: 29%; height:100%; margin:0px; vertical-align:text-bottom">
-                <div style="height:70%;">
-                    <div id="chat_box"></div>
+                    <div style = "display:inline-block; width:30%;">
+                        <div id="chat_box" style="display:block; height:455px; overflow:scroll; padding:10px"></div>
+                        <div class="well" style="height:55px; padding-top: 8px;">
+                            <input type="text" id="msg" value="" class="form-control" style="display:inline-block; width:70%">
+                            <button id="btnSend" class="btn btn-primary" style="display:inline-block; width:27%;">Send</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="well">
-                    <input type="text" id="msg" value="" class="form-control">
-                    <button id="btnSend" class="btn btn-primary">Send Message</button>
-                </div>
-            </div>
-
-            {{/game}}
+                {{/game}}
             </div>
         </div>
 
     </div>
 </div>
+
 {{/partial}}
 
 {{#partial "script"}}
@@ -47,6 +47,3 @@
 {{/partial}}
 
 {{> base}}
-
-
-

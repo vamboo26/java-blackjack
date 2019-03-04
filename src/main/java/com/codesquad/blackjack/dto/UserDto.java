@@ -3,6 +3,7 @@ package com.codesquad.blackjack.dto;
 import com.codesquad.blackjack.domain.Chip;
 
 public class UserDto {
+    private String type;
     private String name;
     private CardsDto cards;
     private Chip chip;
@@ -10,6 +11,13 @@ public class UserDto {
     public UserDto(String name, CardsDto cards) {
         this.name = name;
         this.cards = cards;
+    }
+
+    public UserDto(String type, String name, CardsDto cards, Chip chip) {
+        this.type = type;
+        this.name = name;
+        this.cards = cards;
+        this.chip = chip;
     }
 
     public UserDto(String name, CardsDto cards, Chip chip) {
@@ -40,6 +48,14 @@ public class UserDto {
 
     public void setChip(Chip chip) {
         this.chip = chip;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

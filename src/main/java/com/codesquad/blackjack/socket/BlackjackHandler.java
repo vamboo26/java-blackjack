@@ -36,47 +36,28 @@ public class BlackjackHandler extends TextWebSocketHandler {
         log.debug("afterConnectionEstablished : " + session);
 
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
-
-        GameSession gameSession = findByGameId(gameId);
-
         log.debug("겜아디 : {}", gameId);
 
+        GameSession gameSession = findByGameId(gameId);
         log.debug("겜세션 : {}", gameSession);
 
         User user = WebSocketSessionUtils.userFromSession(session);
         log.debug("접속유저 : {}", user);
 
-
         sessionController.readyToGame(session, gameSession);
         sessionController.startGame(gameSession);
         log.debug("*** 입장한 유저 던져준더 : {}", user._toUserDto().toString());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-
         for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto())));
-//            ws.sendMessage(new TextMessage(senderId + "님이 접속하셨습니다"));
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toChatDto("JOIN"))));
+
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto("INIT_GAME_INFO"))));
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto("INIT_GAME_INFO"))));
         }
-
-        //바로 딜러카드 한장보여주고, 플레이어 카드 두장보여준당
     }
-
-
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//        log.debug("handleTextMessage : " + session + " + " + message);
-//        String senderId = getUserId(session);
-//        String msg = message.getPayload();
-//
-//        //서버로 들어오는 메세지 타입으로 구분해서 로직실행
-//
-//        if (StringUtils.isNotEmpty(msg)) {
-//            for (WebSocketSession ws : gameSessions.get(gameId).getSessions()) {
-//                ws.sendMessage(new TextMessage(senderId + " : " + msg));
-//            }
-//        }
-
         long gameId = getGameId(session);
         GameSession gameSession = findByGameId(gameId);
 

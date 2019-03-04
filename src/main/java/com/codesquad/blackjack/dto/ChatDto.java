@@ -8,6 +8,11 @@ public class ChatDto {
     public ChatDto() {
     }
 
+    public ChatDto(String type, String userName) {
+        this.type = type;
+        this.userName = userName;
+    }
+
     public ChatDto(String type, String userName, String message) {
         this.type = type;
         this.userName = userName;

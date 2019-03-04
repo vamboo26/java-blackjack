@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-{{#block "header"}}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -19,13 +18,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/tinymce.css">
+    {{#block "header"}}
+    {{/block}}
 </head>
-{{/block}}
 
 <body>
 <div class="issues issues--wrap mdl-layout mdl-js-layout is-upgraded">
-
-{{#block "navigation"}}
     <header class="mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
             <!-- Title -->
@@ -46,22 +44,19 @@
             </nav>
         </div>
     </header>
-{{/block}}
 
     <main class="mdl-layout__content">
+        {{#block "contents"}}
+        {{/block}}
+    </main>
 
-    {{#block "contents"}}
-    {{/block}}
-
-    {{#block "footer"}}
     <footer class="mdl-mini-footer">
         <div class="mdl-mini-footer--left-section">
             <div class="mdl-logo mdl-color-text--grey-600">Proudly powered by Finn & Zingo</div>
         </div>
+        {{#block "footer"}}
+        {{/block}}
     </footer>
-    {{/block}}
-
-    </main>
     <div class="mdl-layout__obfuscator"></div>
 </div>
 
