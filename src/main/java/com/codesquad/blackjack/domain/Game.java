@@ -5,8 +5,7 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.GameDto;
-import com.codesquad.blackjack.dto.PlayerDto;
-import java.util.List;
+import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
     public static final String TIE = "무승부";
@@ -71,7 +70,7 @@ public class Game {
         return TIE;
     }
 
-    public PlayerDto endByPlayerWin(Chip prize) {
+    public UserDto endByPlayerWin(Chip prize) {
         user.winPrize(prize);
         return user._toUserDto();
     }
@@ -108,11 +107,11 @@ public class Game {
         return user.isBankruptcy();
     }
 
-    public PlayerDto getPlayerDto() {
+    public UserDto getPlayerDto() {
         return user._toUserDto();
     }
 
-    public PlayerDto getDealerDto() {
+    public UserDto getDealerDto() {
         return dealer._toUserDto();
     }
 

@@ -3,21 +3,21 @@ package com.codesquad.blackjack.dto;
 import com.codesquad.blackjack.domain.Chip;
 
 public class GameDto {
-    private PlayerDto dealer;
-    private PlayerDto player;
+    private UserDto dealer;
+    private UserDto player;
     private Chip totalBet;
 
-    public GameDto(PlayerDto dealer, PlayerDto player, Chip totalBet) {
+    public GameDto(UserDto dealer, UserDto player, Chip totalBet) {
         this.dealer = dealer;
         this.player = player;
         this.totalBet = totalBet;
     }
 
-    public PlayerDto getDealer() {
+    public UserDto getDealer() {
         return dealer;
     }
 
-    public PlayerDto getPlayer() {
+    public UserDto getPlayer() {
         return player;
     }
 }

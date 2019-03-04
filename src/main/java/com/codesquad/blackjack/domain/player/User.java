@@ -1,7 +1,7 @@
 package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.Chip;
-import com.codesquad.blackjack.dto.PlayerDto;
+import com.codesquad.blackjack.dto.UserDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -49,8 +49,8 @@ public class User extends AbstractPlayer {
     }
 
     @Override
-    public PlayerDto _toUserDto() {
-        return new PlayerDto(getName(), getCardsDto(), this.chip);
+    public UserDto _toUserDto() {
+        return new UserDto(getName(), getCardsDto(), this.chip);
     }
 
     public void betChip(int bettingChip) {

@@ -22,6 +22,9 @@ function connectSockJs() {
         socket.onmessage = function (event) {
             console.log(event.data + '\n');
 
+            var user = JSON.parse(event.data);
+            console.log(user);
+
             let $chat = $('div#chat_box');
             $chat.append('<li>' + event.data + '</li>')
         };
