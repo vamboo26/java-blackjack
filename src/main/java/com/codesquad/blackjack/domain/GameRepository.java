@@ -19,6 +19,10 @@ public class GameRepository {
         return this.games.get(this.id);
     }
 
+    public Game remove(long gameId) {
+        return games.remove(gameId);
+    }
+
     public List<Game> findAll() {
         return new ArrayList<>(games.values());
     }

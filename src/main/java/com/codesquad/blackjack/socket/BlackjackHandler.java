@@ -1,9 +1,11 @@
 package com.codesquad.blackjack.socket;
 
+import com.codesquad.blackjack.domain.GameRepository;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
+import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.web.SessionController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -29,6 +31,9 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     @Autowired
     private SessionController sessionController;
+
+    @Autowired
+    private GameService gameService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -65,9 +70,6 @@ public class BlackjackHandler extends TextWebSocketHandler {
         log.debug("afterConnectionClosed : " + session + " + " + status);
         long gameId = getGameId(session);
         gameSessions.remove(gameId);
-
-
-
 
         // 나중에 게임 끊기면 방 사라지게하는 로직 필요. 현재는 끊어져도 방이 남아있고 들어가도 재접속 안됨.
 

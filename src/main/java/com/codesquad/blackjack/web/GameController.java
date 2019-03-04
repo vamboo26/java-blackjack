@@ -44,8 +44,9 @@ public class GameController {
         return "/game/room";
     }
 
-    @GetMapping("/exit")
-    public String exit() {
+    @GetMapping("/{id}/exit")
+    public String exit(@PathVariable("id") long game_id) {
+        gameService.remove(game_id);
         return "redirect:/games";
     }
 }

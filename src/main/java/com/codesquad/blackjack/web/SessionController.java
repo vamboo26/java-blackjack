@@ -4,9 +4,11 @@ import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.domain.player.UserRepository;
 import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
+import com.codesquad.blackjack.service.UserService;
 import com.codesquad.blackjack.socket.GameSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -31,6 +34,9 @@ public class SessionController {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public void readyToGame(WebSocketSession webSocketSession, GameSession gameSession) throws IOException {
         gameSession.addSession(webSocketSession);
@@ -62,6 +68,7 @@ public class SessionController {
         }
         game.initializeGame();
 
+        userRepository.save(game.getUser());
 
 
 

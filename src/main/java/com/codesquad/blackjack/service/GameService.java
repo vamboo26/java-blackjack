@@ -24,7 +24,15 @@ public class GameService {
         return gameRepository.save(new Game(loginUser));
     }
 
+    public Game remove(long gameId) {
+        return gameRepository.remove(gameId);
+    }
+
     public Game findById(long id) {
         return gameRepository.findById(id);
+    }
+
+    public void initializeGame() {
+
     }
 }

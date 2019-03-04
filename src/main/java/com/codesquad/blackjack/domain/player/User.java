@@ -26,7 +26,7 @@ public class User extends AbstractPlayer {
     @Column(nullable = false, length = 20)
     private String password;
 
-    @Size(min = 3, max = 20)
+    @Size(min = 2, max = 20)
     @Column(nullable = false, length = 20)
     private String name;
 
@@ -144,16 +144,17 @@ public class User extends AbstractPlayer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
                 Objects.equals(userId, user.userId) &&
                 Objects.equals(password, user.password) &&
+                Objects.equals(name, user.name) &&
                 Objects.equals(chip, user.chip);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, password, chip);
+        return Objects.hash(id);
     }
 }
