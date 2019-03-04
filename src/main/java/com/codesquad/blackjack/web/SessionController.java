@@ -1,14 +1,24 @@
 package com.codesquad.blackjack.web;
 
+import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.card.Deck;
+import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.socket.GameSession;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+
+import java.io.IOException;
+
+import static com.codesquad.blackjack.MessageType.INIT;
 
 @Component
 public class SessionController {
@@ -17,26 +27,32 @@ public class SessionController {
     @Autowired
     private GameService gameService;
 
-    public void readyToGame(WebSocketSession webSocketSession, GameSession gameSession) {
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    public void readyToGame(WebSocketSession webSocketSession, GameSession gameSession) throws IOException {
         gameSession.addSession(webSocketSession);
+
+        User user = WebSocketSessionUtils.userFromSession(webSocketSession);
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toChatDto("JOIN"))));
+        }
+
         log.debug("*** {}가 게임에 입장하여 준비완료!", webSocketSession.getId());
     }
 
-    public void startGame(GameSession gameSession) {
-        log.debug("{]번 게임방, 게임 시작합니다.", gameSession.getGameId());
-        for (WebSocketSession session : gameSession.getSessions()) {
-            log.debug("참여자는 {}입니다.", session.getId());
-        }
-
+    public void startGame(WebSocketSession webSocketSession, GameSession gameSession) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
-        boolean nextGame = true;
-
-//        while (nextGame) {
-        int bettingChip = 100;
-//            bettingChip = verifyPlayerChip(game, bettingChip);
         Deck deck = Deck.auto();
 
-        game.init(deck, bettingChip);
+        game.init(deck, 100);
+
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getDealerDto(INIT))));
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getUserDto(INIT))));
+        }
+
+
 //            playerTurnGame(game, bettingChip, deck);
 //            dealerTurnGame(game, deck);
 //

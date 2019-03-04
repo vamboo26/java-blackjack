@@ -1,6 +1,8 @@
 package com.codesquad.blackjack.domain.player;
 
+import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.card.Card;
+import com.codesquad.blackjack.dto.DealerDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Dealer extends AbstractPlayer {
@@ -15,9 +17,8 @@ public class Dealer extends AbstractPlayer {
         return new Dealer();
     }
 
-    @Override
-    public UserDto _toUserDto() {
-        return new UserDto(DEALER_NAME, getCardsDto());
+    public DealerDto _toDealerDto(MessageType type) {
+        return new DealerDto(type, getName(), getCardsDto());
     }
 
     public void dealerTurn(Card card) {

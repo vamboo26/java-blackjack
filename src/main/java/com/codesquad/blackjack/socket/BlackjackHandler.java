@@ -6,7 +6,6 @@ import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.web.SessionController;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,27 +32,11 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.debug("afterConnectionEstablished : " + session);
-
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
-        log.debug("겜아디 : {}", gameId);
-
         GameSession gameSession = findByGameId(gameId);
-        log.debug("겜세션 : {}", gameSession);
-
-        User user = WebSocketSessionUtils.userFromSession(session);
-        log.debug("접속유저 : {}", user);
 
         sessionController.readyToGame(session, gameSession);
-        sessionController.startGame(gameSession);
-        log.debug("*** 입장한 유저 던져준더 : {}", user._toUserDto().toString());
-
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toChatDto("JOIN"))));
-
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto("INIT_GAME_INFO"))));
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto("INIT_GAME_INFO"))));
-        }
+        sessionController.startGame(session, gameSession);
     }
 
     @Override

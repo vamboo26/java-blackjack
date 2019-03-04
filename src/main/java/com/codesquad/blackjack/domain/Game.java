@@ -1,10 +1,11 @@
 package com.codesquad.blackjack.domain;
 
+import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
-import com.codesquad.blackjack.dto.GameDto;
+import com.codesquad.blackjack.dto.DealerDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
@@ -62,7 +63,7 @@ public class Game {
             return endByPlayerWin(prize);
         }
 
-        return dealer.isTie(user) ? endByTie() : dealer._toUserDto();
+        return dealer.isTie(user) ? endByTie() : dealer._toDealerDto(MessageType.INIT);
     }
 
     private Object endByTie() {
@@ -107,16 +108,12 @@ public class Game {
         return user.isBankruptcy();
     }
 
-    public UserDto getPlayerDto() {
-        return user._toUserDto();
+    public UserDto getUserDto(MessageType type) {
+        return user._toUserDto(type);
     }
 
-    public UserDto getDealerDto() {
-        return dealer._toUserDto();
-    }
-
-    public GameDto _toGameDto() {
-        return new GameDto(dealer._toUserDto(), user._toUserDto(), totalBet);
+    public DealerDto getDealerDto(MessageType type) {
+        return dealer._toDealerDto(type);
     }
 
     public long getId() {

@@ -32,14 +32,25 @@ function connectSockJs() {
             if(message.type === 'JOIN') {
                 $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
             }
+
             if(message.type === 'CHAT') {
                 $chat.append('<li>' + message.userName + ' : ' + message.message + '</li>')
             }
-            if(message.type === 'INIT_GAME_INFO') {
+
+            if(message.type === 'INIT') {
                 console.log(message);
-                $game.append('<li>' + message.name + '의 카드 </li>')
-                $game.append(message.cards.cards + '(카드상세정보) </br>')
-                $game.append('전체 카드의 합은 ' + message.cards.total + '입니다. </br>')
+
+                $game.append(' * ' + message.name + '의 카드 : ')
+
+                for (const key of Object.keys(message.cards)) {
+                    if(key === 'cards') {
+                        for (const secondKey of Object.keys(message.cards[key])) {
+                            $game.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
+                        }
+                    }
+                }
+
+                $game.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
             }
         };
 
