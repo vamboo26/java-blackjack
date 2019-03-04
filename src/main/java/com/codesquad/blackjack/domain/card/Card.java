@@ -40,12 +40,28 @@ public class Card {
         return this.number == ONE;
     }
 
-    int getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    String getName() {
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
+
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

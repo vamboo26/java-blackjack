@@ -315,6 +315,8 @@ body .issues {
 }
 
 .mdl-layout__content {
+  display: block;
+  overflow: scroll;
   padding-top: 36px;
 }
 
