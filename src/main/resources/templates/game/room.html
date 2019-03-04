@@ -1,0 +1,56 @@
+{{#partial "contents"}}
+<div class="issues-back">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon back-btn" title="go back"
+       role="button">
+        <i class="material-icons" role="presentation">arrow_back</i>
+    </a>
+</div>
+<div class="issues__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        <!--{{#game}}-->
+        <!--<div class="mdl-card__title mdl-color-text&#45;&#45;grey-50" style="height:80px;">-->
+            <!--<h4>{{id}}번방</h4>-->
+        <!--</div>-->
+
+        <!--<ul class="chat_box">-->
+        <!--</ul>-->
+        <!--<input name="message">-->
+        <!--<button class="send">보내기</button>-->
+        <!--{{/game}}-->
+
+        <div class="issues__posts mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col" style="display:inline-block";>
+                {{#game}}
+                <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+                <h4>{{id}}번방</h4>
+                </div>
+
+            <div style="display:inline-block; width: 70%; height:100%; margin:0px; background-color:red;">
+            </div>
+
+            <div style="display:inline-block; width: 29%; height:100%; margin:0px; vertical-align:text-bottom">
+                <div style="height:70%;">
+                    <div id="chat_box"></div>
+                </div>
+                <div class="well">
+                    <input type="text" id="msg" value="" class="form-control">
+                    <button id="btnSend" class="btn btn-primary">Send Message</button>
+                </div>
+            </div>
+
+            {{/game}}
+            </div>
+        </div>
+
+    </div>
+</div>
+{{/partial}}
+
+{{#partial "script"}}
+<script src="/js/socket.js"></script>
+{{/partial}}
+
+{{> base}}
+
+
+

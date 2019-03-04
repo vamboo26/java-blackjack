@@ -23,17 +23,8 @@ public class GameRepository {
         return new ArrayList<>(games.values());
     }
 
-//    public List<IndianPoker> findByGameStatus(GameStatus gameStatus) {
-//        return indianPokerMap.values().stream()
-//                .filter(i -> i.isGameStatus(gameStatus))
-//                .collect(Collectors.toList());
-//    }
-//
-//    public Optional<IndianPoker> findById(long indianPoker_id) {
-//        return Optional.ofNullable(indianPokerMap.get(indianPoker_id));
-//    }
-//
-//    public IndianPoker remove(Long gameId) {
-//        return indianPokerMap.remove(gameId);
-//    }
+    public Game findById(long id) {
+        return games.get(id);
+    }
+
 }
