@@ -1,8 +1,8 @@
-package com.codesquad.blackjack;
+package com.codesquad.blackjack.socket;
 
 import com.codesquad.blackjack.domain.player.User;
-import com.codesquad.blackjack.domain.support.SessionUtil;
-import com.codesquad.blackjack.socket.GameSession;
+import com.codesquad.blackjack.security.HttpSessionUtils;
+import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +17,8 @@ import java.util.Map;
 public class BlackjackHandler extends TextWebSocketHandler {
     private static final Logger log = LoggerFactory.getLogger(BlackjackHandler.class);
     
-    Map<Long, GameSession> gameSessions = new HashMap<>();
-    Map<String, WebSocketSession> userSessions = new HashMap<>();
+    private Map<Long, GameSession> gameSessions = new HashMap<>();
+    private Map<String, WebSocketSession> userSessions = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -40,6 +40,8 @@ public class BlackjackHandler extends TextWebSocketHandler {
         for (WebSocketSession ws : gameSessions.get(gameId).getSessions()) {
             ws.sendMessage(new TextMessage(senderId + "님이 접속하셨습니다"));
         }
+
+        //바로 딜러카드 한장보여주고, 플레이어 카드 두장보여준당
     }
 
     @Override
@@ -50,6 +52,8 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         String senderId = getUserId(session);
         String msg = message.getPayload();
+
+        //서버로 들어오는 메세지 타입으로 구분해서 로직실행
 
         if (StringUtils.isNotEmpty(msg)) {
             for (WebSocketSession ws : gameSessions.get(gameId).getSessions()) {
@@ -70,7 +74,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
         //addInterceptors를 통해 WebsocketSession에 httpSession이 이미 얹어진 상태에서, Map에 그 값들을 넣어준다
         Map<String, Object> httpSession = session.getAttributes();
         //httpSession에 올라간 로그인된 유저를 불러온다
-        User loginUser = (User) httpSession.get(SessionUtil.PLAYER_SESSION);
+        User loginUser = (User) httpSession.get(HttpSessionUtils.USER_SESSION_KEY);
 
         return loginUser.getUserId();
     }
@@ -78,6 +82,6 @@ public class BlackjackHandler extends TextWebSocketHandler {
     private long getGameId(WebSocketSession session) {
         Map<String, Object> httpSesion = session.getAttributes();
 
-        return (long) httpSesion.get(SessionUtil.GAME_ID);
+        return (long) httpSesion.get(WebSocketSessionUtils.GAME_SESSION_KEY);
     }
 }

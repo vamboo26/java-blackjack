@@ -8,8 +8,6 @@ import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.PlayerDto;
 import java.util.List;
 
-import java.util.List;
-
 public class Game {
     public static final String TIE = "무승부";
     public static final int HIT_SELECTION = 1;
@@ -22,8 +20,6 @@ public class Game {
     private boolean gameProgress = true;
 
     private long id;
-    private List<User> users;
-    private int limitUser;
 
     public Game(String playerName) {
         this.user = new User(playerName);
@@ -31,10 +27,6 @@ public class Game {
 
     public Game(User loginUser) {
         this.user = loginUser;
-    }
-
-    public Game(int numberOfUser) {
-        this.limitUser = numberOfUser;
     }
 
     public void init(Deck deck, int bettingChip) {
