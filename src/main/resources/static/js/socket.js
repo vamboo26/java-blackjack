@@ -1,4 +1,5 @@
 var socket = null;
+var userName = $('.content').data('user-name');
 
 $(document).ready( function() {
 	connectSockJs();
@@ -8,7 +9,7 @@ $(document).ready( function() {
         if (socket.readyState !== 1) return;
 
         let msg = $('input#msg').val();
-        socket.send(msg);
+        socket.send(JSON.stringify({type: 'CHAT', userName: userName, message: msg}));
         $('input#msg').val("");
     });
 });
@@ -22,11 +23,17 @@ function connectSockJs() {
         socket.onmessage = function (event) {
             console.log(event.data + '\n');
 
-            var user = JSON.parse(event.data);
-            console.log(user);
+            var message = JSON.parse(event.data);
+            console.log(message);
 
             let $chat = $('div#chat_box');
-            $chat.append('<li>' + event.data + '</li>')
+
+            if(message.type === 'CHAT') {
+                $chat.append('<li>' + message.userName + ' : ' + message.message + '</li>')
+            } else {
+                $chat.append('<li>' + message.name + '님이 입장했습니다.</li>')
+            }
+
         };
 
         socket.onclose = function (event) {

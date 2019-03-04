@@ -40,6 +40,7 @@ public class GameController {
         log.debug("*** {}가 게임방 입장", loginUser);
         session.setAttribute(WebSocketSessionUtils.GAME_SESSION_KEY, game_id);
         model.addAttribute("game", gameService.findById(game_id));
+        model.addAttribute("eachUser", loginUser);
         return "/game/room";
     }
 }

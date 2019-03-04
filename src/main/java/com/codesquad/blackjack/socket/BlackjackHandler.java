@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.socket;
 
 import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.web.SessionController;
@@ -23,7 +24,9 @@ public class BlackjackHandler extends TextWebSocketHandler {
     private static final Logger log = LoggerFactory.getLogger(BlackjackHandler.class);
 
     private Map<Long, GameSession> gameSessions = new HashMap<>();
-    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private SessionController sessionController;
@@ -33,25 +36,27 @@ public class BlackjackHandler extends TextWebSocketHandler {
         log.debug("afterConnectionEstablished : " + session);
 
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
-        log.debug("겜아디 : {}", gameId);
 
         GameSession gameSession = findByGameId(gameId);
+
+        log.debug("겜아디 : {}", gameId);
+
         log.debug("겜세션 : {}", gameSession);
 
         User user = WebSocketSessionUtils.userFromSession(session);
         log.debug("접속유저 : {}", user);
 
-        gameSession.addSession(session);
 
-//        sessionController.readyToGame(session, gameSession);
-//        sessionController.startGame(gameSession);
-
+        sessionController.readyToGame(session, gameSession);
+        sessionController.startGame(gameSession);
         log.debug("*** 입장한 유저 던져준더 : {}", user._toUserDto().toString());
-//
-//        for (WebSocketSession ws : gameSession.getSessions()) {
-//            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto())));
-////            ws.sendMessage(new TextMessage(senderId + "님이 접속하셨습니다"));
-//        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toUserDto())));
+//            ws.sendMessage(new TextMessage(senderId + "님이 접속하셨습니다"));
+        }
 
         //바로 딜러카드 한장보여주고, 플레이어 카드 두장보여준당
     }
@@ -60,20 +65,30 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.debug("handleTextMessage : " + session + " + " + message);
+//        log.debug("handleTextMessage : " + session + " + " + message);
+//        String senderId = getUserId(session);
+//        String msg = message.getPayload();
+//
+//        //서버로 들어오는 메세지 타입으로 구분해서 로직실행
+//
+//        if (StringUtils.isNotEmpty(msg)) {
+//            for (WebSocketSession ws : gameSessions.get(gameId).getSessions()) {
+//                ws.sendMessage(new TextMessage(senderId + " : " + msg));
+//            }
+//        }
 
         long gameId = getGameId(session);
+        GameSession gameSession = findByGameId(gameId);
 
-        String senderId = getUserId(session);
-        String msg = message.getPayload();
+        String payload = message.getPayload();
+        log.info("payload : {}", payload);
 
-        //서버로 들어오는 메세지 타입으로 구분해서 로직실행
-
-        if (StringUtils.isNotEmpty(msg)) {
-            for (WebSocketSession ws : gameSessions.get(gameId).getSessions()) {
-                ws.sendMessage(new TextMessage(senderId + " : " + msg));
-            }
+        ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
+        TextMessage chatToSend = new TextMessage(objectMapper.writeValueAsString(receivedChat));
+        for (WebSocketSession gameSessionSession : gameSession.getSessions()) {
+            gameSessionSession.sendMessage(chatToSend);
         }
+
     }
 
     @Override

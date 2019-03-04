@@ -25,5 +25,4 @@ public class GameSession {
     public List<WebSocketSession> getSessions() {
         return sessions;
     }
-
 }
