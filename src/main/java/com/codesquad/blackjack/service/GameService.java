@@ -2,6 +2,8 @@ package com.codesquad.blackjack.service;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.GameRepository;
+import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.security.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +23,13 @@ public class GameService {
 
     public Game create(int limitOfUser) {
         return gameRepository.save(new Game(limitOfUser));
+    }
+
+    public Game create(@LoginUser User loginUser) {
+        return gameRepository.save(new Game(loginUser));
+    }
+
+    public Game findById(long id) {
+        return gameRepository.findById(id);
     }
 }

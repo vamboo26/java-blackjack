@@ -27,11 +27,10 @@ public class Game {
 
     public Game(String playerName) {
         this.user = new User(playerName);
-
     }
 
-    public Game(int numberOfUser) {
-        this.limitUser = numberOfUser;
+    public Game(User loginUser) {
+        this.user = loginUser;
     }
 
     public Game(int numberOfUser) {
