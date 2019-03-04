@@ -13,11 +13,13 @@
             </div>
             <div class="mdl-card__supporting-text">
                 <ul class="issue-list mdl-list">
+                    {{#loginedUser}}
                     <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">
                         <span class="mdl-list__item-primary-content" id="my_ranking">
                             <strong> ----- 나의 순위 : {{userRank}}등 ----- </strong>
                         </span>
                     </li><hr/>
+                    {{/loginedUser}}
 
                     {{#users}}
                     <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">

@@ -27,15 +27,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.hibernate:hibernate-java8'
 	implementation 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.1'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.webjars:sockjs-client:1.1.2'
+	implementation 'org.webjars:jquery:3.3.1'
+	implementation 'org.webjars:webjars-locator:0.30'
+
 	runtime 'com.h2database:h2'
 	runtime 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
-
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.webjars:sockjs-client:1.1.2'
-
-	compile('org.webjars:jquery:3.3.1')
-	compile('org.webjars:webjars-locator:0.30')
-	compile('org.springframework.boot:spring-boot-devtools')
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.assertj:assertj-core:3.10.0'
