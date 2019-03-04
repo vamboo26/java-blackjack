@@ -4,6 +4,7 @@ import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.socket.GameSession;
@@ -18,6 +19,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
+import static com.codesquad.blackjack.MessageType.BLACKJACK;
 import static com.codesquad.blackjack.MessageType.INIT;
 
 @Component
@@ -37,8 +39,6 @@ public class SessionController {
         for (WebSocketSession ws : gameSession.getSessions()) {
             ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toChatDto("JOIN"))));
         }
-
-        log.debug("*** {}가 게임에 입장하여 준비완료!", webSocketSession.getId());
     }
 
     public void startGame(WebSocketSession webSocketSession, GameSession gameSession) throws IOException {
@@ -51,6 +51,20 @@ public class SessionController {
             ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getDealerDto(INIT))));
             ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getUserDto(INIT))));
         }
+
+        if (game.isBlackjack()) {
+            for (WebSocketSession ws : gameSession.getSessions()) {
+                ws.sendMessage(new TextMessage(objectMapper
+                        .writeValueAsString(new ResultDto(BLACKJACK, game.end(game.getBlackjackPrize())))));
+            }
+
+            game.initializeGame();
+        }
+        game.initializeGame();
+
+
+
+
 
 
 //            playerTurnGame(game, bettingChip, deck);

@@ -43,4 +43,9 @@ public class GameController {
         model.addAttribute("eachUser", loginUser);
         return "/game/room";
     }
+
+    @GetMapping("/exit")
+    public String exit() {
+        return "redirect:/games";
+    }
 }

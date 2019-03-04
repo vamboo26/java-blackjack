@@ -47,6 +47,11 @@ public class BlackjackHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload : {}", payload);
 
+        if(payload.equals("continue")) {
+            sessionController.startGame(session, gameSession);
+            return;
+        }
+
         ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
         TextMessage chatToSend = new TextMessage(objectMapper.writeValueAsString(receivedChat));
         for (WebSocketSession gameSessionSession : gameSession.getSessions()) {
@@ -58,6 +63,11 @@ public class BlackjackHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.debug("afterConnectionClosed : " + session + " + " + status);
+        long gameId = getGameId(session);
+        gameSessions.remove(gameId);
+
+
+
 
         // 나중에 게임 끊기면 방 사라지게하는 로직 필요. 현재는 끊어져도 방이 남아있고 들어가도 재접속 안됨.
 

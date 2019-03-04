@@ -9,7 +9,6 @@ import com.codesquad.blackjack.dto.DealerDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
-    public static final String TIE = "무승부";
     public static final int HIT_SELECTION = 1;
     public static final int STAND_SELECTION = 2;
     public static final int DOUBLE_SELECTION = 3;
@@ -43,8 +42,8 @@ public class Game {
     }
 
     public void initializeGame() {
-        this.user = user.initialize();
-        this.dealer = dealer.initialize();
+        user.initialize();
+        dealer.initialize();
         this.gameProgress = true;
     }
 
@@ -56,24 +55,24 @@ public class Game {
         this.gameProgress = false;
     }
 
-    public Object end(Chip prize) {
+    public String end(Chip prize) {
         stopGame();
 
-        if(dealer.isWinner(user)) {
+        if(!dealer.isWinner(user)) {
             return endByPlayerWin(prize);
         }
 
-        return dealer.isTie(user) ? endByTie() : dealer._toDealerDto(MessageType.INIT);
+        return dealer.isTie(user) ? endByTie() : "DEALER";
     }
 
-    private Object endByTie() {
+    private String endByTie() {
         user.winPrize(totalBet);
-        return TIE;
+        return "TIE";
     }
 
-    public UserDto endByPlayerWin(Chip prize) {
+    public String endByPlayerWin(Chip prize) {
         user.winPrize(prize);
-        return user._toUserDto();
+        return "USER";
     }
 
     public Chip getBlackjackPrize() {

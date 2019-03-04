@@ -51,6 +51,17 @@ function connectSockJs() {
                 }
 
                 $game.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
+                                $('#btnContinue').css('visibility','visible');
+            }
+
+            if(message.type === 'BLACKJACK') {
+                if(message.winner === 'TIE') {
+                    $game.append(' * 양측 모두 블랙잭으로 무승부입니다.');
+                } else {
+                    $game.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
+                }
+
+                $('#btnContinue').css('visibility','visible');
             }
         };
 
@@ -63,3 +74,11 @@ function connectSockJs() {
         };
     };
 }
+
+$('#btnContinue').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    $('#game_box').empty();
+    socket.send('continue');
+});

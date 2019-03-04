@@ -12,11 +12,6 @@ public class Dealer extends AbstractPlayer {
         super(DEALER_NAME);
     }
 
-    @Override
-    public Dealer initialize() {
-        return new Dealer();
-    }
-
     public DealerDto _toDealerDto(MessageType type) {
         return new DealerDto(type, getName(), getCardsDto());
     }

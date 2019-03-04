@@ -5,7 +5,7 @@ import com.codesquad.blackjack.dto.CardsDto;
 
 public interface Player {
 
-    Player initialize();
+    void initialize();
 
     void receiveCard(Card card);
 

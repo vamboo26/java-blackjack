@@ -45,15 +45,6 @@ public class User extends AbstractPlayer {
         this.chip = chip;
     }
 
-    @Override
-    public User initialize() {
-        return new User(getName(), chip);
-    }
-
-    public UserDto _toUserDto() {
-        return new UserDto(getName(), getCardsDto(), this.chip);
-    }
-
     public UserDto _toUserDto(MessageType type) {
         return new UserDto(type, getName(), getCardsDto(), this.chip);
     }
