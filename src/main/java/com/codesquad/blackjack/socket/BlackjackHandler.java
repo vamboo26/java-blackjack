@@ -1,6 +1,5 @@
 package com.codesquad.blackjack.socket;
 
-import com.codesquad.blackjack.domain.GameRepository;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.security.HttpSessionUtils;
@@ -41,7 +40,6 @@ public class BlackjackHandler extends TextWebSocketHandler {
         GameSession gameSession = findByGameId(gameId);
 
         sessionController.readyToGame(session, gameSession);
-        sessionController.startGame(session, gameSession);
     }
 
     @Override
@@ -52,17 +50,37 @@ public class BlackjackHandler extends TextWebSocketHandler {
         String payload = message.getPayload();
         log.info("payload : {}", payload);
 
-        if(payload.equals("continue")) {
-            sessionController.startGame(session, gameSession);
+
+        if(payload.contains("START GAME")) {
+            sessionController.startGame(gameSession);
+            sessionController.playerTurnGame(gameSession, 100);
             return;
         }
 
+        if(payload.contains("BETTING")) {
+            int turn = Integer.parseInt(payload.split(":")[1]);
+            sessionController.playerSelect(gameSession, turn);
+            return;
+        }
+
+        if(payload.contains("continue")) {
+            sessionController.startGame(gameSession);
+            return;
+        }
+
+        if(payload.contains("DEALERTURN")) {
+            log.debug("DEALERTURN 실행");
+            sessionController.dealerTurnGame(gameSession);
+        }
+
+
+
+        //채팅
         ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
         TextMessage chatToSend = new TextMessage(objectMapper.writeValueAsString(receivedChat));
         for (WebSocketSession gameSessionSession : gameSession.getSessions()) {
             gameSessionSession.sendMessage(chatToSend);
         }
-
     }
 
     @Override

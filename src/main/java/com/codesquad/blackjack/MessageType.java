@@ -4,5 +4,7 @@ public enum MessageType {
     JOIN,
     CHAT,
     INIT,
-    BLACKJACK
+    BLACKJACK,
+    BETTING,
+    DEALERTURN
 }

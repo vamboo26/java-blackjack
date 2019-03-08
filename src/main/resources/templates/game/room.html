@@ -17,12 +17,16 @@
 
                 <div class="content" data-game-id="{{id}}" data-user-name="{{eachUser.name}}" style="display:block; height:520px">
                     <div style = "display:inline-block; width:69%;">
-                        <div id="game_box" style="display:block; height:455px; overflow:scroll; padding:10px"></div>
+                        <div id="game_box" style="display:block; height:455px; overflow:scroll; padding:10px">
+                            <div id="dealer_box"></div>
+                            <div id="user_box"></div>
+                        </div>
                         <div class="well" style="height:55px; padding-top: 8px;">
                             <button id="a" style="visibility: hidden" class="btn btn-primary">히트</button>
                             <button id="b" style="visibility: hidden" class="btn btn-primary">스탠드</button>
                             <button id="c" style="visibility: hidden" class="btn btn-primary">더블</button>
                             <button id="btnContinue" style="visibility: hidden" class="btn btn-primary">continue</button>
+                            <button id="btnStart" class="btn btn-primary">start</button>
                             <a href="/games/{{id}}/exit"><button class="btn btn-primary">exit</button></a>
                         </div>
                     </div>

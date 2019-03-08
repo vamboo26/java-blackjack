@@ -16,10 +16,8 @@ public class Dealer extends AbstractPlayer {
         return new DealerDto(type, getName(), getCardsDto());
     }
 
-    public void dealerTurn(Card card) {
-        while (getCards().isDealerHit()) {
-            receiveCard(card);
-        }
+    public boolean dealerTurn() {
+        return getCards().isDealerHit();
     }
 
     public boolean isWinner(User target) {
