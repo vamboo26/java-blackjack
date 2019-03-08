@@ -17,6 +17,7 @@ public class Game {
     private User user;
     private Chip totalBet = new Chip(0);
     private boolean gameProgress = true;
+    private Deck deck = Deck.auto();
 
     private long id;
 
@@ -28,10 +29,10 @@ public class Game {
         this.user = loginUser;
     }
 
-    public void init(Deck deck, int bettingChip) {
+    public void init(int bettingChip) {
         this.totalBet = new Chip(bettingChip);
         this.user.betChip(bettingChip);
-        drawInitCards(deck);
+        drawInitCards(this.deck);
     }
 
     private void drawInitCards(Deck deck) {
@@ -83,12 +84,12 @@ public class Game {
         return totalBet.twice();
     }
 
-    public void hit(Card card) {
-        user.receiveCard(card);
+    public void hit() {
+        user.receiveCard(this.deck.draw());
     }
 
-    public void dealerTurn(Card card) {
-        dealer.dealerTurn(card);
+    public void dealerTurn() {
+        while(dealer.dealerTurn()) dealer.receiveCard(this.deck.draw());
     }
 
     public boolean isBlackjack() {

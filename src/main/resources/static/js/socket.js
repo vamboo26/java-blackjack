@@ -29,6 +29,9 @@ function connectSockJs() {
             let $chat = $('div#chat_box');
             let $game = $('div#game_box');
 
+            let $dealer = $('div#dealer_box');
+            let $user = $('div#user_box');
+
             if(message.type === 'JOIN') {
                 $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
             }
@@ -38,20 +41,37 @@ function connectSockJs() {
             }
 
             if(message.type === 'INIT') {
-                console.log(message);
+                if(message.name === 'DEALER') {
+                    $dealer.empty();
 
-                $game.append(' * ' + message.name + '의 카드 : ')
+                    $dealer.append(' * ' + message.name + '의 카드 : ')
 
-                for (const key of Object.keys(message.cards)) {
-                    if(key === 'cards') {
-                        for (const secondKey of Object.keys(message.cards[key])) {
-                            $game.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
+                    for (const key of Object.keys(message.cards)) {
+                        if(key === 'cards') {
+                            for (const secondKey of Object.keys(message.cards[key])) {
+                                $dealer.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
+                            }
                         }
                     }
-                }
 
-                $game.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
-                                $('#btnContinue').css('visibility','visible');
+                    $dealer.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
+                                    $('#btnContinue').css('visibility','visible');
+                } else {
+                    $user.empty();
+
+                    $user.append(' * ' + message.name + '의 카드 : ')
+
+                    for (const key of Object.keys(message.cards)) {
+                        if(key === 'cards') {
+                            for (const secondKey of Object.keys(message.cards[key])) {
+                                $user.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
+                            }
+                        }
+                    }
+
+                    $user.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
+                                    $('#btnContinue').css('visibility','visible');
+                }
             }
 
             if(message.type === 'BLACKJACK') {
@@ -62,6 +82,27 @@ function connectSockJs() {
                 }
 
                 $('#btnContinue').css('visibility','visible');
+            }
+
+            if(message.type === 'BETTING') {
+                $('#a').css('visibility','visible');
+                $('#b').css('visibility','visible');
+                if(event.status === 'DOUBLE') {
+                    $('#c').css('visibility','visible');
+                }
+            }
+
+
+
+
+
+
+
+            if(message.type === 'DEALERTURN') {
+                socket.send('DEALERTURN');
+                $('#a').css('visibility','hidden');
+                $('#b').css('visibility','hidden');
+                $('#c').css('visibility','hidden');
             }
         };
 
@@ -81,4 +122,33 @@ $('#btnContinue').on('click', function(evt) {
 
     $('#game_box').empty();
     socket.send('continue');
+});
+
+$('#btnStart').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    $('#btnStart').css('visibility','hidden');
+    socket.send('START GAME');
+});
+
+$('#a').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    socket.send('BETTING:1');
+});
+
+$('#b').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    socket.send('BETTING:2');
+});
+
+$('#c').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    socket.send('BETTING:3');
 });
