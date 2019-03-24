@@ -1,39 +1,52 @@
 package com.codesquad.blackjack.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Embeddable
 public class Chip {
-    private int amount;
+    public static final int ZERO = 0;
+    private static final int TWO = 2;
+    private static final double ONE_POINT_FIVE = 1.5;
 
-    private Chip(int amount) {
+    @Column
+    private final int amount;
+
+    //TODO : 질문하기
+    public Chip() {
+        this.amount = 0;
+    }
+
+    public Chip(int amount) {
         this.amount = amount;
     }
 
-    public static Chip of(int amount) {
-        return new Chip(amount);
-    }
-
-    public Chip half() {
-        this.amount /= 2;
-        return this;
-    }
-
     public Chip sum(Chip target) {
-        this.amount += target.amount;
-        return this;
+        return new Chip(amount + target.amount);
     }
 
-    public void substract(int bettingChip) {
-        this.amount -= bettingChip;
+    public Chip subtract(int bettingChip) {
+        return new Chip(amount - bettingChip);
     }
 
     public Chip blackjack() {
-        this.amount *= 1.5;
-        return this;
+        return new Chip((int)(amount + (amount * ONE_POINT_FIVE)));
+    }
+
+    public Chip twice() {
+        return new Chip(amount * TWO);
     }
 
     public boolean isOver(int bettingChip) {
-        return amount >= bettingChip;
+        return this.amount >= bettingChip;
+    }
+
+    public boolean isZero() {
+        return this.amount <= ZERO;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override
@@ -54,9 +67,5 @@ public class Chip {
         return "Chip{" +
                 "amount=" + amount +
                 '}';
-    }
-
-    public boolean zero() {
-        return this.amount <= 0;
     }
 }

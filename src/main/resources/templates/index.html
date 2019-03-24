@@ -1,0 +1,38 @@
+{{#partial "contents"}}
+<div class="issues__posts mdl-grid">
+    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+        <form action="/users/login" method="post">
+            <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+                <h4>Games</h4>
+                {{# loginedUser}}
+                <a href="/games/start"
+                   class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored show-modal"
+                >
+                    <i class="material-icons">add</i>
+                </a>
+                {{/ loginedUser}}
+            </div>
+            <div class="mdl-card__supporting-text">
+                <ul class="issue-list mdl-list">
+                    {{#games}}
+                    <li class="mdl-list__item mdl-list__item--two-line">
+                        <span class="mdl-list__item-primary-content">
+                            {{id}}번방
+                            <a href="/games/{{id}}">
+                                <strong>[입장하기]</strong>
+                            </a>
+                            <span class="mdl-list__item-sub-title">
+                                현재 참여인원은 1명입니다.
+                            </span>
+                        </span>
+                    </li>
+                    {{/games}}
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{/partial}}
+
+{{> base}}

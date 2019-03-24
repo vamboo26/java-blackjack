@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.codesquad.blackjack.domain.Chip.ZERO;
+
 public class Deck {
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 13;
@@ -28,7 +30,7 @@ public class Deck {
     }
 
     public Card draw() {
-        return deck.remove(0);
+        return deck.remove(ZERO);
     }
 
     private static void generateDeck(List<Card> deck) {

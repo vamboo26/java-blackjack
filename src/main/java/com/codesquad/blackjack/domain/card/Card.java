@@ -3,6 +3,12 @@ package com.codesquad.blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
+    public static final int ONE = 1;
+    public static final int TEN = 10;
+    public static final int ELEVEN = 11;
+    public static final int TWELVE = 12;
+    public static final int THIRTEEN = 13;
+
     private int number;
     private String suit;
     private String name;
@@ -18,28 +24,44 @@ public class Card {
     }
 
     private String numberToName(int number) {
-        if(number == 1) return "A";
-        if(number == 11) return "J";
-        if(number == 12) return "Q";
-        if(number == 13) return "K";
+        if(number == ONE) return "A";
+        if(number == ELEVEN) return "J";
+        if(number == TWELVE) return "Q";
+        if(number == THIRTEEN) return "K";
 
         return String.valueOf(number);
     }
 
     private int numberToValidNumber(int number) {
-        return (number > 10) ? 10 : number;
+        return (number > TEN) ? TEN : number;
     }
 
     boolean isAce() {
-        return this.number == 1;
+        return this.number == ONE;
     }
 
-    int getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    String getName() {
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
+
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
