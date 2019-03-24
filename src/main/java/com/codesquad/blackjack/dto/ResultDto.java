@@ -2,15 +2,18 @@ package com.codesquad.blackjack.dto;
 
 import com.codesquad.blackjack.MessageType;
 
+import static com.codesquad.blackjack.MessageType.RESULT;
+
 public class ResultDto {
-    private MessageType type;
+    private MessageType type = RESULT;
+    private String status;
     private String winner;
 
     public ResultDto() {
     }
 
-    public ResultDto(MessageType type, String winner) {
-        this.type = type;
+    public ResultDto(String status, String winner) {
+        this.status = status;
         this.winner = winner;
     }
 
@@ -20,6 +23,14 @@ public class ResultDto {
 
     public void setType(MessageType type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getWinner() {

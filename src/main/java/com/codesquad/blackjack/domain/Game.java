@@ -1,7 +1,6 @@
 package com.codesquad.blackjack.domain;
 
 import com.codesquad.blackjack.MessageType;
-import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
@@ -16,7 +15,6 @@ public class Game {
     private Dealer dealer = new Dealer();
     private User user;
     private Chip totalBet = new Chip(0);
-    private boolean gameProgress = true;
     private Deck deck = Deck.auto();
 
     private long id;
@@ -45,19 +43,9 @@ public class Game {
     public void initializeGame() {
         user.initialize();
         dealer.initialize();
-        this.gameProgress = true;
-    }
-
-    public boolean isGameProcess() {
-        return this.gameProgress;
-    }
-
-    public void stopGame() {
-        this.gameProgress = false;
     }
 
     public String end(Chip prize) {
-        stopGame();
 
         if(!dealer.isWinner(user)) {
             return endByPlayerWin(prize);
@@ -127,5 +115,10 @@ public class Game {
 
     public User getUser() {
         return user;
+    }
+
+    public void setDouble() {
+        this.user.betChip(totalBet.getAmount());
+        this.totalBet = totalBet.twice();
     }
 }

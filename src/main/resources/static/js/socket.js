@@ -55,7 +55,6 @@ function connectSockJs() {
                     }
 
                     $dealer.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
-                                    $('#btnContinue').css('visibility','visible');
                 } else {
                     $user.empty();
 
@@ -70,18 +69,31 @@ function connectSockJs() {
                     }
 
                     $user.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
-                                    $('#btnContinue').css('visibility','visible');
                 }
             }
 
-            if(message.type === 'BLACKJACK') {
+            if(message.type === 'RESULT') {
+                $('#a').css('visibility','hidden');
+                $('#b').css('visibility','hidden');
+                $('#c').css('visibility','hidden');
+                $('#btnContinue').css('visibility','visible');
+
                 if(message.winner === 'TIE') {
-                    $game.append(' * 양측 모두 블랙잭으로 무승부입니다.');
-                } else {
+                    $game.append(' * 무승부입니다.');
+                    return;
+                }
+
+                if(message.status === 'BLACKJACK') {
                     $game.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
                 }
 
-                $('#btnContinue').css('visibility','visible');
+                if(message.status === 'BURST') {
+                    $game.append(' * 상대 버스트로 ' + message.winner + '가 승리했습니다.');
+                }
+
+                if(message.status === 'NORMAL') {
+                    $game.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
+                }
             }
 
             if(message.type === 'BETTING') {
@@ -92,11 +104,9 @@ function connectSockJs() {
                 }
             }
 
-
-
-
-
-
+            if(message.type === 'USERTURN') {
+                socket.send('USERTURN');
+            }
 
             if(message.type === 'DEALERTURN') {
                 socket.send('DEALERTURN');

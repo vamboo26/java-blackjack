@@ -8,11 +8,10 @@ import com.codesquad.blackjack.domain.player.UserRepository;
 import com.codesquad.blackjack.dto.BettingDto;
 import com.codesquad.blackjack.dto.DealerTurnDto;
 import com.codesquad.blackjack.dto.ResultDto;
+import com.codesquad.blackjack.dto.UserTurnDto;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
-import com.codesquad.blackjack.service.UserService;
 import com.codesquad.blackjack.socket.GameSession;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,6 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
-import static com.codesquad.blackjack.MessageType.BLACKJACK;
 import static com.codesquad.blackjack.MessageType.INIT;
 import static com.codesquad.blackjack.domain.Game.DOUBLE_SELECTION;
 import static com.codesquad.blackjack.domain.Game.HIT_SELECTION;
@@ -64,38 +62,39 @@ public class SessionController {
 
         if (game.isBlackjack()) {
             for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper
-                        .writeValueAsString(new ResultDto(BLACKJACK, game.end(game.getBlackjackPrize())))));
+                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())))));
             }
 
             game.initializeGame();
-
-            //TODO: 질문!!
             userRepository.save(game.getUser());
+            return;
+        }
+
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new UserTurnDto("USERTURN"))));
         }
     }
 
     public void playerTurnGame(GameSession gameSession, int bettingChip) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
 
-        if (game.isGameProcess()) {
-            if(game.hasGamerEnoughChip(bettingChip)) {
-                //유저에게 turn은 더블까지 보이는 상태를 만들어줘야해
-                for (WebSocketSession ws : gameSession.getSessions()) {
-                    ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("DOUBLE"))));
-                }
-            }
+        if(game.hasGamerEnoughChip(bettingChip)) {
+            //유저에게 turn은 더블까지 보이는 상태를 만들어줘야해
             for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("NONE_DOUBLE"))));
+                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("DOUBLE"))));
             }
+            return;
+        }
+
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("NONE_DOUBLE"))));
         }
     }
 
     public void playerSelect(GameSession gameSession, int turn) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
 
-
-        if (game.isGameProcess() && turn != STAND_SELECTION) {
+        if (turn != STAND_SELECTION) {
             game.hit();
 
             for (WebSocketSession ws : gameSession.getSessions()) {
@@ -104,13 +103,24 @@ public class SessionController {
             }
 
             if (game.isBurst()) {
+                for (WebSocketSession ws : gameSession.getSessions()) {
+                    ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new ResultDto("BURST", "DEALER"))));
+                }
+
                 game.initializeGame();
-                game.stopGame();
-                //출력해줘야됨 결과
+                userRepository.save(game.getUser());
                 return;
             }
 
-            if (game.isBlackjack() || turn == DOUBLE_SELECTION) {
+            if (game.isBlackjack()) {
+                for (WebSocketSession ws : gameSession.getSessions()) {
+                    ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new DealerTurnDto("DELAERTURN"))));
+                }
+                return;
+            }
+
+            if (turn == DOUBLE_SELECTION) {
+                game.setDouble();
                 for (WebSocketSession ws : gameSession.getSessions()) {
                     ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new DealerTurnDto("DELAERTURN"))));
                 }
@@ -121,13 +131,13 @@ public class SessionController {
                 for (WebSocketSession ws : gameSession.getSessions()) {
                     ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("NONE_DOUBLE"))));
                 }
+
+                return;
             }
         }
 
-        else {
-            for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new DealerTurnDto("DEALERTURN"))));
-            }
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new DealerTurnDto("DEALERTURN"))));
         }
     }
 
@@ -138,14 +148,24 @@ public class SessionController {
 
         if (game.isBurst()) {
             game.endByPlayerWin(game.getNormalPrize());
+
+            for (WebSocketSession ws : gameSession.getSessions()) {
+                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new ResultDto("BURST", "USER"))));
+            }
+
+            game.initializeGame();
+            userRepository.save(game.getUser());
             return;
         }
 
         for (WebSocketSession ws : gameSession.getSessions()) {
             ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getDealerDto(INIT))));
             ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getUserDto(INIT))));
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new ResultDto("NORMAL", game.end(game.getNormalPrize())))));
+
         }
+
+        game.initializeGame();
+        userRepository.save(game.getUser());
     }
-
-
 }

@@ -53,6 +53,11 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         if(payload.contains("START GAME")) {
             sessionController.startGame(gameSession);
+            return;
+        }
+
+        if(payload.contains("USERTURN")) {
+            log.debug("USERTURN 실행");
             sessionController.playerTurnGame(gameSession, 100);
             return;
         }
@@ -68,12 +73,12 @@ public class BlackjackHandler extends TextWebSocketHandler {
             return;
         }
 
+
         if(payload.contains("DEALERTURN")) {
             log.debug("DEALERTURN 실행");
             sessionController.dealerTurnGame(gameSession);
+            return;
         }
-
-
 
         //채팅
         ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
