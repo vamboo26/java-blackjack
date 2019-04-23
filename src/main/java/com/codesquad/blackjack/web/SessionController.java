@@ -1,8 +1,6 @@
 package com.codesquad.blackjack.web;
 
-import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.Game;
-import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.domain.player.UserRepository;
 import com.codesquad.blackjack.dto.BettingDto;
@@ -12,6 +10,7 @@ import com.codesquad.blackjack.dto.UserTurnDto;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.socket.GameSession;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
-import static com.codesquad.blackjack.MessageType.INIT;
+import static com.codesquad.blackjack.domain.MessageType.INIT;
 import static com.codesquad.blackjack.domain.Game.DOUBLE_SELECTION;
 import static com.codesquad.blackjack.domain.Game.HIT_SELECTION;
 import static com.codesquad.blackjack.domain.Game.STAND_SELECTION;
@@ -30,6 +29,7 @@ import static com.codesquad.blackjack.domain.Game.STAND_SELECTION;
 
 @Component
 public class SessionController {
+
     private static final Logger log = LoggerFactory.getLogger(SessionController.class);
 
     @Autowired
@@ -168,4 +168,11 @@ public class SessionController {
         game.initializeGame();
         userRepository.save(game.getUser());
     }
+
+    private void sendtoAll(GameSession gameSession, Object dto) throws IOException {
+        for (WebSocketSession ws : gameSession.getSessions()) {
+            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));
+        }
+    }
+
 }

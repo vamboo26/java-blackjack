@@ -9,6 +9,7 @@ import java.util.List;
 import static com.codesquad.blackjack.domain.Chip.ZERO;
 
 public class Deck {
+
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 13;
 
@@ -44,4 +45,5 @@ public class Deck {
             deck.add(Card.of(i, suit.toString()));
         }
     }
+
 }

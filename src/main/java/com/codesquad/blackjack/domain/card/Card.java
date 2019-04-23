@@ -3,6 +3,7 @@ package com.codesquad.blackjack.domain.card;
 import java.util.Objects;
 
 public class Card {
+
     public static final int ONE = 1;
     public static final int TEN = 10;
     public static final int ELEVEN = 11;
@@ -87,4 +88,5 @@ public class Card {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

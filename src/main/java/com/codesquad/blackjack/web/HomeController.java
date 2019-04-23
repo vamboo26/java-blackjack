@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+
     private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
     @Autowired
@@ -21,4 +22,5 @@ public class HomeController {
         model.addAttribute("games", gameService.findAll());
         return "/index";
     }
+
 }

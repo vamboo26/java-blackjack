@@ -1,10 +1,11 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 
-import static com.codesquad.blackjack.MessageType.USERTURN;
+import static com.codesquad.blackjack.domain.MessageType.USERTURN;
 
 public class UserTurnDto {
+
     private MessageType type = USERTURN;
     private String status;
 
@@ -27,4 +28,5 @@ public class UserTurnDto {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

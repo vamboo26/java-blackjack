@@ -1,10 +1,11 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 
-import static com.codesquad.blackjack.MessageType.BETTING;
+import static com.codesquad.blackjack.domain.MessageType.BETTING;
 
 public class BettingDto {
+
     private MessageType type = BETTING;
     private String status;
 
@@ -30,4 +31,5 @@ public class BettingDto {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

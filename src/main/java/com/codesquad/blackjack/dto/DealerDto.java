@@ -1,8 +1,9 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 
 public class DealerDto {
+
     private MessageType type;
     private String name;
     private CardsDto cards;
@@ -48,5 +49,6 @@ public class DealerDto {
                 ", cards=" + cards +
                 '}';
     }
+
 }
 

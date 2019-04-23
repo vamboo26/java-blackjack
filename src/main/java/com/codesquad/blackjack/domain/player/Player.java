@@ -14,4 +14,5 @@ public interface Player {
     boolean isBlackjack();
 
     CardsDto getCardsDto();
+
 }

@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.dto;
 
 public class ChatDto {
+
     private String type;
     private String userName;
     private String message;
@@ -51,4 +52,5 @@ public class ChatDto {
                 ", message='" + message + '\'' +
                 '}';
     }
+
 }

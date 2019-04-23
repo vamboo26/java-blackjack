@@ -58,4 +58,5 @@ public abstract class AbstractPlayer implements Player {
     public CardsDto getCardsDto() {
         return this.cards._toCardsDto();
     }
+
 }

@@ -1,9 +1,10 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.domain.Chip;
 
 public class UserDto {
+
     private MessageType type;
     private String name;
     private CardsDto cards;
@@ -68,4 +69,5 @@ public class UserDto {
                 ", chip=" + chip +
                 '}';
     }
+
 }

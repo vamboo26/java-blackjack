@@ -15,7 +15,7 @@ $(document).ready( function() {
 });
 
 function connectSockJs() {
-    socket = new SockJS("/ws/chat");
+    socket = new SockJS("/game");
 
     socket.onopen = function () {
         console.log('Info: connection opened.');

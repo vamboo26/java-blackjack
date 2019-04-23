@@ -1,4 +1,4 @@
-package com.codesquad.blackjack;
+package com.codesquad.blackjack.config;
 
 import com.codesquad.blackjack.socket.BlackjackHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,17 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    private final BlackjackHandler blackjackHandler;
+
     @Autowired
-    private BlackjackHandler blackjackHandler;
+    public WebSocketConfig(BlackjackHandler blackjackHandler) {
+        this.blackjackHandler = blackjackHandler;
+    }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(blackjackHandler, "/ws/chat")
+        registry.addHandler(blackjackHandler, "/game")
                 .addInterceptors(new HttpSessionHandshakeInterceptor()).setAllowedOrigins("*").withSockJS();
     }
+
 }

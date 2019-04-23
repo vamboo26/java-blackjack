@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
@@ -49,4 +50,5 @@ public class UserService {
         original.update(loginUser, updatedUser);
         return userRepository.save(original);
     }
+
 }

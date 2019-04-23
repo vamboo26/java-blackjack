@@ -1,6 +1,7 @@
-package com.codesquad.blackjack;
+package com.codesquad.blackjack.domain;
 
 public enum MessageType {
+
     JOIN,
     CHAT,
     INIT,
@@ -8,4 +9,5 @@ public enum MessageType {
     BETTING,
     DEALERTURN,
     USERTURN
+
 }

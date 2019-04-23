@@ -7,6 +7,7 @@ import org.springframework.web.context.request.WebRequest;
 import javax.servlet.http.HttpSession;
 
 public class HttpSessionUtils {
+
     public static final String USER_SESSION_KEY = "loginedUser";
 
     public static boolean isLoginUser(NativeWebRequest webRequest) {
@@ -36,4 +37,5 @@ public class HttpSessionUtils {
 
         return (User) session.getAttribute(USER_SESSION_KEY);
     }
+
 }

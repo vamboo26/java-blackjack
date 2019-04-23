@@ -8,6 +8,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.hasParameterAnnotation(LoginUser.class);
@@ -27,4 +28,5 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
         return user;
     }
+
 }

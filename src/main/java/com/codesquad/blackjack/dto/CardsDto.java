@@ -5,6 +5,7 @@ import com.codesquad.blackjack.domain.card.Card;
 import java.util.List;
 
 public class CardsDto {
+
     private List<Card> cards;
     private int total;
 
@@ -31,4 +32,5 @@ public class CardsDto {
                 "cards=" + cards +
                 '}';
     }
+
 }

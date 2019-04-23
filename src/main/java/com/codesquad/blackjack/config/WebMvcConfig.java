@@ -1,4 +1,4 @@
-package com.codesquad.blackjack;
+package com.codesquad.blackjack.config;
 
 
 import com.codesquad.blackjack.security.LoginUserHandlerMethodArgumentResolver;
@@ -21,4 +21,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(loginUserArgumentResolver());
     }
+
 }

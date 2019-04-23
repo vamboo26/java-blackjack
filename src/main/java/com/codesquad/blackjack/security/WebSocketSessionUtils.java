@@ -6,6 +6,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.Map;
 
 public class WebSocketSessionUtils {
+
     public static final String GAME_SESSION_KEY = "gameId";
 
     private static Map<String, Object> getAttributes(WebSocketSession webSocketSession) {
@@ -21,4 +22,5 @@ public class WebSocketSessionUtils {
         Map<String, Object> httpSession = getAttributes(session);
             return (long) httpSession.get(WebSocketSessionUtils.GAME_SESSION_KEY);
     }
+
 }

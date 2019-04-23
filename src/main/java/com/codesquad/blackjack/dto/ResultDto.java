@@ -1,10 +1,11 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 
-import static com.codesquad.blackjack.MessageType.RESULT;
+import static com.codesquad.blackjack.domain.MessageType.RESULT;
 
 public class ResultDto {
+
     private MessageType type = RESULT;
     private String status;
     private String winner;
@@ -40,4 +41,5 @@ public class ResultDto {
     public void setWinner(String winner) {
         this.winner = winner;
     }
+
 }

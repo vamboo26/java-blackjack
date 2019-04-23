@@ -6,6 +6,7 @@ import java.util.*;
 
 @Repository
 public class GameRepository {
+
     private Map<Long, Game> games;
     private long id = 0;
 
@@ -30,4 +31,5 @@ public class GameRepository {
     public Game findById(long id) {
         return games.get(id);
     }
+
 }

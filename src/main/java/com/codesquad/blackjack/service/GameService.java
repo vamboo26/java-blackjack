@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GameService {
+
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
     @Autowired
@@ -35,4 +36,5 @@ public class GameService {
     public void initializeGame() {
 
     }
+
 }

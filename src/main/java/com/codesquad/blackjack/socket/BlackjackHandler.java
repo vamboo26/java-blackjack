@@ -21,6 +21,7 @@ import java.util.Map;
 
 @Component
 public class BlackjackHandler extends TextWebSocketHandler {
+
     private static final Logger log = LoggerFactory.getLogger(BlackjackHandler.class);
 
     private Map<Long, GameSession> gameSessions = new HashMap<>();
@@ -120,4 +121,5 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         return (long) httpSesion.get(WebSocketSessionUtils.GAME_SESSION_KEY);
     }
+
 }

@@ -1,6 +1,6 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.MessageType;
+import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.dto.UserDto;
@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 public class User extends AbstractPlayer {
+
     public static final GuestUser GUEST_USER = new GuestUser();
     private static final int DEFAULT_CHIP_AMOUNT = 500;
 
@@ -157,4 +158,5 @@ public class User extends AbstractPlayer {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

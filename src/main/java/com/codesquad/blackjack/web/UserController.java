@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("users")
 public class UserController {
+
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Resource(name = "userService")
@@ -87,4 +88,5 @@ public class UserController {
         userService.update(loginUser, id, target);
         return "redirect:/users";
     }
+
 }

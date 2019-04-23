@@ -1,11 +1,10 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.MessageType;
-import com.codesquad.blackjack.domain.card.Card;
+import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.dto.DealerDto;
-import com.codesquad.blackjack.dto.UserDto;
 
 public class Dealer extends AbstractPlayer {
+
     public static final String DEALER_NAME = "DEALER";
 
     public Dealer() {
@@ -27,4 +26,5 @@ public class Dealer extends AbstractPlayer {
     public boolean isTie(User target) {
         return getCards().isTie(target.getCards());
     }
+
 }

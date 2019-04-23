@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameSession {
+
     private Long gameId;
     private List<WebSocketSession> sessions;
 
@@ -25,4 +26,5 @@ public class GameSession {
     public List<WebSocketSession> getSessions() {
         return sessions;
     }
+
 }

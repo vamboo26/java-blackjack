@@ -8,6 +8,7 @@ import java.util.List;
 import static com.codesquad.blackjack.domain.card.Card.TEN;
 
 public class Cards {
+
     public static final int DEALER_HIT_NUMBER = 17;
     public static final int BLACKJACK_NUMBER = 21;
 
@@ -63,4 +64,5 @@ public class Cards {
     public CardsDto _toCardsDto() {
         return new CardsDto(cards, calculateTotal());
     }
+
 }

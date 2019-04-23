@@ -1,6 +1,5 @@
 package com.codesquad.blackjack.domain;
 
-import com.codesquad.blackjack.MessageType;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
@@ -8,6 +7,7 @@ import com.codesquad.blackjack.dto.DealerDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
+
     public static final int HIT_SELECTION = 1;
     public static final int STAND_SELECTION = 2;
     public static final int DOUBLE_SELECTION = 3;
@@ -121,4 +121,5 @@ public class Game {
         this.user.betChip(totalBet.getAmount());
         this.totalBet = totalBet.twice();
     }
+
 }

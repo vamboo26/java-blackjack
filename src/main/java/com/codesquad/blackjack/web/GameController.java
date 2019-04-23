@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/games")
 public class GameController {
+
     private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
     @Autowired
@@ -49,4 +50,5 @@ public class GameController {
         gameService.remove(game_id);
         return "redirect:/games";
     }
+
 }
