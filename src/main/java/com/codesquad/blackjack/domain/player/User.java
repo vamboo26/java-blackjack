@@ -4,11 +4,14 @@ import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.dto.UserDto;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 public class User extends AbstractPlayer {
 
@@ -46,14 +49,6 @@ public class User extends AbstractPlayer {
         this.chip = chip;
     }
 
-    public UserDto _toUserDto(MessageType type) {
-        return new UserDto(type, getName(), getCardsDto(), this.chip);
-    }
-
-    public ChatDto _toChatDto(String type) {
-        return new ChatDto(type, this.name);
-    }
-
     public void betChip(int bettingChip) {
         this.chip = chip.subtract(bettingChip);
     }
@@ -70,51 +65,6 @@ public class User extends AbstractPlayer {
         return this.chip.isZero();
     }
 
-    public boolean matchPassword(String password) {
-        return this.password.equals(password);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Chip getChip() {
-        return chip;
-    }
-
-    public void setChip(Chip chip) {
-        this.chip = chip;
-    }
-
     public void update(User loginUser, User target) {
         if (!matchUserId(loginUser.userId)) {
             throw new RuntimeException();
@@ -127,8 +77,20 @@ public class User extends AbstractPlayer {
         this.name = target.name;
     }
 
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
+    }
+
     private boolean matchUserId(String userId) {
         return this.userId.equals(userId);
+    }
+
+    public UserDto _toUserDto(MessageType type) {
+        return new UserDto(type, getName(), getCardsDto(), this.chip);
+    }
+
+    public ChatDto _toChatDto(String type) {
+        return new ChatDto(type, this.name);
     }
 
     public boolean isGuestUser() {
@@ -140,23 +102,6 @@ public class User extends AbstractPlayer {
         public boolean isGuestUser() {
             return true;
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                Objects.equals(userId, user.userId) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(chip, user.chip);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
 }
