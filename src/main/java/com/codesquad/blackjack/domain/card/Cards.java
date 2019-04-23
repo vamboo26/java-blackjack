@@ -17,7 +17,6 @@ public class Cards {
         cards.add(card);
     }
 
-    //TODO : 리팩토링 필요
     public int calculateTotal() {
         int sum = 0;
 

@@ -12,7 +12,6 @@ public class Chip {
     @Column
     private final int amount;
 
-    //TODO : 질문하기
     public Chip() {
         this.amount = 0;
     }
