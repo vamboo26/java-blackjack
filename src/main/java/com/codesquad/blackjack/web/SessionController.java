@@ -9,8 +9,8 @@ import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.dto.UserTurnDto;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
+import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.socket.GameSession;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,63 +32,55 @@ public class SessionController {
 
     private static final Logger log = LoggerFactory.getLogger(SessionController.class);
 
-    @Autowired
-    private GameService gameService;
+    private final GameService gameService;
+
+    private final ObjectMapper objectMapper;
+
+    private final UserRepository userRepository;
+
+    private final MessageService messageService;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private UserRepository userRepository;
+    public SessionController(GameService gameService, ObjectMapper objectMapper, UserRepository userRepository, MessageService messageService) {
+        this.gameService = gameService;
+        this.objectMapper = objectMapper;
+        this.userRepository = userRepository;
+        this.messageService = messageService;
+    }
 
     public void readyToGame(WebSocketSession webSocketSession, GameSession gameSession) throws IOException {
         gameSession.addSession(webSocketSession);
 
         User user = WebSocketSessionUtils.userFromSession(webSocketSession);
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(user._toChatDto("JOIN"))));
-        }
+        messageService.sendToAll(user._toChatDto("JOIN"), gameSession);
     }
 
     public void startGame(GameSession gameSession) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
-
         game.init(100);
-
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getDealerDto(INIT))));
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getUserDto(INIT))));
-        }
+        messageService.sendToAll(game.getDealerDto(INIT), gameSession);
+        messageService.sendToAll(game.getUserDto(INIT), gameSession);
 
         if (game.isBlackjack()) {
-            for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())))));
-            }
-
+            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
             game.initializeGame();
             userRepository.save(game.getUser());
             return;
         }
 
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new UserTurnDto("USERTURN"))));
-        }
+        messageService.sendToAll(new UserTurnDto("USERTURN"), gameSession);
     }
 
     public void playerTurnGame(GameSession gameSession, int bettingChip) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
 
         if(game.hasGamerEnoughChip(bettingChip)) {
-            //유저에게 turn은 더블까지 보이는 상태를 만들어줘야해
-            for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("DOUBLE"))));
-            }
+            messageService.sendToAll(new UserTurnDto("USERTURN"), gameSession);
+            messageService.sendToAll(new BettingDto("DOUBLE"), gameSession);
             return;
         }
 
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(new BettingDto("NONE_DOUBLE"))));
-        }
+        messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
     }
 
     public void playerSelect(GameSession gameSession, int turn) throws IOException {
@@ -97,10 +89,9 @@ public class SessionController {
         if (turn != STAND_SELECTION) {
             game.hit();
 
-            for (WebSocketSession ws : gameSession.getSessions()) {
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getDealerDto(INIT))));
-                ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(game.getUserDto(INIT))));
-            }
+            messageService.sendToAll(game.getDealerDto(INIT), gameSession);
+            messageService.sendToAll(game.getUserDto(INIT), gameSession);
+
 
             if (game.isBurst()) {
                 for (WebSocketSession ws : gameSession.getSessions()) {
@@ -167,12 +158,6 @@ public class SessionController {
 
         game.initializeGame();
         userRepository.save(game.getUser());
-    }
-
-    private void sendtoAll(GameSession gameSession, Object dto) throws IOException {
-        for (WebSocketSession ws : gameSession.getSessions()) {
-            ws.sendMessage(new TextMessage(objectMapper.writeValueAsString(dto)));
-        }
     }
 
 }

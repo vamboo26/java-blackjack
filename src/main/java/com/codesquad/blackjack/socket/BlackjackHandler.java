@@ -27,24 +27,30 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     private Map<Long, GameSession> gameSessions = new HashMap<>();
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final MessageService messageService;
+
+    private final GameService gameService;
+
+    private final SessionController sessionController;
+
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private SessionController sessionController;
-
-    @Autowired
-    private GameService gameService;
-
-    @Autowired
-    private MessageService messageService;
+    public BlackjackHandler(MessageService messageService, GameService gameService, SessionController sessionController, ObjectMapper objectMapper) {
+        this.messageService = messageService;
+        this.gameService = gameService;
+        this.sessionController = sessionController;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
         GameSession gameSession = findByGameId(gameId);
 
-        sessionController.readyToGame(session, gameSession);
+        gameSession.addSession(session);
+        User user = WebSocketSessionUtils.userFromSession(session);
+        messageService.sendToAll(user._toChatDto("JOIN"), gameSession);
     }
 
     @Override
@@ -52,17 +58,11 @@ public class BlackjackHandler extends TextWebSocketHandler {
         long gameId = getGameId(session);
         GameSession gameSession = findByGameId(gameId);
 
-        System.out.println(gameSession);
-
         String payload = message.getPayload();
         log.info("payload : {}", payload);
 
-        TableController controller;
-
-
         if(payload.contains("START")) {
-            controller = new StartTableController();
-            controller.handleTableRequestMessage(gameSession, 0, messageService);
+            sessionController.startGame(gameSession);
             return;
         }
 
@@ -127,7 +127,6 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     private long getGameId(WebSocketSession session) {
         Map<String, Object> httpSesion = session.getAttributes();
-
         return (long) httpSesion.get(WebSocketSessionUtils.GAME_SESSION_KEY);
     }
 

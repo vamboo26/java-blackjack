@@ -26,7 +26,7 @@ public class User extends AbstractPlayer {
     @Column(unique = true, nullable = false, length = 20)
     private String userId;
 
-    @Size(min = 6, max = 20)
+    @Size(min = 4, max = 20)
     @Column(nullable = false, length = 20)
     private String password;
 
@@ -83,6 +83,14 @@ public class User extends AbstractPlayer {
 
     private boolean matchUserId(String userId) {
         return this.userId.equals(userId);
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Chip getChip() {
+        return chip;
     }
 
     public UserDto _toUserDto(MessageType type) {

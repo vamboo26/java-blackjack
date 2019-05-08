@@ -8,6 +8,7 @@ import com.codesquad.blackjack.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class GameController {
         return "redirect:/";
     }
 
+    @SendTo
     @GetMapping("/start")
     public String create(@LoginUser User loginUser) {
         Game game = gameService.create(loginUser);
