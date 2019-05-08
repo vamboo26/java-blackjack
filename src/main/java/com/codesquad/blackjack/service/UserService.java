@@ -51,4 +51,8 @@ public class UserService {
         return userRepository.save(original);
     }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
 }

@@ -43,6 +43,7 @@ public class Game {
     public void initializeGame() {
         user.initialize();
         dealer.initialize();
+        deck = Deck.auto();
     }
 
     public String end(Chip prize) {

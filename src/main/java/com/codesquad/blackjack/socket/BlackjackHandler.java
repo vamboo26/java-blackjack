@@ -78,7 +78,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
             return;
         }
 
-        if(payload.contains("continue")) {
+        if(payload.contains("CONTINUE")) {
             sessionController.startGame(gameSession);
             return;
         }

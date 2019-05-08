@@ -27,10 +27,9 @@ function connectSockJs() {
             console.log(message);
 
             let $chat = $('div#chat_box');
-            let $game = $('div#game_box');
-
             let $dealer = $('div#dealer_box');
             let $user = $('div#user_box');
+            let $result = $('div#result_box');
 
             if(message.type === 'JOIN') {
                 $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
@@ -43,7 +42,6 @@ function connectSockJs() {
             if(message.type === 'INIT') {
                 if(message.name === 'DEALER') {
                     $dealer.empty();
-
                     $dealer.append(' * ' + message.name + '의 카드 : ')
 
                     for (const key of Object.keys(message.cards)) {
@@ -57,7 +55,6 @@ function connectSockJs() {
                     $dealer.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
                 } else {
                     $user.empty();
-
                     $user.append(' * ' + message.name + '의 카드 : ')
 
                     for (const key of Object.keys(message.cards)) {
@@ -79,20 +76,20 @@ function connectSockJs() {
                 $('#btnContinue').css('visibility','visible');
 
                 if(message.winner === 'TIE') {
-                    $game.append(' * 무승부입니다.');
+                    $result.append(' * 무승부입니다.');
                     return;
                 }
 
                 if(message.status === 'BLACKJACK') {
-                    $game.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
+                    $result.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
                 }
 
                 if(message.status === 'BURST') {
-                    $game.append(' * 상대 버스트로 ' + message.winner + '가 승리했습니다.');
+                    $result.append(' * 상대 버스트로 ' + message.winner + '가 승리했습니다.');
                 }
 
                 if(message.status === 'NORMAL') {
-                    $game.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
+                    $result.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
                 }
             }
 
@@ -109,10 +106,10 @@ function connectSockJs() {
             }
 
             if(message.type === 'DEALERTURN') {
-                socket.send('DEALERTURN');
                 $('#a').css('visibility','hidden');
                 $('#b').css('visibility','hidden');
                 $('#c').css('visibility','hidden');
+                socket.send('DEALERTURN');
             }
         };
 
@@ -126,20 +123,20 @@ function connectSockJs() {
     };
 }
 
-$('#btnContinue').on('click', function(evt) {
-    evt.preventDefault();
-    if (socket.readyState !== 1) return;
-
-    $('#game_box').empty();
-    socket.send('continue');
-});
-
 $('#btnStart').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
     $('#btnStart').css('visibility','hidden');
     socket.send('START');
+});
+
+$('#btnContinue').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    $('#result_box').empty();
+    socket.send('CONTINUE');
 });
 
 $('#a').on('click', function(evt) {

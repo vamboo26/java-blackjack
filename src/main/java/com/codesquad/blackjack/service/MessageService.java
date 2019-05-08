@@ -25,7 +25,7 @@ public class MessageService {
     }
 
     public <T> void send(T messageObject, WebSocketSession session) {
-        log.debug("send : {}", session);
+        log.debug("send : {}", messageObject);
 
         //TODO 예외처리, synchronized 확인
         try {

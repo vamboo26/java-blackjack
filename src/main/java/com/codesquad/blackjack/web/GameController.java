@@ -5,6 +5,7 @@ import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.security.LoginUser;
 import com.codesquad.blackjack.service.GameService;
+import com.codesquad.blackjack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class GameController {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public String list(Model model) {
@@ -49,6 +53,7 @@ public class GameController {
 
     @GetMapping("/{id}/exit")
     public String exit(@PathVariable("id") long game_id) {
+        userService.save(gameService.findById(game_id).getUser());
         gameService.remove(game_id);
         return "redirect:/games";
     }
