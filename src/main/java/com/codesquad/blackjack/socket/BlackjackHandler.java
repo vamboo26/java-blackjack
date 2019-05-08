@@ -5,6 +5,7 @@ import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
+import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.web.SessionController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -35,6 +36,9 @@ public class BlackjackHandler extends TextWebSocketHandler {
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private MessageService messageService;
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
@@ -48,12 +52,17 @@ public class BlackjackHandler extends TextWebSocketHandler {
         long gameId = getGameId(session);
         GameSession gameSession = findByGameId(gameId);
 
+        System.out.println(gameSession);
+
         String payload = message.getPayload();
         log.info("payload : {}", payload);
 
+        TableController controller;
 
-        if(payload.contains("START GAME")) {
-            sessionController.startGame(gameSession);
+
+        if(payload.contains("START")) {
+            controller = new StartTableController();
+            controller.handleTableRequestMessage(gameSession, 0, messageService);
             return;
         }
 

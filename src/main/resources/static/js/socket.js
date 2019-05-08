@@ -139,7 +139,7 @@ $('#btnStart').on('click', function(evt) {
     if (socket.readyState !== 1) return;
 
     $('#btnStart').css('visibility','hidden');
-    socket.send('START GAME');
+    socket.send('START');
 });
 
 $('#a').on('click', function(evt) {

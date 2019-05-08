@@ -28,7 +28,7 @@ public class MessageService {
     public <T> void send(T messageObject, WebSocketSession session) throws IOException {
         log.debug("send : {}", session);
 
-        //TODO 예외처리, 동기화필요?
+        //TODO 예외처리, synchronized 확인
         TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
         session.sendMessage(message);
     }

@@ -27,4 +27,12 @@ public class GameSession {
         return sessions;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("GameSession{");
+        sb.append("gameId=").append(gameId);
+        sb.append(", sessions=").append(sessions);
+        sb.append('}');
+        return sb.toString();
+    }
 }
