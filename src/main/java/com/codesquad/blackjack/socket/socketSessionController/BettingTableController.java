@@ -33,7 +33,7 @@ public class BettingTableController implements TableController {
             game.hit();
 
             //한장 추가했으니 유저의 갱신된카드 뿌려줘
-//                messageService.sendToAll(new SocketMessage<>("INIT", game._toGameDto()), gameSession);
+//                messageService.sendToAll(new SocketRequest<>("INIT", game._toGameDto()), gameSession);
             messageService.sendToAll(game.getUserDto(INIT), gameSession);
 
             //히트 또눌렀어, 이 메소드 다시 호출해야해
@@ -71,4 +71,5 @@ public class BettingTableController implements TableController {
         //딜러턴 수행해(버튼숨겨야해)
         messageService.sendToAll(new DealerTurnDto("DEALERTURN"), gameSession);
     }
+
 }

@@ -4,7 +4,7 @@ import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.socket.GameSession;
-import com.codesquad.blackjack.socket.SocketMessage;
+import com.codesquad.blackjack.socket.SocketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +39,9 @@ public class DealerTableController implements TableController {
         //종료결과, 승자, 잔여칩 보여줘
         //유저 저장해줘
 
-        messageService.sendToAll(new SocketMessage<>("INIT", game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketRequest<>("INIT", game._toGameDto()), gameSession);
 //        userRepository.save(game.getUser());
         return;
     }
+
 }

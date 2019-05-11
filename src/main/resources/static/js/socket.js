@@ -32,7 +32,7 @@ function connectSockJs() {
             let $result = $('div#result_box');
 
             var type = JSON.parse(event.data).type;
-            var data = JSON.parse(event.data).response;
+            var data = JSON.parse(event.data).request;
 
             if(type === 'INIT') {
                 let dealer = data.dealer;
