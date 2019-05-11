@@ -1,56 +1,24 @@
 package com.codesquad.blackjack.dto;
 
+import lombok.Getter;
+
+@Getter
 public class ChatDto {
 
-    private String type;
     private String userName;
     private String message;
 
     public ChatDto() {
+
     }
 
-    public ChatDto(String type, String userName) {
-        this.type = type;
+    public ChatDto(String userName) {
         this.userName = userName;
     }
 
-    public ChatDto(String type, String userName, String message) {
-        this.type = type;
+    public ChatDto(String userName, String message) {
         this.userName = userName;
         this.message = message;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    @Override
-    public String toString() {
-        return "ChatDto{" +
-                "type='" + type + '\'' +
-                ", userName='" + userName + '\'' +
-                ", message='" + message + '\'' +
-                '}';
     }
 
 }

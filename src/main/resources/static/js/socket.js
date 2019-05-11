@@ -1,5 +1,9 @@
 var socket = null;
 var userName = $('.content').data('user-name');
+let $chat = $('div#chat_box');
+let $dealer = $('div#dealer_box');
+let $user = $('div#user_box');
+let $result = $('div#result_box');
 
 $(document).ready( function() {
 	connectSockJs();
@@ -26,44 +30,45 @@ function connectSockJs() {
             var message = JSON.parse(event.data);
             console.log(message);
 
-            let $chat = $('div#chat_box');
-            let $dealer = $('div#dealer_box');
-            let $user = $('div#user_box');
-            let $result = $('div#result_box');
-
             var type = JSON.parse(event.data).type;
             var data = JSON.parse(event.data).request;
 
             if(type === 'INIT') {
-                let dealer = data.dealer;
-                let user = data.user;
-
-                $dealer.empty();
-                $dealer.append(' * 딜러의 카드 : ')
-
-                for (const key of Object.keys(dealer.cards)) {
-                    if(key === 'cards') {
-                        for (const secondKey of Object.keys(dealer.cards[key])) {
-                            $dealer.append('(' + dealer.cards[key][secondKey].name + '/' + dealer.cards[key][secondKey].suit + ')')
-                        }
-                    }
-                }
-
-                $dealer.append('<br>전체 카드의 합은 ' + user.cards.total + '입니다. <br><br>')
-
-                $user.empty();
-                $user.append(' * ' + user.name + '의 카드 : ')
-
-                for (const key of Object.keys(user.cards)) {
-                    if(key === 'cards') {
-                        for (const secondKey of Object.keys(user.cards[key])) {
-                            $user.append('(' + user.cards[key][secondKey].name + '/' + user.cards[key][secondKey].suit + ')')
-                        }
-                    }
-                }
-
-                $user.append('<br>전체 카드의 합은 ' + user.cards.total + '입니다. <br><br>')
+                showDealerCards(data.dealer);
+                showUserCards(data.user);
             }
+
+            if(type === 'CHAT') {
+                printChat(data);
+            }
+
+            if(type === 'JOIN') {
+                $chat.append('<li>' + data.userName + '님이 입장했습니다.</li>')
+            }
+
+            if(type === 'SELECT') {
+                if(data === 1) {
+                    $('#c').css('visibility','hidden');
+                } else {
+                    $('#c').css('visibility','visible');
+                }
+            }
+
+            if(type === 'BETTING') {
+                //Hit again
+                if(data === 1) {
+                    $('#c').css('visibility','hidden');
+                } else {
+                    hideAllButtons();
+                    socket.send('DEALERTURN');
+                }
+            }
+
+            if(type === 'DEALERTURN') {
+                hideAllButtons();
+                socket.send('DEALERTURN');
+            }
+
 
 
             /**
@@ -88,49 +93,18 @@ function connectSockJs() {
              *
              */
 
-            if(message.type === 'JOIN') {
-                $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
-            }
-
-            if(message.type === 'CHAT') {
-                $chat.append('<li>' + message.userName + ' : ' + message.message + '</li>')
-            }
-
-            // if(message.type === 'INIT') {
-            //     if(message.name === 'DEALER') {
-            //         $dealer.empty();
-            //         $dealer.append(' * ' + message.name + '의 카드 : ')
+            // if(message.type === 'JOIN') {
+            //     $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
+            // }
             //
-            //         for (const key of Object.keys(message.cards)) {
-            //             if(key === 'cards') {
-            //                 for (const secondKey of Object.keys(message.cards[key])) {
-            //                     $dealer.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
-            //                 }
-            //             }
-            //         }
-            //
-            //         $dealer.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
-            //     } else {
-            //         $user.empty();
-            //         $user.append(' * ' + message.name + '의 카드 : ')
-            //
-            //         for (const key of Object.keys(message.cards)) {
-            //             if(key === 'cards') {
-            //                 for (const secondKey of Object.keys(message.cards[key])) {
-            //                     $user.append('(' + message.cards[key][secondKey].name + '/' + message.cards[key][secondKey].suit + ')')
-            //                 }
-            //             }
-            //         }
-            //
-            //         $user.append('<br>전체 카드의 합은 ' + message.cards.total + '입니다. <br><br>')
-            //     }
+            // if(message.type === 'CHAT') {
+            //     $chat.append('<li>' + message.userName + ' : ' + message.message + '</li>')
             // }
 
             if(message.type === 'RESULT') {
                 $('#a').css('visibility','hidden');
                 $('#b').css('visibility','hidden');
                 $('#c').css('visibility','hidden');
-                $('#btnContinue').css('visibility','visible');
 
                 if(message.winner === 'TIE') {
                     $result.append(' * 무승부입니다.');
@@ -158,14 +132,14 @@ function connectSockJs() {
                 }
             }
 
-            if(message.type === 'USERTURN') {
-                socket.send('USERTURN');
-            }
-
-            if(message.type === 'DEALERTURN') {
-                hideAllButtons();
-                socket.send('DEALERTURN');
-            }
+            // if(message.type === 'USERTURN') {
+            //     socket.send('USERTURN');
+            // }
+            //
+            // if(message.type === 'DEALERTURN') {
+            //     hideAllButtons();
+            //     socket.send('DEALERTURN');
+            // }
         };
 
         socket.onclose = function (event) {
@@ -182,15 +156,10 @@ $('#btnStart').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
-    $('#btnStart').css('visibility','hidden');
-    socket.send('START');
-});
+    $('#a').css('visibility','visible');
+    $('#b').css('visibility','visible');
+    $result.empty();
 
-$('#btnContinue').on('click', function(evt) {
-    evt.preventDefault();
-    if (socket.readyState !== 1) return;
-
-    $('#result_box').empty();
     socket.send('START');
 });
 
@@ -219,4 +188,38 @@ function hideAllButtons() {
     $('#a').css('visibility','hidden');
     $('#b').css('visibility','hidden');
     $('#c').css('visibility','hidden');
+}
+
+function showDealerCards(dealer) {
+    $dealer.empty();
+    $dealer.append(' * 딜러의 카드 : ');
+
+    for (const key of Object.keys(dealer.cards)) {
+        if(key === 'cards') {
+            for (const secondKey of Object.keys(dealer.cards[key])) {
+                $dealer.append('(' + dealer.cards[key][secondKey].name + '/' + dealer.cards[key][secondKey].suit + ')');
+            }
+        }
+    }
+
+    $dealer.append('<br>전체 카드의 합은 ' + dealer.cards.total + '입니다. <br><br>');
+}
+
+function showUserCards(user) {
+    $user.empty();
+    $user.append(' * ' + user.name + '의 카드 : ')
+
+    for (const key of Object.keys(user.cards)) {
+        if(key === 'cards') {
+            for (const secondKey of Object.keys(user.cards[key])) {
+                $user.append('(' + user.cards[key][secondKey].name + '/' + user.cards[key][secondKey].suit + ')')
+            }
+        }
+    }
+
+    $user.append('<br>전체 카드의 합은 ' + user.cards.total + '입니다. <br><br>')
+}
+
+function printChat(request) {
+    $chat.append('<li>' + request.userName + ' : ' + request.message + '</li>')
 }

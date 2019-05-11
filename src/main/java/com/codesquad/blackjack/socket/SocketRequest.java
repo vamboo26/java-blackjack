@@ -1,5 +1,9 @@
 package com.codesquad.blackjack.socket;
 
+import lombok.Getter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+@Getter
 public class SocketRequest<T> {
 
     private String type;
@@ -10,12 +14,12 @@ public class SocketRequest<T> {
         this.request = request;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public T getRequest() {
-        return request;
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("type", type)
+                .append("request", request)
+                .toString();
     }
 
 }

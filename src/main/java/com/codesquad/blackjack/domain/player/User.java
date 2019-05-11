@@ -4,8 +4,6 @@ import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.dto.UserDto;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -89,8 +87,8 @@ public class User extends AbstractPlayer {
         return new UserDto(type, getName(), getCardsDto(), this.chip);
     }
 
-    public ChatDto _toChatDto(String type) {
-        return new ChatDto(type, this.name);
+    public ChatDto _toChatDto() {
+        return new ChatDto(this.name);
     }
 
     public boolean isGuestUser() {

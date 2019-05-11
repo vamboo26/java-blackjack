@@ -12,8 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitTableController implements TableController {
 
+    private final MessageService messageService;
+
     @Autowired
-    private MessageService messageService;
+    public InitTableController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @Override
     public void handleTurn(GameSession gameSession, Game game) {
@@ -41,9 +45,11 @@ public class InitTableController implements TableController {
         messageService.sendToAll(new SocketRequest<>("INIT", game._toGameDto()), gameSession);
 
         if(game.hasGamerEnoughChip(100)) {
-            messageService.sendToAll(new BettingDto("DOUBLE"), gameSession);
+            messageService.sendToAll(new SocketRequest<>("SELECT", 2), gameSession);
+//            messageService.sendToAll(new BettingDto("DOUBLE"), gameSession);
         } else {
-            messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
+            messageService.sendToAll(new SocketRequest<>("SELECT", 1), gameSession);
+//            messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
         }
         //여기까지했으면 버튼 잘 열어주고 끝났어
         //이제 버튼 누르길 기다려야함

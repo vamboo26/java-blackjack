@@ -55,7 +55,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         gameSession.addSession(session);
         User user = WebSocketSessionUtils.userFromSession(session);
-        messageService.sendToAll(user._toChatDto("JOIN"), gameSession);
+        messageService.sendToAll(new SocketRequest<>("JOIN", user._toChatDto()), gameSession);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         if(controller == null) {
             ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
-            messageService.sendToAll(receivedChat, gameSession);
+            messageService.sendToAll(new SocketRequest<>("CHAT", receivedChat), gameSession);
             return;
         }
 
@@ -95,7 +95,6 @@ public class BlackjackHandler extends TextWebSocketHandler {
         log.debug("afterConnectionClosed : " + session + " + " + status);
         long gameId = getGameId(session);
         gameSessions.remove(gameId);
-
         // 나중에 게임 끊기면 방 사라지게하는 로직 필요. 현재는 끊어져도 방이 남아있고 들어가도 재접속 안됨.
 
     }

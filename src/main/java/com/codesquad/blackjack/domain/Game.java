@@ -9,9 +9,7 @@ import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
 
-    public static final int HIT_SELECTION = 1;
-    public static final int STAND_SELECTION = 2;
-    public static final int DOUBLE_SELECTION = 3;
+
 
     private Dealer dealer = new Dealer();
     private User user;
