@@ -56,23 +56,23 @@ public class SessionController {
     }
 
     public void startGame(GameSession gameSession) throws IOException {
-        Game game = gameService.findById(gameSession.getGameId());
-        game.initializeGame();
-
-        game.init(100);
-
-        System.out.println("*** 게임 시작합니닷!!!");
-
-        if (game.isBlackjack()) {
-            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
-            userRepository.save(game.getUser());
-            return;
-        }
-
-        messageService.sendToAll(game.getDealerDto(INIT), gameSession);
-        messageService.sendToAll(game.getUserDto(INIT), gameSession);
-
-        messageService.sendToAll(new UserTurnDto("USERTURN"), gameSession);
+//        Game game = gameService.findById(gameSession.getGameId());
+//        game.initializeGame();
+//
+//        game.init(100);
+//
+//        System.out.println("*** 게임 시작합니닷!!!");
+//
+//        if (game.isBlackjack()) {
+//            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
+//            userRepository.save(game.getUser());
+//            return;
+//        }
+//
+//        messageService.sendToAll(game.getDealerDto(INIT), gameSession);
+//        messageService.sendToAll(game.getUserDto(INIT), gameSession);
+//
+//        messageService.sendToAll(new UserTurnDto("USERTURN"), gameSession);
     }
 
     public void playerTurnGame(GameSession gameSession, int bettingChip) throws IOException {
@@ -89,58 +89,58 @@ public class SessionController {
     public void playerSelect(GameSession gameSession, int turn) throws IOException {
         Game game = gameService.findById(gameSession.getGameId());
 
-        if (turn != STAND_SELECTION) {
-            game.hit();
-
-            messageService.sendToAll(game.getDealerDto(INIT), gameSession);
-            messageService.sendToAll(game.getUserDto(INIT), gameSession);
-
-
-            if (game.isBurst()) {
-                messageService.sendToAll(new ResultDto("BURST", "DEALER"), gameSession);
-
-                game.initializeGame();
-                return;
-            }
-
-            if (game.isBlackjack()) {
-                messageService.sendToAll(new DealerTurnDto("DELAERTURN"), gameSession);
-                return;
-            }
-
-            if (turn == DOUBLE_SELECTION) {
-                game.setDouble();
-                messageService.sendToAll(new DealerTurnDto("DELAERTURN"), gameSession);
-                return;
-            }
-
-            if (turn == HIT_SELECTION) {
-                messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
-                return;
-            }
-        }
-
-        messageService.sendToAll(new DealerTurnDto("DEALERTURN"), gameSession);
+//        if (turn != STAND_SELECTION) {
+//            game.hit();
+//
+//            messageService.sendToAll(game.getDealerDto(INIT), gameSession);
+//            messageService.sendToAll(game.getUserDto(INIT), gameSession);
+//
+//
+//            if (game.isBurst()) {
+//                messageService.sendToAll(new ResultDto("BURST", "DEALER"), gameSession);
+//
+//                game.initializeGame();
+//                return;
+//            }
+//
+//            if (game.isBlackjack()) {
+//                messageService.sendToAll(new DealerTurnDto("DELAERTURN"), gameSession);
+//                return;
+//            }
+//
+//            if (turn == DOUBLE_SELECTION) {
+//                game.setDouble();
+//                messageService.sendToAll(new DealerTurnDto("DELAERTURN"), gameSession);
+//                return;
+//            }
+//
+//            if (turn == HIT_SELECTION) {
+//                messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
+//                return;
+//            }
+//        }
+//
+//        messageService.sendToAll(new DealerTurnDto("DEALERTURN"), gameSession);
     }
 
     public void dealerTurnGame(GameSession gameSession) throws IOException {
-        Game game = gameService.findById(gameSession.getGameId());
-
-        game.dealerTurn();
-
-        if (game.isBurst()) {
-            game.endByPlayerWin(game.getNormalPrize());
-
-            messageService.sendToAll(new ResultDto("BURST", "USER"), gameSession);
-            game.initializeGame();
-            userRepository.save(game.getUser());
-            return;
-        }
-
-        messageService.sendToAll(game.getDealerDto(INIT), gameSession);
-        messageService.sendToAll(game.getUserDto(INIT), gameSession);
-        messageService.sendToAll(new ResultDto("NORMAL", game.end(game.getNormalPrize())), gameSession);
-        userRepository.save(game.getUser());
+//        Game game = gameService.findById(gameSession.getGameId());
+//
+//        game.dealerTurn();
+//
+//        if (game.isBurst()) {
+//            game.endByPlayerWin(game.getNormalPrize());
+//
+//            messageService.sendToAll(new ResultDto("BURST", "USER"), gameSession);
+//            game.initializeGame();
+//            userRepository.save(game.getUser());
+//            return;
+//        }
+//
+//        messageService.sendToAll(game.getDealerDto(INIT), gameSession);
+//        messageService.sendToAll(game.getUserDto(INIT), gameSession);
+//        messageService.sendToAll(new ResultDto("NORMAL", game.end(game.getNormalPrize())), gameSession);
+//        userRepository.save(game.getUser());
     }
 
 }

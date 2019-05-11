@@ -3,13 +3,13 @@ package com.codesquad.blackjack.domain.player;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
 import com.codesquad.blackjack.dto.CardsDto;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Getter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+@Getter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractPlayer implements Player {
 
     @Size(min = 2, max = 10)
@@ -24,14 +24,6 @@ public abstract class AbstractPlayer implements Player {
 
     public AbstractPlayer(String name) {
         this.name = name;
-    }
-
-    protected String getName() {
-        return name;
-    }
-
-    protected Cards getCards() {
-        return cards;
     }
 
     @Override

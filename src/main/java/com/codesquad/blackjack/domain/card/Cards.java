@@ -1,21 +1,29 @@
 package com.codesquad.blackjack.domain.card;
 
 import com.codesquad.blackjack.dto.CardsDto;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.codesquad.blackjack.domain.card.Card.TEN;
 
+@Getter
 public class Cards {
 
     public static final int DEALER_HIT_NUMBER = 17;
     public static final int BLACKJACK_NUMBER = 21;
 
     private List<Card> cards = new ArrayList<>();
+    private int total;
 
     public void add(Card card) {
         cards.add(card);
+        total = calculateTotal();
+    }
+
+    public int getTotal() {
+        return total;
     }
 
     public int calculateTotal() {

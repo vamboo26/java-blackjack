@@ -4,6 +4,7 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.DealerDto;
+import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
@@ -116,6 +117,10 @@ public class Game {
 
     public User getUser() {
         return user;
+    }
+
+    public GameDto _toGameDto() {
+        return new GameDto(dealer, user, totalBet);
     }
 
     public void setDouble() {

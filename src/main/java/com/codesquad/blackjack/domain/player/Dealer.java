@@ -2,7 +2,9 @@ package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.MessageType;
 import com.codesquad.blackjack.dto.DealerDto;
+import lombok.Getter;
 
+@Getter
 public class Dealer extends AbstractPlayer {
 
     public static final String DEALER_NAME = "DEALER";

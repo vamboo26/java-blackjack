@@ -6,12 +6,12 @@ import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.dto.UserDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
 @Entity
 public class User extends AbstractPlayer {
 
@@ -83,14 +83,6 @@ public class User extends AbstractPlayer {
 
     private boolean matchUserId(String userId) {
         return this.userId.equals(userId);
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public Chip getChip() {
-        return chip;
     }
 
     public UserDto _toUserDto(MessageType type) {
