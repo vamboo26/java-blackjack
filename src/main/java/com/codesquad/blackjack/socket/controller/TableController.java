@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.socketSessionController;
+package com.codesquad.blackjack.socket.controller;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.socket.GameSession;

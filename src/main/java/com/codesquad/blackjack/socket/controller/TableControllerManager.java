@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.socketSessionController;
+package com.codesquad.blackjack.socket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,17 +8,17 @@ public class TableControllerManager {
 
     private final InitTableController initTableController;
 
-    private final BettingTableController bettingTableController;
+    private final BettingController bettingController;
 
-    private final DealerTableController dealerTableController;
+    private final DealerController dealerController;
 
     private final ChatController chatController;
 
     @Autowired
-    public TableControllerManager(InitTableController initTableController, BettingTableController bettingTableController, DealerTableController dealerTableController, ChatController chatController) {
+    public TableControllerManager(InitTableController initTableController, BettingController bettingController, DealerController dealerController, ChatController chatController) {
         this.initTableController = initTableController;
-        this.bettingTableController = bettingTableController;
-        this.dealerTableController = dealerTableController;
+        this.bettingController = bettingController;
+        this.dealerController = dealerController;
         this.chatController = chatController;
     }
 
@@ -29,11 +29,11 @@ public class TableControllerManager {
         }
 
         if(key.contains("BETTING")) {
-            return bettingTableController;
+            return bettingController;
         }
 
         if(key.equals("DEALERTURN")) {
-            return dealerTableController;
+            return dealerController;
         }
 
         return chatController;

@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.socketSessionController;
+package com.codesquad.blackjack.socket.controller;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.ResultDto;
@@ -10,18 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BettingTableController implements TableController {
+public class BettingController implements TableController {
 
     public static final int HIT_SELECTION = 1;
-
     public static final int STAND_SELECTION = 2;
-
     public static final int DOUBLE_SELECTION = 3;
 
     private final MessageService messageService;
 
     @Autowired
-    public BettingTableController(MessageService messageService) {
+    public BettingController(MessageService messageService) {
         this.messageService = messageService;
     }
 

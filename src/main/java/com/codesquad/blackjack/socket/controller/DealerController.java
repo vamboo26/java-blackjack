@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.socketSessionController;
+package com.codesquad.blackjack.socket.controller;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.ResultDto;
@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DealerTableController implements TableController {
+public class DealerController implements TableController {
 
     private final MessageService messageService;
 
     @Autowired
-    public DealerTableController(MessageService messageService) {
+    public DealerController(MessageService messageService) {
         this.messageService = messageService;
     }
 

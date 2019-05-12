@@ -1,7 +1,6 @@
-package com.codesquad.blackjack.socket.socketSessionController;
+package com.codesquad.blackjack.socket.controller;
 
 import com.codesquad.blackjack.domain.Game;
-import com.codesquad.blackjack.dto.BettingDto;
 import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.socket.GameSession;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class InitTableController implements TableController {
 
     public static final int DOUBLE = 1;
-    public static final int NOT_DOUBLE = 2;
+    public static final int WITHOUT_DOUBLE = 2;
 
     private final MessageService messageService;
 
@@ -52,7 +51,7 @@ public class InitTableController implements TableController {
         if(game.hasGamerEnoughChip(100)) {
             messageService.sendToAll(new SocketResponse<>("SELECTION", DOUBLE), gameSession);
         } else {
-            messageService.sendToAll(new SocketResponse<>("SELECTION", NOT_DOUBLE), gameSession);
+            messageService.sendToAll(new SocketResponse<>("SELECTION", WITHOUT_DOUBLE), gameSession);
         }
         //여기까지했으면 버튼 잘 열어주고 끝났어
         //이제 버튼 누르길 기다려야함

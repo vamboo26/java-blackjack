@@ -7,7 +7,7 @@ import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.service.MessageService;
-import com.codesquad.blackjack.socket.socketSessionController.*;
+import com.codesquad.blackjack.socket.controller.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
