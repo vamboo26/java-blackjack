@@ -1,11 +1,11 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 import com.codesquad.blackjack.domain.Chip;
 
 public class UserDto {
 
-    private MessageType type;
+    private ResponseType type;
     private String name;
     private CardsDto cards;
     private Chip chip;
@@ -15,7 +15,7 @@ public class UserDto {
         this.cards = cards;
     }
 
-    public UserDto(MessageType type, String name, CardsDto cards, Chip chip) {
+    public UserDto(ResponseType type, String name, CardsDto cards, Chip chip) {
         this.type = type;
         this.name = name;
         this.cards = cards;
@@ -52,11 +52,11 @@ public class UserDto {
         this.chip = chip;
     }
 
-    public MessageType getType() {
+    public ResponseType getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
+    public void setType(ResponseType type) {
         this.type = type;
     }
 

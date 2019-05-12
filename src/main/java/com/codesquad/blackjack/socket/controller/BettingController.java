@@ -9,6 +9,8 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.codesquad.blackjack.domain.ResponseType.*;
+
 @Component
 public class BettingController implements TableController {
 
@@ -34,11 +36,11 @@ public class BettingController implements TableController {
             game.hit();
 
             //한장 추가했으니 유저의 갱신된카드 뿌려줘
-            messageService.sendToAll(new SocketResponse<>("INIT", game._toGameDto()), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
 
             //히트 또눌렀어, 이 메소드 다시 호출해야해
             if (turn == HIT_SELECTION) {
-                messageService.sendToAll(new SocketResponse<>("BETTING", HIT_SELECTION), gameSession);
+                messageService.sendToAll(new SocketResponse<>(BETTING, HIT_SELECTION), gameSession);
 //                messageService.sendToAll(new BettingDto("NONE_DOUBLE"), gameSession);
                 return;
             }
@@ -57,20 +59,20 @@ public class BettingController implements TableController {
             //뽑았더니 21됐어, 그럼 바로 딜러턴으로 넘어가
             //버튼 숨기고 딜러턴 수행해
             if (game.isBlackjack()) {
-                messageService.sendToAll(new SocketResponse<>("DEALERTURN", null), gameSession);
+                messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
                 return;
             }
 
             //더블을 눌렀어(블랙잭/버스트 안됨) 그럼 바로 딜러턴으로 넘어가
             if (turn == DOUBLE_SELECTION) {
                 game.setDouble();
-                messageService.sendToAll(new SocketResponse<>("DEALERTURN", null), gameSession);
+                messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
                 return;
             }
         }
 
         //딜러턴 수행해(버튼숨겨야해)
-        messageService.sendToAll(new SocketResponse<>("DEALERTURN", null), gameSession);
+        messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
     }
 
 }

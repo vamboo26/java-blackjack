@@ -1,7 +1,7 @@
 package com.codesquad.blackjack.socket;
 
+import com.google.common.base.MoreObjects;
 import lombok.Getter;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Getter
 public class SocketRequest<T> {
@@ -9,7 +9,7 @@ public class SocketRequest<T> {
     private String type;
     private T request;
 
-    //리플렉션위해? object mapper 확인
+    //TODO 자바 리플렉션 확인
     private SocketRequest() {}
 
     public SocketRequest(String type, T request) {
@@ -19,9 +19,9 @@ public class SocketRequest<T> {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("type", type)
-                .append("request", request)
+        return MoreObjects.toStringHelper(this)
+                .add("type", type)
+                .add("request", request)
                 .toString();
     }
 

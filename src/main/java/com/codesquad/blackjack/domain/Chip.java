@@ -1,5 +1,7 @@
 package com.codesquad.blackjack.domain;
 
+import com.google.common.base.MoreObjects;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -64,9 +66,9 @@ public class Chip {
 
     @Override
     public String toString() {
-        return "Chip{" +
-                "amount=" + amount +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("amount", amount)
+                .toString();
     }
-
+    
 }

@@ -9,6 +9,8 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.codesquad.blackjack.domain.ResponseType.INIT;
+
 @Component
 public class DealerController implements TableController {
 
@@ -40,7 +42,7 @@ public class DealerController implements TableController {
         //종료결과, 승자, 잔여칩 보여줘
         //유저 저장해줘
 
-        messageService.sendToAll(new SocketResponse<>("INIT", game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
 //        userRepository.save(game.getUser());
         return;
     }

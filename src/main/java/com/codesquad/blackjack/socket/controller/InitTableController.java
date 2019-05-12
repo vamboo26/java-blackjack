@@ -9,6 +9,9 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.codesquad.blackjack.domain.ResponseType.INIT;
+import static com.codesquad.blackjack.domain.ResponseType.SELECTION;
+
 @Component
 public class InitTableController implements TableController {
 
@@ -37,7 +40,7 @@ public class InitTableController implements TableController {
             //종료결과, 승자, 잔여칩 보여주기
             //둘의 카드 다 보여주기
             //버튼 모두 숨기기
-            messageService.sendToAll(new SocketResponse<>("INIT", game._toGameDto()), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
             messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
 //            userRepository.save(game.getUser());
             return;
@@ -46,12 +49,12 @@ public class InitTableController implements TableController {
         //블랙잭 없으면
         //딜러 1장, 유저 2장 보여주기
         //버튼 열어준다(보유칩에 따라 더블다운까지)
-        messageService.sendToAll(new SocketResponse<>("INIT", game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
 
         if(game.hasGamerEnoughChip(100)) {
-            messageService.sendToAll(new SocketResponse<>("SELECTION", DOUBLE), gameSession);
+            messageService.sendToAll(new SocketResponse<>(SELECTION, DOUBLE), gameSession);
         } else {
-            messageService.sendToAll(new SocketResponse<>("SELECTION", WITHOUT_DOUBLE), gameSession);
+            messageService.sendToAll(new SocketResponse<>(SELECTION, WITHOUT_DOUBLE), gameSession);
         }
         //여기까지했으면 버튼 잘 열어주고 끝났어
         //이제 버튼 누르길 기다려야함

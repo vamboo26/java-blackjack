@@ -1,15 +1,17 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.dto.ChatDto;
 import com.codesquad.blackjack.dto.UserDto;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Getter
+@Setter
 @Entity
 public class User extends AbstractPlayer {
 
@@ -68,6 +70,9 @@ public class User extends AbstractPlayer {
             throw new RuntimeException();
         }
 
+        //TODO
+        // 폼에서 데이터 던질 때, 유저객체로 받아서 setter가 필요한데(이것도 리플렉션?)
+        // 어떻게 setter없이 로직구현할지 고민하기
         if (!matchPassword(target.password)) {
             throw new RuntimeException();
         }
@@ -83,7 +88,7 @@ public class User extends AbstractPlayer {
         return this.userId.equals(userId);
     }
 
-    public UserDto _toUserDto(MessageType type) {
+    public UserDto _toUserDto(ResponseType type) {
         return new UserDto(type, getName(), getCardsDto(), this.chip);
     }
 

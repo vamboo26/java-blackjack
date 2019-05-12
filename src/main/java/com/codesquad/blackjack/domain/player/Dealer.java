@@ -1,6 +1,6 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 import com.codesquad.blackjack.dto.DealerDto;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public class Dealer extends AbstractPlayer {
         super(DEALER_NAME);
     }
 
-    public DealerDto _toDealerDto(MessageType type) {
+    public DealerDto _toDealerDto(ResponseType type) {
         return new DealerDto(type, getName(), getCardsDto());
     }
 

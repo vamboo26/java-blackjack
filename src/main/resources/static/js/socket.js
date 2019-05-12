@@ -7,15 +7,6 @@ let $result = $('div#result_box');
 
 $(document).ready( function() {
 	connectSockJs();
-
-    $('#btnSend').on('click', function(evt) {
-        evt.preventDefault();
-        if (socket.readyState !== 1) return;
-
-        let msg = $('input#msg').val();
-        socket.send(JSON.stringify({type: 'CHAT', request: userName + '&' + msg}));
-        $('input#msg').val("");
-    });
 });
 
 function connectSockJs() {
@@ -33,6 +24,13 @@ function connectSockJs() {
             var type = JSON.parse(event.data).type;
             var data = JSON.parse(event.data).response;
 
+            if(message === '관전자') {
+                $('#a').remove();
+                $('#b').remove();
+                $('#c').remove();
+                $('#btnStart').remove();
+            }
+
             if(type === 'INIT') {
                 showDealerCards(data.dealer);
                 showUserCards(data.user);
@@ -48,6 +46,9 @@ function connectSockJs() {
             }
 
             if(type === 'SELECTION') {
+                $('#a').css('visibility','visible');
+                $('#b').css('visibility','visible');
+
                 if(data === 1) {
                     $('#c').css('visibility','visible');
                 } else {
@@ -69,8 +70,6 @@ function connectSockJs() {
                 hideAllButtons();
                 socket.send(JSON.stringify({type: 'DEALERTURN', request: 'null'}));
             }
-
-
 
             /**
              * data.type === JOIN
@@ -94,22 +93,15 @@ function connectSockJs() {
              *
              */
 
-            // if(message.type === 'JOIN') {
-            //     $chat.append('<li>' + message.userName + '님이 입장했습니다.</li>')
-            // }
-            //
-            // if(message.type === 'CHAT') {
-            //     $chat.append('<li>' + message.userName + ' : ' + message.message + '</li>')
-            // }
-
             if(message.type === 'RESULT') {
                 $('#a').css('visibility','hidden');
                 $('#b').css('visibility','hidden');
                 $('#c').css('visibility','hidden');
 
+                $result.empty();
+
                 if(message.winner === 'TIE') {
                     $result.append(' * 무승부입니다.');
-                    return;
                 }
 
                 if(message.status === 'BLACKJACK') {
@@ -140,8 +132,6 @@ $('#btnStart').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
-    $('#a').css('visibility','visible');
-    $('#b').css('visibility','visible');
     $result.empty();
 
     socket.send(JSON.stringify({type: 'START', request: 'null'}));
@@ -166,6 +156,15 @@ $('#c').on('click', function(evt) {
     if (socket.readyState !== 1) return;
 
     socket.send(JSON.stringify({type: 'BETTING', request: 3}));
+});
+
+$('#btnSend').on('click', function(evt) {
+    evt.preventDefault();
+    if (socket.readyState !== 1) return;
+
+    let msg = $('input#msg').val();
+    socket.send(JSON.stringify({type: 'CHAT', request: userName + '&' + msg}));
+    $('input#msg').val("");
 });
 
 function hideAllButtons() {

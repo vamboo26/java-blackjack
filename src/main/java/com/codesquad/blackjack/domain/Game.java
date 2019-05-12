@@ -3,20 +3,15 @@ package com.codesquad.blackjack.domain;
 import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
-import com.codesquad.blackjack.dto.DealerDto;
 import com.codesquad.blackjack.dto.GameDto;
-import com.codesquad.blackjack.dto.UserDto;
 
 public class Game {
 
-
-
+    private long id;
     private Dealer dealer = new Dealer();
     private User user;
     private Chip totalBet = new Chip(0);
     private Deck deck = Deck.auto();
-
-    private long id;
 
     public Game(String playerName) {
         this.user = new User(playerName);
@@ -46,7 +41,6 @@ public class Game {
     }
 
     public String end(Chip prize) {
-
         if(!dealer.isWinner(user)) {
             return endByPlayerWin(prize);
         }
@@ -96,14 +90,6 @@ public class Game {
         return user.isBankruptcy();
     }
 
-    public UserDto getUserDto(MessageType type) {
-        return user._toUserDto(type);
-    }
-
-    public DealerDto getDealerDto(MessageType type) {
-        return dealer._toDealerDto(type);
-    }
-
     public long getId() {
         return id;
     }
@@ -111,7 +97,6 @@ public class Game {
     public void setId(long id) {
         this.id = id;
     }
-
 
     public User getUser() {
         return user;

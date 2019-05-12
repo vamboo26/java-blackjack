@@ -1,19 +1,19 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 
-import static com.codesquad.blackjack.domain.MessageType.USERTURN;
+import static com.codesquad.blackjack.domain.ResponseType.USERTURN;
 
 public class UserTurnDto {
 
-    private MessageType type = USERTURN;
+    private ResponseType type = USERTURN;
     private String status;
 
     public UserTurnDto(String status) {
         this.status = status;
     }
 
-    public MessageType getType() {
+    public ResponseType getType() {
         return type;
     }
 

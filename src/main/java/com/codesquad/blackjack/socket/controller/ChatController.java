@@ -8,6 +8,8 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.codesquad.blackjack.domain.ResponseType.CHAT;
+
 @Component
 public class ChatController implements TableController {
 
@@ -20,7 +22,7 @@ public class ChatController implements TableController {
 
     @Override
     public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
-        messageService.sendToAll(new SocketResponse<>("CHAT", request.getRequest()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(CHAT, request.getRequest()), gameSession);
     }
 
 }

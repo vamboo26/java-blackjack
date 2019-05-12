@@ -1,12 +1,12 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 
-import static com.codesquad.blackjack.domain.MessageType.RESULT;
+import static com.codesquad.blackjack.domain.ResponseType.RESULT;
 
 public class ResultDto {
 
-    private MessageType type = RESULT;
+    private ResponseType type = RESULT;
     private String status;
     private String winner;
 
@@ -18,11 +18,11 @@ public class ResultDto {
         this.winner = winner;
     }
 
-    public MessageType getType() {
+    public ResponseType getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
+    public void setType(ResponseType type) {
         this.type = type;
     }
 

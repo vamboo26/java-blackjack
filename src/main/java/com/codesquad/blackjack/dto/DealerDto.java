@@ -1,27 +1,27 @@
 package com.codesquad.blackjack.dto;
 
-import com.codesquad.blackjack.domain.MessageType;
+import com.codesquad.blackjack.domain.ResponseType;
 
 public class DealerDto {
 
-    private MessageType type;
+    private ResponseType type;
     private String name;
     private CardsDto cards;
 
     public DealerDto() {
     }
 
-    public DealerDto(MessageType type, String name, CardsDto cards) {
+    public DealerDto(ResponseType type, String name, CardsDto cards) {
         this.type = type;
         this.name = name;
         this.cards = cards;
     }
 
-    public MessageType getType() {
+    public ResponseType getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
+    public void setType(ResponseType type) {
         this.type = type;
     }
 
