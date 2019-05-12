@@ -3,7 +3,6 @@ package com.codesquad.blackjack.socket;
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.domain.player.UserRepository;
-import com.codesquad.blackjack.dto.*;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
@@ -55,7 +54,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
         gameSession.addSession(session);
         User user = WebSocketSessionUtils.userFromSession(session);
-        messageService.sendToAll(new SocketRequest<>("JOIN", user._toChatDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>("JOIN", user._toChatDto()), gameSession);
     }
 
     @Override
@@ -64,18 +63,16 @@ public class BlackjackHandler extends TextWebSocketHandler {
         GameSession gameSession = findByGameId(gameId);
         Game game = gameService.findById(gameSession.getGameId());
 
+
         String payload = message.getPayload();
         log.info("payload : {}", payload);
 
-        TableController controller = tableControllerManager.getTableController(payload);
+        SocketRequest request = objectMapper.readValue(payload, SocketRequest.class);
+        log.info("request : {}", request);
 
-        if(controller == null) {
-            ChatDto receivedChat = objectMapper.readValue(payload, ChatDto.class);
-            messageService.sendToAll(new SocketRequest<>("CHAT", receivedChat), gameSession);
-            return;
-        }
 
-        controller.handleTurn(gameSession, game);
+        TableController controller = tableControllerManager.getTableController(request.getType());
+        controller.handleTurn(gameSession, game, request);
 
         /**
          * 1) afterConnectionEstablished

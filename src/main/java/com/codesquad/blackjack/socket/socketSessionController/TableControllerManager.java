@@ -12,11 +12,14 @@ public class TableControllerManager {
 
     private final DealerTableController dealerTableController;
 
+    private final ChatController chatController;
+
     @Autowired
-    public TableControllerManager(InitTableController initTableController, BettingTableController bettingTableController, DealerTableController dealerTableController) {
+    public TableControllerManager(InitTableController initTableController, BettingTableController bettingTableController, DealerTableController dealerTableController, ChatController chatController) {
         this.initTableController = initTableController;
         this.bettingTableController = bettingTableController;
         this.dealerTableController = dealerTableController;
+        this.chatController = chatController;
     }
 
     //TODO 이거 분명히... 개선가능할텐데? 일단 진행
@@ -33,7 +36,7 @@ public class TableControllerManager {
             return dealerTableController;
         }
 
-        return null;
+        return chatController;
     }
 
 }

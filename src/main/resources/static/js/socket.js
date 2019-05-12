@@ -13,7 +13,7 @@ $(document).ready( function() {
         if (socket.readyState !== 1) return;
 
         let msg = $('input#msg').val();
-        socket.send(JSON.stringify({type: 'CHAT', userName: userName, message: msg}));
+        socket.send(JSON.stringify({type: 'CHAT', request: userName + '&' + msg}));
         $('input#msg').val("");
     });
 });
@@ -31,7 +31,7 @@ function connectSockJs() {
             console.log(message);
 
             var type = JSON.parse(event.data).type;
-            var data = JSON.parse(event.data).request;
+            var data = JSON.parse(event.data).response;
 
             if(type === 'INIT') {
                 showDealerCards(data.dealer);
@@ -39,18 +39,19 @@ function connectSockJs() {
             }
 
             if(type === 'CHAT') {
-                printChat(data);
+                var words = data.split('&');
+                printChat(words);
             }
 
             if(type === 'JOIN') {
                 $chat.append('<li>' + data.userName + '님이 입장했습니다.</li>')
             }
 
-            if(type === 'SELECT') {
+            if(type === 'SELECTION') {
                 if(data === 1) {
-                    $('#c').css('visibility','hidden');
-                } else {
                     $('#c').css('visibility','visible');
+                } else {
+                    $('#c').css('visibility','hidden');
                 }
             }
 
@@ -60,13 +61,13 @@ function connectSockJs() {
                     $('#c').css('visibility','hidden');
                 } else {
                     hideAllButtons();
-                    socket.send('DEALERTURN');
+                    socket.send(JSON.stringify({type: 'DEALERTURN', request: 'null'}));
                 }
             }
 
             if(type === 'DEALERTURN') {
                 hideAllButtons();
-                socket.send('DEALERTURN');
+                socket.send(JSON.stringify({type: 'DEALERTURN', request: 'null'}));
             }
 
 
@@ -123,23 +124,6 @@ function connectSockJs() {
                     $result.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
                 }
             }
-
-            if(message.type === 'BETTING') {
-                $('#a').css('visibility','visible');
-                $('#b').css('visibility','visible');
-                if(event.status === 'DOUBLE') {
-                    $('#c').css('visibility','visible');
-                }
-            }
-
-            // if(message.type === 'USERTURN') {
-            //     socket.send('USERTURN');
-            // }
-            //
-            // if(message.type === 'DEALERTURN') {
-            //     hideAllButtons();
-            //     socket.send('DEALERTURN');
-            // }
         };
 
         socket.onclose = function (event) {
@@ -160,28 +144,28 @@ $('#btnStart').on('click', function(evt) {
     $('#b').css('visibility','visible');
     $result.empty();
 
-    socket.send('START');
+    socket.send(JSON.stringify({type: 'START', request: 'null'}));
 });
 
 $('#a').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
-    socket.send('BETTING:1');
+    socket.send(JSON.stringify({type: 'BETTING', request: 1}));
 });
 
 $('#b').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
-    socket.send('BETTING:2');
+    socket.send(JSON.stringify({type: 'BETTING', request: 2}));
 });
 
 $('#c').on('click', function(evt) {
     evt.preventDefault();
     if (socket.readyState !== 1) return;
 
-    socket.send('BETTING:3');
+    socket.send(JSON.stringify({type: 'BETTING', request: 3}));
 });
 
 function hideAllButtons() {
@@ -220,6 +204,6 @@ function showUserCards(user) {
     $user.append('<br>전체 카드의 합은 ' + user.cards.total + '입니다. <br><br>')
 }
 
-function printChat(request) {
-    $chat.append('<li>' + request.userName + ' : ' + request.message + '</li>')
+function printChat(words) {
+    $chat.append('<li>' + words[0] + ' : ' + words[1] + '</li>')
 }

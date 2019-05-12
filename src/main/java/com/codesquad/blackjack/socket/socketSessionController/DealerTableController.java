@@ -5,6 +5,7 @@ import com.codesquad.blackjack.dto.ResultDto;
 import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.socket.GameSession;
 import com.codesquad.blackjack.socket.SocketRequest;
+import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class DealerTableController implements TableController {
     }
 
     @Override
-    public void handleTurn(GameSession gameSession, Game game) {
+    public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
 //        log.debug("DEALERTURN 실행");
 
         //룰에 따라 카드 뽑든 안뽑든해
@@ -39,7 +40,7 @@ public class DealerTableController implements TableController {
         //종료결과, 승자, 잔여칩 보여줘
         //유저 저장해줘
 
-        messageService.sendToAll(new SocketRequest<>("INIT", game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>("INIT", game._toGameDto()), gameSession);
 //        userRepository.save(game.getUser());
         return;
     }

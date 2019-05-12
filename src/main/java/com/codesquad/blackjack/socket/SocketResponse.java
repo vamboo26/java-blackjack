@@ -4,24 +4,21 @@ import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Getter
-public class SocketRequest<T> {
+public class SocketResponse<T> {
 
     private String type;
-    private T request;
+    private T response;
 
-    //리플렉션위해? object mapper 확인
-    private SocketRequest() {}
-
-    public SocketRequest(String type, T request) {
+    public SocketResponse(String type, T response) {
         this.type = type;
-        this.request = request;
+        this.response = response;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("type", type)
-                .append("request", request)
+                .append("response", response)
                 .toString();
     }
 
