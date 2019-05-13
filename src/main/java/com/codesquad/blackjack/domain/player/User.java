@@ -1,9 +1,7 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.domain.ResponseType;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.dto.ChatDto;
-import com.codesquad.blackjack.dto.UserDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -88,9 +86,6 @@ public class User extends AbstractPlayer {
         return this.userId.equals(userId);
     }
 
-    public UserDto _toUserDto(ResponseType type) {
-        return new UserDto(type, getName(), getCardsDto(), this.chip);
-    }
 
     public ChatDto _toChatDto() {
         return new ChatDto(this.name);

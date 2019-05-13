@@ -1,6 +1,5 @@
 package com.codesquad.blackjack.domain.card;
 
-import com.codesquad.blackjack.dto.CardsDto;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -67,10 +66,6 @@ public class Cards {
 
     public boolean isBigger(Cards target) {
         return calculateTotal() > target.calculateTotal();
-    }
-
-    public CardsDto _toCardsDto() {
-        return new CardsDto(cards, calculateTotal());
     }
 
 }

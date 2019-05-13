@@ -1,7 +1,7 @@
 package com.codesquad.blackjack.socket.controller;
 
 import com.codesquad.blackjack.domain.Game;
-import com.codesquad.blackjack.dto.ResultDto;
+import com.codesquad.blackjack.dto.GameDto;
 import com.codesquad.blackjack.service.MessageService;
 import com.codesquad.blackjack.socket.GameSession;
 import com.codesquad.blackjack.socket.SocketRequest;
@@ -9,6 +9,7 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.codesquad.blackjack.domain.GameStatus.BLACKJACK;
 import static com.codesquad.blackjack.domain.ResponseType.*;
 
 @Component
@@ -31,8 +32,9 @@ public class InitTableController implements TableController {
         game.init(100);
 
         if (game.isBlackjack()) {
-            messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
-            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
+            GameDto gameDto = game._toGameDto(BLACKJACK, game.finishGame(BLACKJACK));
+            messageService.sendToAll(new SocketResponse<>(INIT, gameDto), gameSession);
+//            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
 //            userRepository.save(game.getUser());
             return;
         }

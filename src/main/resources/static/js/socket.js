@@ -71,6 +71,25 @@ function connectSockJs() {
                 socket.send(JSON.stringify({type: 'DEALERTURN', request: 'null'}));
             }
 
+
+            if(data.status === 'BLACKJACK') {
+                hideAllButtons();
+                $result.empty();
+                $result.append(' * 블랙잭으로 ' + data.winner + '가 승리했습니다.');
+            }
+
+            if(data.status === 'BURST') {
+                hideAllButtons();
+                $result.empty();
+                $result.append(' * 상대 버스트로 ' + data.winner + '가 승리했습니다.');
+            }
+
+            if(data.status === 'NORMAL') {
+                hideAllButtons();
+                $result.empty();
+                $result.append(' * 합산결과 ' + data.winner + '가 승리했습니다.');
+            }
+
             /**
              * data.type === JOIN
              * 조인메세지 출력 (chat)
@@ -93,29 +112,29 @@ function connectSockJs() {
              *
              */
 
-            if(message.type === 'RESULT') {
-                $('#a').css('visibility','hidden');
-                $('#b').css('visibility','hidden');
-                $('#c').css('visibility','hidden');
-
-                $result.empty();
-
-                if(message.winner === 'TIE') {
-                    $result.append(' * 무승부입니다.');
-                }
-
-                if(message.status === 'BLACKJACK') {
-                    $result.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
-                }
-
-                if(message.status === 'BURST') {
-                    $result.append(' * 상대 버스트로 ' + message.winner + '가 승리했습니다.');
-                }
-
-                if(message.status === 'NORMAL') {
-                    $result.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
-                }
-            }
+            // if(message.type === 'RESULT') {
+            //     $('#a').css('visibility','hidden');
+            //     $('#b').css('visibility','hidden');
+            //     $('#c').css('visibility','hidden');
+            //
+            //     $result.empty();
+            //
+            //     if(message.winner === 'TIE') {
+            //         $result.append(' * 무승부입니다.');
+            //     }
+            //
+            //     if(message.status === 'BLACKJACK') {
+            //         $result.append(' * 블랙잭으로 ' + message.winner + '가 승리했습니다.');
+            //     }
+            //
+            //     if(message.status === 'BURST') {
+            //         $result.append(' * 상대 버스트로 ' + message.winner + '가 승리했습니다.');
+            //     }
+            //
+            //     if(message.status === 'NORMAL') {
+            //         $result.append(' * 합산결과 ' + message.winner + '가 승리했습니다.');
+            //     }
+            // }
         };
 
         socket.onclose = function (event) {

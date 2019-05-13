@@ -2,7 +2,6 @@ package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
-import com.codesquad.blackjack.dto.CardsDto;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -19,10 +18,10 @@ public abstract class AbstractPlayer implements Player {
     @Transient
     private Cards cards = new Cards();
 
-    public AbstractPlayer() {
+    AbstractPlayer() {
     }
 
-    public AbstractPlayer(String name) {
+    AbstractPlayer(String name) {
         this.name = name;
     }
 
@@ -44,11 +43,6 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public boolean isBlackjack() {
         return this.cards.isBlackjack();
-    }
-
-    @Override
-    public CardsDto getCardsDto() {
-        return this.cards._toCardsDto();
     }
 
 }
