@@ -27,7 +27,7 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public void initialize() {
-        this.cards = new Cards() ;
+        this.cards = new Cards();
     }
 
     @Override

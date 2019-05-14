@@ -6,6 +6,8 @@ import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.GameDto;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 public class Game {
 
@@ -29,7 +31,7 @@ public class Game {
 
     public void init(int bettingChip) {
         //TODO exception 정리필요
-        if(hasGamerNoMoney()) {
+        if (hasGamerNoMoney()) {
             throw new IllegalArgumentException("칩이 없어요");
         }
 
@@ -45,36 +47,13 @@ public class Game {
         user.receiveCard(deck.draw());
     }
 
-
-    /**
-     * dealer, user 둘다 블랙잭 -> 무승부(push)
-     * user의 버스트 -> dealer 상관없이 dealer 승리
-     * dealer만 버스트 -> 유저 승리 (베팅액 * 2)
-     * 두 케이스 제외하면 모두 normal 숫자계산(둘다 21보다 작거나 같은 상황에서 크기 비교)
-     *
-     * 1. INFO
-     * 둘다블랙잭 -> 무승부 종료
-     * 딜러블랙잭 -> 딜러 승리
-     * 유저블랙잭 -> 유저 승리((베팅액 * 2) * 1.5
-     *
-     * 2. 유저턴
-     * 유저버스트 -> 딜러 승리
-     * 나머지 -> 딜러턴으로
-     *
-     * 3. 딜러턴
-     * 딜러버스트 -> 유저 승리 (베팅액 * 2)
-     * 나머지 -> 합 비교 후 유저 승리 시 (베팅액 * 2)
-     */
-
+    //TODO 리턴타입 고민
     public String finishGame(GameStatus status) {
-        for (GameStatus value : GameStatus.values()) {
-            if (value.equals(status)) {
-                return value.finish(this);
-            }
-        }
-
-        //TODO exception 관리 필요
-        throw new IllegalArgumentException("올바른 status가 아니에요");
+        return Arrays.stream(GameStatus.values())
+                .filter(value -> value.equals(status))
+                .findAny()
+                .orElseThrow(IllegalAccessError::new)
+                .finish(this);
     }
 
     public void hit() {
@@ -82,13 +61,8 @@ public class Game {
     }
 
     public void dealerTurn() {
-        while(dealer.dealerTurn()) dealer.receiveCard(this.deck.draw());
+        while (dealer.dealerTurn()) dealer.receiveCard(this.deck.draw());
     }
-
-
-
-
-
 
     public boolean isBlackjack() {
         return dealer.isBlackjack() || user.isBlackjack();
@@ -97,9 +71,6 @@ public class Game {
     public boolean isBurst() {
         return dealer.isBurst() || user.isBurst();
     }
-
-
-
 
     public boolean hasGamerEnoughChip(int bettingChip) {
         return user.checkChip(bettingChip);
@@ -127,11 +98,12 @@ public class Game {
     }
 
     public enum GameStatus {
+        //TODO 상수 하드코딩 처리, 혹은 리턴을 객체로 처리
 
         BLACKJACK {
             @Override
             String finish(Game game) {
-                if(game.dealer.isTie(game.user)) {
+                if (game.dealer.isTie(game.user)) {
                     return "TIE";
                 }
 
@@ -146,7 +118,7 @@ public class Game {
         BURST {
             @Override
             String finish(Game game) {
-                if(game.user.isBurst()) {
+                if (game.user.isBurst()) {
                     return "DEALER";
                 }
 
@@ -157,12 +129,12 @@ public class Game {
         NORMAL {
             @Override
             String finish(Game game) {
-                if(!game.dealer.isWinner(game.user)) {
+                if (!game.dealer.isWinner(game.user)) {
                     game.user.winPrize(game.totalBet.twice());
                     return "USER";
                 }
 
-                if(!game.dealer.isTie(game.user)) {
+                if (!game.dealer.isTie(game.user)) {
                     return "DEALER";
                 }
 
