@@ -4,9 +4,9 @@ import com.codesquad.blackjack.domain.card.Deck;
 import com.codesquad.blackjack.domain.player.Dealer;
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.dto.GameDto;
+import lombok.Getter;
 
-import static com.codesquad.blackjack.domain.GameStatus.*;
-
+@Getter
 public class Game {
 
     private long id;
@@ -67,72 +67,15 @@ public class Game {
      */
 
     public String finishGame(GameStatus status) {
-        if(status.equals(BLACKJACK)) {
-            if(isBothBlackjack()) {
-                return "TIE";
+        for (GameStatus value : GameStatus.values()) {
+            if (value.equals(status)) {
+                return value.finish(this);
             }
-
-            if(!dealer.isWinner(user)) {
-                user.winPrize(totalBet.blackjack());
-                return "USER";
-            }
-
-            return "DEALER";
         }
 
-        if(status.equals(BURST)) {
-            if(user.isBurst()) {
-                return "DEALER";
-            }
-
-            user.winPrize(totalBet.twice());
-            return "USER";
-        }
-
-        if(!dealer.isWinner(user)) {
-            user.winPrize(totalBet.twice());
-            return "USER";
-        }
-
-        if(!dealer.isTie(user)) {
-            return "DEALER";
-        }
-
-        return "TIE";
+        //TODO exception 관리 필요
+        throw new IllegalArgumentException("올바른 status가 아니에요");
     }
-
-
-    public String end(Chip prize) {
-        if(!dealer.isWinner(user)) {
-            return endByPlayerWin(prize);
-        }
-
-        return dealer.isTie(user) ? endByTie() : "DEALER";
-    }
-
-    private String endByTie() {
-        user.winPrize(totalBet);
-        return "TIE";
-    }
-
-    public String endByPlayerWin(Chip prize) {
-        user.winPrize(prize);
-        return "USER";
-    }
-
-    public Chip getBlackjackPrize() {
-        return totalBet.blackjack();
-    }
-
-    public Chip getNormalPrize() {
-        return totalBet.twice();
-    }
-
-
-
-
-
-
 
     public void hit() {
         user.receiveCard(this.deck.draw());
@@ -142,17 +85,21 @@ public class Game {
         while(dealer.dealerTurn()) dealer.receiveCard(this.deck.draw());
     }
 
+
+
+
+
+
     public boolean isBlackjack() {
         return dealer.isBlackjack() || user.isBlackjack();
-    }
-
-    public boolean isBothBlackjack() {
-        return dealer.isBlackjack() && user.isBlackjack();
     }
 
     public boolean isBurst() {
         return dealer.isBurst() || user.isBurst();
     }
+
+
+
 
     public boolean hasGamerEnoughChip(int bettingChip) {
         return user.checkChip(bettingChip);
@@ -162,16 +109,8 @@ public class Game {
         return user.isBankruptcy();
     }
 
-    public long getId() {
-        return id;
-    }
-
     public void setId(long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
     }
 
     public void raiseDouble() {
@@ -185,6 +124,53 @@ public class Game {
 
     public GameDto _toGameDto(GameStatus status, String winner) {
         return new GameDto(dealer, user, totalBet, status, winner);
+    }
+
+    public enum GameStatus {
+
+        BLACKJACK {
+            @Override
+            String finish(Game game) {
+                if(game.dealer.isTie(game.user)) {
+                    return "TIE";
+                }
+
+                if (!game.dealer.isWinner(game.user)) {
+                    game.user.winPrize(game.totalBet.blackjack());
+                    return "USER";
+                }
+
+                return "DEALER";
+            }
+        },
+        BURST {
+            @Override
+            String finish(Game game) {
+                if(game.user.isBurst()) {
+                    return "DEALER";
+                }
+
+                game.user.winPrize(game.totalBet.twice());
+                return "USER";
+            }
+        },
+        NORMAL {
+            @Override
+            String finish(Game game) {
+                if(!game.dealer.isWinner(game.user)) {
+                    game.user.winPrize(game.totalBet.twice());
+                    return "USER";
+                }
+
+                if(!game.dealer.isTie(game.user)) {
+                    return "DEALER";
+                }
+
+                return "TIE";
+            }
+        };
+
+        abstract String finish(Game game);
     }
 
 }

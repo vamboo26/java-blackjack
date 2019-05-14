@@ -9,8 +9,8 @@ import com.codesquad.blackjack.socket.SocketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static com.codesquad.blackjack.domain.GameStatus.BURST;
-import static com.codesquad.blackjack.domain.GameStatus.NORMAL;
+import static com.codesquad.blackjack.domain.Game.GameStatus.BURST;
+import static com.codesquad.blackjack.domain.Game.GameStatus.NORMAL;
 import static com.codesquad.blackjack.domain.ResponseType.INIT;
 
 @Component
