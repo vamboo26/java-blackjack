@@ -28,26 +28,25 @@ public class BettingController implements TableController {
 
     @Override
     public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
-//        int turn = request.getRequest();
-        int turn = 2;
+        int turn = (int) request.getRequest();
+
         if(turn == STAND_SELECTION) {
-            messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
+            messageService.processToDealerTurn(gameSession);
             return;
         }
 
         game.hit();
-        messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(INFO, game._toGameDto()), gameSession);
 
         if (game.isBurst()) {
             GameDto gameDto = game._toGameDto(BURST, game.finishGame(BURST));
-            messageService.sendToAll(new SocketResponse<>(INIT, gameDto), gameSession);
-//            messageService.sendToAll(new ResultDto("BURST", "DEALER"), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
             game.initializeGame();
             return;
         }
 
         if (game.isBlackjack()) {
-            messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
+            messageService.processToDealerTurn(gameSession);
             return;
         }
 
@@ -58,7 +57,7 @@ public class BettingController implements TableController {
 
         if (turn == DOUBLE_SELECTION) {
             game.raiseDouble();
-            messageService.sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
+            messageService.processToDealerTurn(gameSession);
         }
     }
 

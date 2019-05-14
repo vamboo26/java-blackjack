@@ -29,7 +29,7 @@ public class TableControllerManager {
             return initTableController;
         }
 
-        if(key.contains("BETTING")) {
+        if(key.equals("BETTING")) {
             return bettingController;
         }
 

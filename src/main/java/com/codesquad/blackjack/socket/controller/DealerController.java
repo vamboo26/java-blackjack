@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import static com.codesquad.blackjack.domain.Game.GameStatus.BURST;
 import static com.codesquad.blackjack.domain.Game.GameStatus.NORMAL;
-import static com.codesquad.blackjack.domain.ResponseType.INIT;
+import static com.codesquad.blackjack.domain.ResponseType.INFO;
 
 @Component
 public class DealerController implements TableController {
@@ -30,15 +30,15 @@ public class DealerController implements TableController {
         if(game.isBurst()) {
 //            game.endByPlayerWin(game.getNormalPrize());
             GameDto gameDto = game._toGameDto(BURST, game.finishGame(BURST));
-            messageService.sendToAll(new SocketResponse<>(INIT, gameDto), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
 //            messageService.sendToAll(new ResultDto("BURST", "USER"), gameSession);
         } else {
             GameDto gameDto = game._toGameDto(NORMAL, game.finishGame(NORMAL));
-            messageService.sendToAll(new SocketResponse<>(INIT, gameDto), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
 //            messageService.sendToAll(new ResultDto("NORMAL", game.end(game.getNormalPrize())), gameSession);
         }
 
-//        messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
+//        messageService.sendToAll(new SocketResponse<>(INFO, game._toGameDto()), gameSession);
 //        userRepository.save(game.getUser());
     }
 

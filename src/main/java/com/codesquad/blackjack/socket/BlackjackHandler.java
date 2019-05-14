@@ -18,6 +18,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,23 +35,17 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     private final GameService gameService;
 
-    private final ObjectMapper objectMapper;
-
-    private final UserRepository userRepository;
-
     private final TableControllerManager tableControllerManager;
 
     @Autowired
-    public BlackjackHandler(MessageService messageService, GameService gameService, ObjectMapper objectMapper, UserRepository userRepository, TableControllerManager tableControllerManager) {
+    public BlackjackHandler(MessageService messageService, GameService gameService, TableControllerManager tableControllerManager) {
         this.messageService = messageService;
         this.gameService = gameService;
-        this.objectMapper = objectMapper;
-        this.userRepository = userRepository;
         this.tableControllerManager = tableControllerManager;
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) {
+    public void afterConnectionEstablished(WebSocketSession session) throws IOException {
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
         GameSession gameSession = findByGameId(gameId);
 
@@ -72,8 +67,9 @@ public class BlackjackHandler extends TextWebSocketHandler {
         GameSession gameSession = findByGameId(gameId);
         Game game = gameService.findById(gameSession.getGameId());
 
-        SocketRequest request = objectMapper.readValue(message.getPayload(), SocketRequest.class);
+        SocketRequest request = messageService.getSocketRequest(message);
         log.debug("received : '{}'", request);
+
         TableController controller = tableControllerManager.getTableController(request.getType());
         controller.handleTurn(gameSession, game, request);
     }

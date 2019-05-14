@@ -1,7 +1,8 @@
 package com.codesquad.blackjack.service;
 
 import com.codesquad.blackjack.socket.GameSession;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.codesquad.blackjack.socket.SocketRequest;
+import com.codesquad.blackjack.socket.SocketResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 
+import static com.codesquad.blackjack.domain.ResponseType.DEALERTURN;
+
 @Service
 public class MessageService {
 
@@ -20,24 +23,30 @@ public class MessageService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public <T> void sendToAll(T messageObject, GameSession gameSession) {
-        gameSession.getSessions().forEach(session -> send(messageObject, session));
+    public void processToDealerTurn(GameSession gameSession) {
+        sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
     }
 
-    public <T> void send(T messageObject, WebSocketSession session) {
+    public <T> void sendToAll(T messageObject, GameSession gameSession) {
+        gameSession.getSessions().forEach(session -> {
+            try {
+                send(messageObject, session);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public <T> void send(T messageObject, WebSocketSession session) throws IOException {
         log.debug("send : {}", messageObject);
 
         //TODO 예외처리, synchronized 확인
-        try {
-            TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
-            synchronized (session) {
-                session.sendMessage(message);
-            }
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-        }
+        TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
+        session.sendMessage(message);
+    }
+
+    public SocketRequest getSocketRequest(TextMessage message) throws IOException {
+        return objectMapper.readValue(message.getPayload(), SocketRequest.class);
     }
 
 }

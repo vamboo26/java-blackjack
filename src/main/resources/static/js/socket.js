@@ -31,7 +31,7 @@ function connectSockJs() {
                 $('#btnStart').remove();
             }
 
-            if(type === 'INIT') {
+            if(type === 'INFO') {
                 showDealerCards(data.dealer);
                 showUserCards(data.user);
             }
@@ -153,7 +153,7 @@ $('#btnStart').on('click', function(evt) {
 
     $result.empty();
 
-    socket.send(JSON.stringify({type: 'START', request: 'null'}));
+    socket.send(JSON.stringify({type: 'START', request: 1000}));
 });
 
 $('#a').on('click', function(evt) {

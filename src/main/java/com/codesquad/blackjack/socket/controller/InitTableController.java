@@ -27,19 +27,18 @@ public class InitTableController implements TableController {
 
     @Override
     public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
-//        int bettingChip = request.getRequest();
+        int bettingChip = (int) request.getRequest();
         game.initializeGame();
-        game.init(100);
+        game.init(bettingChip);
 
         if (game.isBlackjack()) {
             GameDto gameDto = game._toGameDto(BLACKJACK, game.finishGame(BLACKJACK));
-            messageService.sendToAll(new SocketResponse<>(INIT, gameDto), gameSession);
-//            messageService.sendToAll(new ResultDto("BLACKJACK", game.end(game.getBlackjackPrize())), gameSession);
+            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
 //            userRepository.save(game.getUser());
             return;
         }
 
-        messageService.sendToAll(new SocketResponse<>(INIT, game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(INFO, game._toGameDto()), gameSession);
 
         SocketResponse selection = (game.hasGamerEnoughChip(100))
                         ? new SocketResponse<>(SELECTION, DOUBLE)

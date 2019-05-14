@@ -4,12 +4,9 @@ public enum ResponseType {
 
     JOIN,
     CHAT,
-    INIT,
+    INFO,
     SELECTION,
-    NORMAL,
-    RESULT,
     BETTING,
-    DEALERTURN,
-    USERTURN
+    DEALERTURN
 
 }
