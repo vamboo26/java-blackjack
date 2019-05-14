@@ -23,6 +23,7 @@ public class TableControllerManager {
     }
 
     //TODO 이거 분명히... 개선가능할텐데? 일단 진행
+    // 다형성...enum...map...?
     public TableController getTableController(String key) {
         if(key.equals("START")) {
             return initTableController;

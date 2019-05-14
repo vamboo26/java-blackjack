@@ -15,6 +15,8 @@ public class Chip {
     @Column
     private final int amount;
 
+    //TODO
+    // Chip -> Coin이 더 나을까?, 산술계산 enum, 추상메소드로 개선해보자...
     public Chip() {
         this.amount = 0;
     }
