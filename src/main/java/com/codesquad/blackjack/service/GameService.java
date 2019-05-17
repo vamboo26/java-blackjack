@@ -13,8 +13,12 @@ public class GameService {
 
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
+    private final GameRepository gameRepository;
+
     @Autowired
-    private GameRepository gameRepository;
+    public GameService(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
 
     public Iterable<Game> findAll() {
         log.debug("*** gameService.findTop10(), 전체 게임을 반환해준다");
@@ -31,10 +35,6 @@ public class GameService {
 
     public Game findById(long id) {
         return gameRepository.findById(id);
-    }
-
-    public void initializeGame() {
-
     }
 
 }

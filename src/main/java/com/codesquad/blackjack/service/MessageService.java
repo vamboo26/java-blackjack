@@ -20,11 +20,11 @@ public class MessageService {
 
     private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    public void processToDealerTurn(GameSession gameSession) {
-        sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
+    @Autowired
+    public MessageService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
     public <T> void sendToAll(T messageObject, GameSession gameSession) {
@@ -43,6 +43,10 @@ public class MessageService {
         //TODO 예외처리, synchronized 확인
         TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
         session.sendMessage(message);
+    }
+
+    public void processToDealerTurn(GameSession gameSession) {
+        sendToAll(new SocketResponse<>(DEALERTURN, null), gameSession);
     }
 
     public SocketRequest getSocketRequest(TextMessage message) throws IOException {

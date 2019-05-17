@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.controller;
+package com.codesquad.blackjack.controller.table;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.GameDto;

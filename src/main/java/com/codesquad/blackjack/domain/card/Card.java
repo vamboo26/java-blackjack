@@ -1,7 +1,9 @@
 package com.codesquad.blackjack.domain.card;
 
-import java.util.Objects;
+import com.google.common.base.MoreObjects;
+import lombok.Getter;
 
+@Getter
 public class Card {
 
     public static final int ONE = 1;
@@ -41,52 +43,13 @@ public class Card {
         return this.number == ONE;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getSuit() {
-        return suit;
-    }
-
-    public void setSuit(String suit) {
-        this.suit = suit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return number == card.number &&
-                Objects.equals(suit, card.suit) &&
-                Objects.equals(name, card.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, suit, name);
-    }
-
     @Override
     public String toString() {
-        return "Card{" +
-                "number=" + number +
-                ", suit='" + suit + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return MoreObjects.toStringHelper(this)
+                .add("number", number)
+                .add("suit", suit)
+                .add("name", name)
+                .toString();
     }
 
 }

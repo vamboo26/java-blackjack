@@ -21,10 +21,6 @@ public class Cards {
         total = calculateTotal();
     }
 
-    public int getTotal() {
-        return total;
-    }
-
     public int calculateTotal() {
         int sum = 0;
 

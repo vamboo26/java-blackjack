@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.controller;
+package com.codesquad.blackjack.controller.table;
 
 import com.codesquad.blackjack.domain.RequestType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,12 @@ import static com.codesquad.blackjack.domain.RequestType.*;
 @Component
 public class TableControllerManager {
 
-    private final InitTableController initTableController;
-
-    private final BettingController bettingController;
-
-    private final DealerController dealerController;
-
-    private final ChatController chatController;
-
     private Map<RequestType, TableController> controllers = new HashMap<>();
+
+    private final InitTableController initTableController;
+    private final BettingController bettingController;
+    private final DealerController dealerController;
+    private final ChatController chatController;
 
     @Autowired
     public TableControllerManager(InitTableController initTableController, BettingController bettingController, DealerController dealerController, ChatController chatController) {

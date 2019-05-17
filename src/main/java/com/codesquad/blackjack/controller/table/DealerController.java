@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.socket.controller;
+package com.codesquad.blackjack.controller.table;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.GameDto;
@@ -27,18 +27,11 @@ public class DealerController implements TableController {
     public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
         game.dealerTurn();
 
-        if(game.isBurst()) {
-//            game.endByPlayerWin(game.getNormalPrize());
-            GameDto gameDto = game._toGameDto(BURST, game.finishGame(BURST));
-            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
-//            messageService.sendToAll(new ResultDto("BURST", "USER"), gameSession);
-        } else {
-            GameDto gameDto = game._toGameDto(NORMAL, game.finishGame(NORMAL));
-            messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
-//            messageService.sendToAll(new ResultDto("NORMAL", game.end(game.getNormalPrize())), gameSession);
-        }
+        GameDto gameDto = (game.isBurst())
+                ? game._toGameDto(BURST, game.finishGame(BURST))
+                : game._toGameDto(NORMAL, game.finishGame(NORMAL));
 
-//        messageService.sendToAll(new SocketResponse<>(INFO, game._toGameDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(INFO, gameDto), gameSession);
 //        userRepository.save(game.getUser());
     }
 

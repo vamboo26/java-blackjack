@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.web;
+package com.codesquad.blackjack.controller;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.player.User;
@@ -24,14 +24,17 @@ public class GameController {
 
     private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
-    @Autowired
-    private GameService gameService;
+    private final GameService gameService;
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public GameController(GameService gameService, UserService userService) {
+        this.gameService = gameService;
+        this.userService = userService;
+    }
 
     @GetMapping
-    public String list(Model model) {
+    public String list() {
         return "redirect:/";
     }
 

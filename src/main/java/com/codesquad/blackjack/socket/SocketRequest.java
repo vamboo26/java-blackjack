@@ -13,11 +13,6 @@ public class SocketRequest<T> {
     //TODO 자바 리플렉션 확인
     private SocketRequest() {}
 
-    public SocketRequest(RequestType type, T request) {
-        this.type = type;
-        this.request = request;
-    }
-
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)

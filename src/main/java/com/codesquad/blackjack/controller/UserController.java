@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.web;
+package com.codesquad.blackjack.controller;
 
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.security.HttpSessionUtils;
@@ -6,11 +6,11 @@ import com.codesquad.blackjack.security.LoginUser;
 import com.codesquad.blackjack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -19,8 +19,12 @@ public class UserController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    @Resource(name = "userService")
-    private UserService userService;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/join")
     public String joinForm() {

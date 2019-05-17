@@ -2,13 +2,11 @@ package com.codesquad.blackjack.socket;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.domain.player.User;
-import com.codesquad.blackjack.domain.player.UserRepository;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.service.MessageService;
-import com.codesquad.blackjack.socket.controller.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.codesquad.blackjack.controller.table.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +30,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
     private Map<Long, GameSession> gameSessions = new HashMap<>();
 
     private final MessageService messageService;
-
     private final GameService gameService;
-
     private final TableControllerManager tableControllerManager;
 
     @Autowired

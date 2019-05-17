@@ -1,6 +1,5 @@
 package com.codesquad.blackjack.domain.player;
 
-import com.codesquad.blackjack.domain.ResponseType;
 import lombok.Getter;
 
 @Getter

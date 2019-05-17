@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.web;
+package com.codesquad.blackjack.controller;
 
 import com.codesquad.blackjack.service.GameService;
 import org.slf4j.Logger;
@@ -13,8 +13,12 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(GameController.class);
 
+    private final GameService gameService;
+
     @Autowired
-    private GameService gameService;
+    public HomeController(GameService gameService) {
+        this.gameService = gameService;
+    }
 
     @GetMapping("/")
     public String home(Model model) {

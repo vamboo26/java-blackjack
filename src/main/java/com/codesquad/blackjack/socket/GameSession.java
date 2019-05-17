@@ -1,5 +1,6 @@
 package com.codesquad.blackjack.socket;
 
+import com.google.common.base.MoreObjects;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
@@ -10,16 +11,16 @@ public class GameSession {
     private Long gameId;
     private List<WebSocketSession> sessions;
 
-    public GameSession(Long gameId) {
+    GameSession(Long gameId) {
         this.gameId = gameId;
         this.sessions = new ArrayList<>();
     }
 
-    public void addSession(WebSocketSession webSocketSession) {
+    void addSession(WebSocketSession webSocketSession) {
         this.sessions.add(webSocketSession);
     }
 
-    public Long getGameId() {
+    Long getGameId() {
         return gameId;
     }
 
@@ -29,10 +30,10 @@ public class GameSession {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("GameSession{");
-        sb.append("gameId=").append(gameId);
-        sb.append(", sessions=").append(sessions);
-        sb.append('}');
-        return sb.toString();
+        return MoreObjects.toStringHelper(this)
+                .add("gameId", gameId)
+                .add("sessions", sessions)
+                .toString();
     }
+
 }
