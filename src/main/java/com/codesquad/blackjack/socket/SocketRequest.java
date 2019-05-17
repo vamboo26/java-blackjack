@@ -1,18 +1,19 @@
 package com.codesquad.blackjack.socket;
 
+import com.codesquad.blackjack.domain.RequestType;
 import com.google.common.base.MoreObjects;
 import lombok.Getter;
 
 @Getter
 public class SocketRequest<T> {
 
-    private String type;
+    private RequestType type;
     private T request;
 
     //TODO 자바 리플렉션 확인
     private SocketRequest() {}
 
-    public SocketRequest(String type, T request) {
+    public SocketRequest(RequestType type, T request) {
         this.type = type;
         this.request = request;
     }

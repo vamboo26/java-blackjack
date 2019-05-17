@@ -1,7 +1,14 @@
 package com.codesquad.blackjack.socket.controller;
 
+import com.codesquad.blackjack.domain.RequestType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.codesquad.blackjack.domain.RequestType.*;
 
 @Component
 public class TableControllerManager {
@@ -14,6 +21,8 @@ public class TableControllerManager {
 
     private final ChatController chatController;
 
+    private Map<RequestType, TableController> controllers = new HashMap<>();
+
     @Autowired
     public TableControllerManager(InitTableController initTableController, BettingController bettingController, DealerController dealerController, ChatController chatController) {
         this.initTableController = initTableController;
@@ -22,22 +31,20 @@ public class TableControllerManager {
         this.chatController = chatController;
     }
 
-    //TODO 이거 분명히... 개선가능할텐데? 일단 진행
-    // 다형성...enum...map...?
-    public TableController getTableController(String key) {
-        if(key.equals("START")) {
-            return initTableController;
+    @PostConstruct
+    private void init() {
+        controllers.put(START, initTableController);
+        controllers.put(BETTING, bettingController);
+        controllers.put(DEALERTURN, dealerController);
+        controllers.put(CHAT, chatController);
+    }
+
+    public TableController getTableController(RequestType type) {
+        if(!controllers.containsKey(type)) {
+            throw new IllegalArgumentException("key 없어오");
         }
 
-        if(key.equals("BETTING")) {
-            return bettingController;
-        }
-
-        if(key.equals("DEALERTURN")) {
-            return dealerController;
-        }
-
-        return chatController;
+        return controllers.get(type);
     }
 
 }
