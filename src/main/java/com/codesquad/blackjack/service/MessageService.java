@@ -29,20 +29,19 @@ public class MessageService {
 
     public <T> void sendToAll(T messageObject, GameSession gameSession) {
         gameSession.getSessions().forEach(session -> {
-            try {
-                send(messageObject, session);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            send(messageObject, session);
         });
     }
 
-    public <T> void send(T messageObject, WebSocketSession session) throws IOException {
+    public synchronized <T> void send(T messageObject, WebSocketSession session) {
         log.debug("send : {}", messageObject);
 
-        //TODO 예외처리, synchronized 확인
-        TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
-        session.sendMessage(message);
+        try {
+            TextMessage message = new TextMessage(objectMapper.writeValueAsString(messageObject));
+            session.sendMessage(message);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void processToDealerTurn(GameSession gameSession) {

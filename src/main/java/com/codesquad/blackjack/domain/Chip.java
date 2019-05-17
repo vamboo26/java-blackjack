@@ -1,9 +1,9 @@
 package com.codesquad.blackjack.domain;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Embeddable
 public class Chip {
@@ -51,6 +51,19 @@ public class Chip {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Chip)) return false;
+        Chip chip = (Chip) o;
+        return amount == chip.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(amount);
     }
 
     @Override
