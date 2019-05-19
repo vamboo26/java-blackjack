@@ -13,20 +13,19 @@ import static com.codesquad.blackjack.domain.RequestType.*;
 @Component
 public class TableControllerManager {
 
-    private Map<RequestType, TableController> controllers = new HashMap<>();
-
-    private final InitTableController initTableController;
-    private final BettingController bettingController;
-    private final DealerController dealerController;
-    private final ChatController chatController;
+    private final Map<RequestType, TableController> controllers = new HashMap<>();
 
     @Autowired
-    public TableControllerManager(InitTableController initTableController, BettingController bettingController, DealerController dealerController, ChatController chatController) {
-        this.initTableController = initTableController;
-        this.bettingController = bettingController;
-        this.dealerController = dealerController;
-        this.chatController = chatController;
-    }
+    private InitTableController initTableController;
+
+    @Autowired
+    private BettingController bettingController;
+
+    @Autowired
+    private DealerController dealerController;
+
+    @Autowired
+    private ChatController chatController;
 
     @PostConstruct
     private void init() {
