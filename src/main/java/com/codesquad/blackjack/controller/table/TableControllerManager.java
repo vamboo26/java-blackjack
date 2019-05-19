@@ -4,7 +4,6 @@ import com.codesquad.blackjack.domain.RequestType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,19 +15,7 @@ public class TableControllerManager {
     private final Map<RequestType, TableController> controllers = new HashMap<>();
 
     @Autowired
-    private InitTableController initTableController;
-
-    @Autowired
-    private BettingController bettingController;
-
-    @Autowired
-    private DealerController dealerController;
-
-    @Autowired
-    private ChatController chatController;
-
-    @PostConstruct
-    private void init() {
+    public TableControllerManager(InitTableController initTableController, BettingController bettingController, DealerController dealerController, ChatController chatController) {
         controllers.put(START, initTableController);
         controllers.put(BETTING, bettingController);
         controllers.put(DEALERTURN, dealerController);
