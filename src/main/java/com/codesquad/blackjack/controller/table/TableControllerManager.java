@@ -23,10 +23,6 @@ public class TableControllerManager {
     }
 
     public TableController getTableController(RequestType type) {
-        if(!controllers.containsKey(type)) {
-            throw new IllegalArgumentException("key 없어오");
-        }
-
         return controllers.get(type);
     }
 
