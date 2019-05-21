@@ -31,6 +31,7 @@ public class Game {
 
     public void init(int bettingChip) {
         //TODO exception 정리필요
+        // 현재 칩이 부족할 때 START 누르면 에러발생, 소켓세션 닫히는데 이거 버튼 무반응하도록 하는건? 혹은 alert 띄우는 쪽으로
         if (hasGamerNoMoney()) {
             throw new IllegalArgumentException("칩이 없어요");
         }
