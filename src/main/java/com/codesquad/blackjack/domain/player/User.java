@@ -1,7 +1,8 @@
 package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.Chip;
-import com.codesquad.blackjack.dto.ChatDto;
+import com.codesquad.blackjack.domain.card.Card;
+import com.codesquad.blackjack.domain.card.Cards;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
-public class User extends AbstractPlayer {
+public class User implements Player {
 
     public static final GuestUser GUEST_USER = new GuestUser();
     private static final int DEFAULT_CHIP_AMOUNT = 500;
@@ -35,17 +36,10 @@ public class User extends AbstractPlayer {
     @Embedded
     private Chip chip = new Chip(DEFAULT_CHIP_AMOUNT);
 
-    public User() {
-    }
+    @Transient
+    private Cards cards = new Cards();
 
-    public User(String name) {
-        super(name);
-    }
-
-    public User(String name, Chip chip) {
-        super(name);
-        this.chip = chip;
-    }
+    public User() {}
 
     public void betChip(int bettingChip) {
         this.chip = chip.subtract(bettingChip);
@@ -69,7 +63,7 @@ public class User extends AbstractPlayer {
         }
 
         //TODO
-        // 폼에서 데이터 던질 때, 유저객체로 받아서 setter가 필요한데(이것도 리플렉션?)
+        // 폼에서 데이터 던질 때, 유저객체로 받아서 데이터바인딩하는데
         // 어떻게 setter없이 로직구현할지 고민하기
         if (!matchPassword(target.password)) {
             throw new RuntimeException();
@@ -86,13 +80,28 @@ public class User extends AbstractPlayer {
         return this.userId.equals(userId);
     }
 
-
-    public ChatDto _toChatDto() {
-        return new ChatDto(this.name);
-    }
-
     public boolean isGuestUser() {
         return false;
+    }
+
+    @Override
+    public void initialize() {
+        this.cards = new Cards();
+    }
+
+    @Override
+    public void receiveCard(Card card) {
+        this.cards.add(card);
+    }
+
+    @Override
+    public boolean isBurst() {
+        return this.cards.isBurst();
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return this.cards.isBlackjack();
     }
 
     private static class GuestUser extends User {

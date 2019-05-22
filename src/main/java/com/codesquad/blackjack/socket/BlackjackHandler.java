@@ -41,14 +41,14 @@ public class BlackjackHandler extends TextWebSocketHandler {
     }
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws IOException {
+    public void afterConnectionEstablished(WebSocketSession session) {
         long gameId = WebSocketSessionUtils.gameIdFromSession(session);
         GameSession gameSession = findByGameId(gameId);
 
         //TODO 이 시점에서 방주인과 관전자를 나눠서 저장할까?
         gameSession.addSession(session);
         User user = WebSocketSessionUtils.userFromSession(session);
-        messageService.sendToAll(new SocketResponse<>(JOIN, user._toChatDto()), gameSession);
+        messageService.sendToAll(new SocketResponse<>(JOIN, user.getName()), gameSession);
 
         System.out.println(gameSession.getSessions().size());
 
