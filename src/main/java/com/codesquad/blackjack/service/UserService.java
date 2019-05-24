@@ -13,8 +13,13 @@ public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    public User add(User user) {
-        return userRepository.save(user);
+    public User create(String userId, String password, String name) {
+        User newUser = User.builder()
+                .userId(userId)
+                .password(password)
+                .name(name)
+                .build();
+        return userRepository.save(newUser);
     }
 
     public User login(String userId, String password) throws Exception {

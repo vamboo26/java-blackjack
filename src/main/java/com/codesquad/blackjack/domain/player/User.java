@@ -3,15 +3,16 @@ package com.codesquad.blackjack.domain.player;
 import com.codesquad.blackjack.domain.Chip;
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
-@Getter
-@Setter
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User implements Player {
 
     public static final GuestUser GUEST_USER = new GuestUser();
@@ -21,16 +22,13 @@ public class User implements Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min = 3, max = 20)
     @Column(unique = true, nullable = false, length = 20)
     private String userId;
 
-    @Size(min = 4, max = 20)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 30)
     private String password;
 
-    @Size(min = 2, max = 20)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 30)
     private String name;
 
     @Embedded
@@ -39,7 +37,22 @@ public class User implements Player {
     @Transient
     private Cards cards = new Cards();
 
-    public User() {}
+    @Builder
+    public User(String userId, String password, String name) {
+        checkNotNull(userId);
+        checkNotNull(password);
+        checkNotNull(name);
+        checkArgument(2 <= userId.length() && userId.length() <= 10,
+                "userId must be between 2 and 10 characters");
+        checkArgument(2 <= password.length() && password.length() <= 15,
+                "password must be between 2 and 15 characters");
+        checkArgument(2 <= name.length() && name.length() <= 15,
+                "name must be between 2 and 15 characters");
+
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+    }
 
     public void betChip(int bettingChip) {
         this.chip = chip.subtract(bettingChip);
@@ -62,9 +75,6 @@ public class User implements Player {
             throw new RuntimeException();
         }
 
-        //TODO
-        // 폼에서 데이터 던질 때, 유저객체로 받아서 데이터바인딩하는데
-        // 어떻게 setter없이 로직구현할지 고민하기
         if (!matchPassword(target.password)) {
             throw new RuntimeException();
         }

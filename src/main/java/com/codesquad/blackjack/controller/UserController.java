@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.controller;
 
 import com.codesquad.blackjack.domain.player.User;
+import com.codesquad.blackjack.domain.request.JoinRequest;
 import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.LoginUser;
 import com.codesquad.blackjack.service.UserService;
@@ -32,8 +33,11 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String create(User user) {
-        userService.add(user);
+    public String create(@ModelAttribute JoinRequest joinRequest) {
+        userService.create(
+                joinRequest.getUserId(),
+                joinRequest.getPassword(),
+                joinRequest.getName());
         return "redirect:/";
     }
 
