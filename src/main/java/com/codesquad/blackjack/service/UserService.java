@@ -5,7 +5,8 @@ import com.codesquad.blackjack.domain.player.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.stream.Collectors;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Service
 public class UserService {
@@ -13,7 +14,7 @@ public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    public User create(String userId, String password, String name) {
+    public User join(String userId, String password, String name) {
         User newUser = User.builder()
                 .userId(userId)
                 .password(password)
@@ -32,12 +33,10 @@ public class UserService {
         return userRepository.findTop10ByOrderByChipAmountDesc();
     }
 
-    // 개선 필요
-    public int findRankById(User loginUser) {
-        return userRepository.findAllByOrderByChipAmountDesc().stream()
-                .filter(i -> i.getChip().getAmount() >= loginUser.getChip().getAmount())
-                .collect(Collectors.toList())
-                .size();
+    public long findRankById(User loginUser) {
+        checkNotNull(findById(loginUser.getId()));
+
+        return userRepository.countByChipAmountGreaterThanEqual(loginUser.getAmount());
     }
 
     public User findById(long id) {

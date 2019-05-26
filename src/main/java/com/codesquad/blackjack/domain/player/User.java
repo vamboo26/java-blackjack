@@ -54,6 +54,10 @@ public class User implements Player {
         this.name = name;
     }
 
+    public int getAmount() {
+        return chip.getAmount();
+    }
+
     public void betChip(int bettingChip) {
         this.chip = chip.subtract(bettingChip);
     }

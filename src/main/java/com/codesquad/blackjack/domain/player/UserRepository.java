@@ -11,6 +11,6 @@ public interface UserRepository extends CrudRepository<User, Long>{
 
     List<User> findTop10ByOrderByChipAmountDesc();
 
-    List<User> findAllByOrderByChipAmountDesc();
+    long countByChipAmountGreaterThanEqual(int amount);
 
 }

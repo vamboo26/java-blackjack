@@ -33,8 +33,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String create(@ModelAttribute JoinRequest joinRequest) {
-        userService.create(
+    public String join(@ModelAttribute JoinRequest joinRequest) {
+        userService.join(
                 joinRequest.getUserId(),
                 joinRequest.getPassword(),
                 joinRequest.getName());
