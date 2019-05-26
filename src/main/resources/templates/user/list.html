@@ -7,30 +7,28 @@
 </div>
 <div class="issues__posts mdl-grid">
     <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-        <form action="/users/login" method="post">
-            <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
-                <h4>Ranking</h4>
-            </div>
-            <div class="mdl-card__supporting-text">
-                <ul class="issue-list mdl-list">
-                    {{#loginedUser}}
-                    <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">
-                        <span class="mdl-list__item-primary-content" id="my_ranking">
-                            <strong> ----- 나의 순위 : {{userRank}}등 ----- </strong>
-                        </span>
-                    </li><hr/>
-                    {{/loginedUser}}
-
-                    {{#users}}
-                    <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">
-                    <span class="mdl-list__item-primary-content" id="ranking">
-                    <a href="/users/{{id}}"><strong>{{@index_1}}등. {{name}}({{userId}})의 칩 : {{chip.amount}}</strong></a>
+        <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
+            <h4>Ranking</h4>
+        </div>
+        <div class="mdl-card__supporting-text">
+            <ul class="issue-list mdl-list">
+                {{#loginedUser}}
+                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">
+                    <span class="mdl-list__item-primary-content" id="my_ranking">
+                        <strong> ----- 나의 순위 : {{userRank}}등 ----- </strong>
                     </span>
-                    </li><hr/>
-                    {{/users}}
-                </ul>
-            </div>
-        </form>
+                </li><hr/>
+                {{/loginedUser}}
+
+                {{#users}}
+                <li class="mdl-list__item mdl-list__item--two-line mdl-list__item--bottom-line">
+                <span class="mdl-list__item-primary-content" id="ranking">
+                <a href="/users/{{id}}"><strong>{{@index_1}}등. {{name}}({{userId}})의 칩 : {{chip.amount}}</strong></a>
+                </span>
+                </li><hr/>
+                {{/users}}
+            </ul>
+        </div>
     </div>
 </div>
 
