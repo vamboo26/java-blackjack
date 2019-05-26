@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: blackjack
+  datasource:
+    url: jdbc:mysql://localhost:3306/blackjack?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+handlebars:
+  suffix: .html
+  cache: false # 배포시에는 true로
+  expose-session-attributes: true # 핸들바에서 세션데이터를 인식한다
