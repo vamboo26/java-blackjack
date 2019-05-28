@@ -1,5 +1,6 @@
-package com.codesquad.blackjack.domain.player;
+package com.codesquad.blackjack.repository;
 
+import com.codesquad.blackjack.domain.player.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

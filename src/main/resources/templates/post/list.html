@@ -1,53 +1,58 @@
+{{#partial "header"}}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+{{/partial}}
+
 {{#partial "contents"}}
 <div class="issues-back">
-    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon back-btn" title="go back"
-       role="button">
-        <i class="material-icons" role="presentation">arrow_back</i>
-    </a>
-</div>
-<div class="issues__posts mdl-grid">
-    <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
-        <div class="mdl-card__title mdl-color-text--grey-50" style="height:80px;">
-            <h4>Community</h4>
-        </div>
-
-        <div class="mdl-card__supporting-text">
-            <ul class="issue-list mdl-list">
-                {{#posts}}
-                <li class="mdl-list__item mdl-list__item--two-line">
-                    <span class="mdl-list__item-primary-content">
-                        #{{id}}
-                        <a href="/posts/{{id}}" style="font-size:22px">
-                            <strong>{{title}}</strong>
-                        </a>
-                        <span class="mdl-list__item-sub-title">
-                            작성자 : <a href="users/{{writer.id}}">{{writer.name}}</a>
-                        </span>
-                    </span>
-                </li>
-                <hr>
-                {{/posts}}
-            </ul>
-        </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6 text-center">
-                <ul class="pagination center-block" style="display:inline-block;">
-                    <li><a href="/posts?page={{page.previous}}">«</a></li>
-                    {{# page.index}}
-                    <li><a href="/posts?page={{this}}">{{this}}</a></li>
-                    {{/ page.index}}
-                    <li><a href="/posts?page={{page.next}}">»</a></li>
-                </ul>
-            </div>
-            {{# loginedUser }}
-            <div class="col-md-3 qna-write">
-                <a href="/posts/form" class="btn btn-primary pull-right" role="button">포스트 작성</a>
-            </div>
-            {{/ loginedUser }}
-        </div>
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon back-btn" title="go back"
+           role="button">
+            <i class="material-icons" role="presentation">arrow_back</i>
+        </a>
     </div>
-</div>
+    <!--TODO 무한스크롤-->
+    <div class="post-box" ove>
+        {{# posts}}
+        <li class="issues__posts mdl-grid">
+            <div class="[ panel panel-default ] panel-google-plus" style="width:900px">
+                <div class="dropdown">
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+                <div class="panel-heading">
+                    <img class="[ img-circle pull-left ]" src="https://lh3.googleusercontent.com/-CxXg7_7ylq4/AAAAAAAAAAI/AAAAAAAAAQ8/LhCIKQC5Aq4/s46-c-k-no/photo.jpg" alt="Mouse0270" />
+                    <h3>{{title}}</h3>
+                    <!--TODO 작성시간-->
+                    <h5><span>{{writer.name}}</span> - <span>Jun 27, 2014</span> </h5>
+                </div>
+                <div class="panel-body">
+                    <p>{{contents}}</p>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="[ btn btn-default ]">+1</button>
+                    <button type="button" class="[ btn btn-default ]">
+                        <span class="[ glyphicon glyphicon-share-alt ]"></span>
+                    </button>
+                </div>
+                <!--TODO 감추기, 코멘트 작성기능, 코멘트 보여주기-->
+                <div class="panel-google-plus-comment">
+                    <div class="panel-google-plus-textarea">
+                        <textarea style="width: 899px; height: 50px; padding: 10px; display: block" rows="4"></textarea>
+                        <button type="submit" class="[ btn btn-success disabled ]">Post comment</button>
+                        <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </li>
+        {{/ posts}}
+    </div>
 {{/partial}}
 
 {{> base }}

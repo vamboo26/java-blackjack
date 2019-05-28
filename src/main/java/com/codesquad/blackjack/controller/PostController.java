@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,6 +43,13 @@ public class PostController {
         Iterable<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
         return "/post/list";
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "개별 포스트 조회")
+    public String read(@PathVariable long id, Model model) {
+        model.addAttribute("post", postService.findById(id));
+        return "/post/show";
     }
 
 }

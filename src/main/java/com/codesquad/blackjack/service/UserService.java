@@ -1,7 +1,7 @@
 package com.codesquad.blackjack.service;
 
 import com.codesquad.blackjack.domain.player.User;
-import com.codesquad.blackjack.domain.player.UserRepository;
+import com.codesquad.blackjack.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
