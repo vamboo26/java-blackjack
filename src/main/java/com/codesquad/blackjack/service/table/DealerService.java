@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.controller.table;
+package com.codesquad.blackjack.service.table;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.GameDto;
@@ -14,12 +14,12 @@ import static com.codesquad.blackjack.domain.Game.GameStatus.NORMAL;
 import static com.codesquad.blackjack.domain.ResponseType.INFO;
 
 @Component
-public class DealerController implements TableController {
+public class DealerService implements TableService {
 
     private final MessageService messageService;
 
     @Autowired
-    public DealerController(MessageService messageService) {
+    public DealerService(MessageService messageService) {
         this.messageService = messageService;
     }
 

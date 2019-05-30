@@ -6,7 +6,8 @@ import com.codesquad.blackjack.security.HttpSessionUtils;
 import com.codesquad.blackjack.security.WebSocketSessionUtils;
 import com.codesquad.blackjack.service.GameService;
 import com.codesquad.blackjack.service.MessageService;
-import com.codesquad.blackjack.controller.table.*;
+import com.codesquad.blackjack.service.table.TableService;
+import com.codesquad.blackjack.service.table.TableServiceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,13 +31,13 @@ public class BlackjackHandler extends TextWebSocketHandler {
 
     private final MessageService messageService;
     private final GameService gameService;
-    private final TableControllerManager tableControllerManager;
+    private final TableServiceManager tableServiceManager;
 
     @Autowired
-    public BlackjackHandler(MessageService messageService, GameService gameService, TableControllerManager tableControllerManager) {
+    public BlackjackHandler(MessageService messageService, GameService gameService, TableServiceManager tableServiceManager) {
         this.messageService = messageService;
         this.gameService = gameService;
-        this.tableControllerManager = tableControllerManager;
+        this.tableServiceManager = tableServiceManager;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class BlackjackHandler extends TextWebSocketHandler {
         SocketRequest request = messageService.getSocketRequest(message);
         log.debug("received : '{}'", request);
 
-        TableController controller = tableControllerManager.getTableController(request.getType());
-        controller.handleTurn(gameSession, game, request);
+        TableService tableService = tableServiceManager.getTableService(request.getType());
+        tableService.handleTurn(gameSession, game, request);
     }
 
     @Override

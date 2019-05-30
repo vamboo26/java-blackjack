@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.controller.table;
+package com.codesquad.blackjack.service.table;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.dto.GameDto;
@@ -13,7 +13,7 @@ import static com.codesquad.blackjack.domain.Game.GameStatus.BURST;
 import static com.codesquad.blackjack.domain.ResponseType.*;
 
 @Component
-public class BettingController implements TableController {
+public class BettingService implements TableService {
 
     public static final int HIT_SELECTION = 1;
     public static final int STAND_SELECTION = 2;
@@ -22,7 +22,7 @@ public class BettingController implements TableController {
     private final MessageService messageService;
 
     @Autowired
-    public BettingController(MessageService messageService) {
+    public BettingService(MessageService messageService) {
         this.messageService = messageService;
     }
 

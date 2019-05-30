@@ -1,4 +1,4 @@
-package com.codesquad.blackjack.controller.table;
+package com.codesquad.blackjack.service.table;
 
 import com.codesquad.blackjack.domain.Game;
 import com.codesquad.blackjack.service.MessageService;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 import static com.codesquad.blackjack.domain.ResponseType.CHAT;
 
 @Component
-public class ChatController implements TableController {
+public class ChatService implements TableService {
 
     private final MessageService messageService;
 
     @Autowired
-    public ChatController(MessageService messageService) {
+    public ChatService(MessageService messageService) {
         this.messageService = messageService;
     }
 
