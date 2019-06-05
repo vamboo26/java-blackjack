@@ -15,11 +15,11 @@ public class TableServiceManager {
     private final Map<RequestType, TableService> services = new HashMap<>();
 
     @Autowired
-    public TableServiceManager(InitTableService initTableController, BettingService bettingController, DealerService dealerController, ChatService chatController) {
-        services.put(START, initTableController);
-        services.put(BETTING, bettingController);
-        services.put(DEALERTURN, dealerController);
-        services.put(CHAT, chatController);
+    public TableServiceManager(InitTableService initTableService, BettingService bettingService, DealerService dealerService, ChatService chatService) {
+        services.put(START, initTableService);
+        services.put(BETTING, bettingService);
+        services.put(DEALERTURN, dealerService);
+        services.put(CHAT, chatService);
     }
 
     public TableService getTableService(RequestType type) {
