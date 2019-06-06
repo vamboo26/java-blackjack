@@ -19,12 +19,9 @@ public class Cards {
         cards.add(card);
     }
 
-    //TODO
-    // ACE 포함 시, 11로 계산해서 버스트가 아니면 무조건 11로 계산
-    // 이게 최선?
-    int getTotal() {
+    public int getTotal() {
         int sum = cards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt(i -> i.getRank().getValue())
                 .sum();
 
         if(hasAce()) {

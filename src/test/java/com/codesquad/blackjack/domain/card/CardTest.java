@@ -8,20 +8,14 @@ public class CardTest extends BaseTest {
 
     @Test
     public void 카드생성_정상() {
-        assertCard(new Card(1, Suit.DIAMOND), "A", Suit.DIAMOND);
-        assertCard(new Card(11, Suit.HEART), "J", Suit.HEART);
-        assertCard(new Card(12, Suit.SPADE), "Q", Suit.SPADE);
-        assertCard(new Card(13, Suit.CLUB), "K", Suit.CLUB);
+        assertCard(new Card(Rank.ACE, Suit.DIAMOND), Rank.ACE, Suit.DIAMOND);
+        assertCard(new Card(Rank.JACK, Suit.HEART), Rank.JACK, Suit.HEART);
+        assertCard(new Card(Rank.QUEEN, Suit.SPADE), Rank.QUEEN, Suit.SPADE);
+        assertCard(new Card(Rank.KING, Suit.CLUB), Rank.KING, Suit.CLUB);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void 카드생성_비정상() {
-        assertCard(new Card(0, Suit.DIAMOND), "A", Suit.DIAMOND);
-        assertCard(new Card(14, Suit.DIAMOND), "A", Suit.DIAMOND);
-    }
-
-    private void assertCard(Card card, String name, Suit suit) {
-        softly.assertThat(card.getName()).isEqualTo(name);
+    private void assertCard(Card card, Rank rank, Suit suit) {
+        softly.assertThat(card.getRank()).isEqualTo(rank);
         softly.assertThat(card.getSuit()).isEqualTo(suit);
     }
 

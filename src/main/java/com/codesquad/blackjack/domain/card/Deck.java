@@ -10,9 +10,6 @@ import static com.codesquad.blackjack.domain.Chip.ZERO;
 
 public class Deck {
 
-    private static final int MIN_NUMBER = 1;
-    private static final int MAX_NUMBER = 13;
-
     private List<Card> deck;
 
     private Deck(List<Card> deck) {
@@ -20,8 +17,7 @@ public class Deck {
     }
 
     public static Deck auto() {
-        List<Card> deck = new LinkedList<>();
-        generateDeck(deck);
+        List<Card> deck = generateDeck();
         Collections.shuffle(deck);
         return new Deck(deck);
     }
@@ -34,16 +30,16 @@ public class Deck {
         return deck.remove(ZERO);
     }
 
-    private static void generateDeck(List<Card> deck) {
-        for (Suit suit : Suit.values()) {
-            generateCards(deck, suit);
-        }
-    }
+    private static List<Card> generateDeck() {
+        List<Card> deck = new LinkedList<>();
 
-    private static void generateCards(List<Card> deck, Suit suit) {
-        for (int i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-            deck.add(new Card(i, suit));
+        for (Suit suit : Suit.values()) {
+            for (Rank value : Rank.values()) {
+                deck.add(new Card(value, suit));
+            }
         }
+
+        return deck;
     }
 
 }
