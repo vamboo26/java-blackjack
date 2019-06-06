@@ -34,7 +34,7 @@ public class Cards {
         return sum;
     }
 
-    boolean hasAce() {
+    private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
@@ -56,6 +56,24 @@ public class Cards {
 
     public boolean isBigger(Cards target) {
         return getTotal() > target.getTotal();
+    }
+
+    public Hand hand() {
+        if(getTotal() == 21) {
+            return Hand.BLACKJACK;
+        }
+
+        if(getTotal() > 21) {
+            return Hand.BURST;
+        }
+
+        return Hand.NORMAL;
+    }
+
+    public enum Hand {
+        BLACKJACK,
+        BURST,
+        NORMAL
     }
 
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 @Getter
 public class Card {
 
@@ -19,7 +21,10 @@ public class Card {
     private final String name;
     private final Suit suit;
 
-    public Card(int number, Suit suit) {
+    Card(int number, Suit suit) {
+        checkArgument(1 <= number && number <= 13,
+                "card number must be between 1 and 13");
+
         this.number = numberToValidNumber(number);
         this.name = numberToName(number);
         this.suit = suit;
