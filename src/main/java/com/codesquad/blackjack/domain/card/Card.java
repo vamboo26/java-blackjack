@@ -65,10 +65,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("name", name)
-                .add("suit", suit)
-                .toString();
+        return name + "_" + suit;
     }
 
 }

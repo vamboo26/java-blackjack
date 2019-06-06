@@ -32,6 +32,9 @@ function connectSockJs() {
             }
 
             if(type === 'INFO') {
+                $result.prepend('<img id="1" src="/img/2_of_clubs.png" style="width: 50px" />');
+
+
                 showDealerCards(data.dealer);
                 showUserCards(data.user);
             }
@@ -174,7 +177,10 @@ function showDealerCards(dealer) {
     for (const key of Object.keys(dealer.cards)) {
         if(key === 'cards') {
             for (const secondKey of Object.keys(dealer.cards[key])) {
-                $dealer.append('(' + dealer.cards[key][secondKey].name + '/' + dealer.cards[key][secondKey].suit + ')');
+                $dealer.append('<img id="1" style="width: 50px" />');
+
+                var myURL = '/img/' + dealer.cards[key][secondKey].name + '_' + dealer.cards[key][secondKey].suit + '.png';
+                document.getElementById('1').src = myURL;
             }
         }
     }
