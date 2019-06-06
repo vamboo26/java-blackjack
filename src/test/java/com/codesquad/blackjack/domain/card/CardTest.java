@@ -1,42 +1,23 @@
 package com.codesquad.blackjack.domain.card;
 
+import com.codesquad.blackjack.domain.Suit;
 import org.junit.Test;
 
-import static com.codesquad.blackjack.domain.Suit.CLUB;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CardTest {
-    public static final Card ACE_CLUB_CARD = Card.of(1, CLUB.toString());
-    public static final Card JACK_CLUB_CARD = Card.of(11, CLUB.toString());
-    public static final Card QUEEN_CLUB_CARD = Card.of(12, CLUB.toString());
-    public static final Card KING_CLUB_CARD = Card.of(13, CLUB.toString());
 
     @Test
-    public void ofATest() {
-        assertThat(ACE_CLUB_CARD.getName()).isEqualTo("A");
-        assertThat(ACE_CLUB_CARD.getNumber()).isEqualTo(1);
+    public void 카드생성_테스트() {
+        assertCard(new Card(1, Suit.DIAMOND), "A", Suit.DIAMOND);
+        assertCard(new Card(11, Suit.HEART), "J", Suit.HEART);
+        assertCard(new Card(12, Suit.SPADE), "Q", Suit.SPADE);
+        assertCard(new Card(13, Suit.CLUB), "K", Suit.CLUB);
     }
 
-    @Test
-    public void ofJTest() {
-        assertThat(JACK_CLUB_CARD.getName()).isEqualTo("J");
-        assertThat(JACK_CLUB_CARD.getNumber()).isEqualTo(10);
+    private void assertCard(Card card, String name, Suit suit) {
+        assertThat(card.getName()).isEqualTo(name);
+        assertThat(card.getSuit()).isEqualTo(suit);
     }
 
-    @Test
-    public void ofQTest() {
-        assertThat(QUEEN_CLUB_CARD.getName()).isEqualTo("Q");
-        assertThat(QUEEN_CLUB_CARD.getNumber()).isEqualTo(10);
-    }
-
-    @Test
-    public void ofKTest() {
-        assertThat(KING_CLUB_CARD.getName()).isEqualTo("K");
-        assertThat(KING_CLUB_CARD.getNumber()).isEqualTo(10);
-    }
-
-    @Test
-    public void isAceTest() {
-        assertThat(ACE_CLUB_CARD.isAce()).isTrue();
-    }
 }

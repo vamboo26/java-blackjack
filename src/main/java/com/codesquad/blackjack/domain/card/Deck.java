@@ -42,7 +42,7 @@ public class Deck {
 
     private static void generateCards(List<Card> deck, Suit suit) {
         for (int i = MIN_NUMBER; i <= MAX_NUMBER; i++) {
-            deck.add(Card.of(i, suit.toString()));
+            deck.add(new Card(i, suit));
         }
     }
 
