@@ -67,7 +67,7 @@ public class BlackjackHandler extends TextWebSocketHandler {
         log.debug("received : '{}'", request);
 
         TableService tableService = tableServiceManager.getTableService(request.getType());
-        tableService.handleTurn(gameSession, game, request);
+        tableService.handleRequest(gameSession, game, request);
     }
 
     @Override

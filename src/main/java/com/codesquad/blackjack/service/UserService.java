@@ -2,17 +2,20 @@ package com.codesquad.blackjack.service;
 
 import com.codesquad.blackjack.domain.player.User;
 import com.codesquad.blackjack.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Service
 public class UserService {
 
-    @Resource(name = "userRepository")
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User join(String userId, String password, String name) {
         User newUser = User.builder()

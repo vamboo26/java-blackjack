@@ -27,7 +27,7 @@ public class BettingService implements TableService {
     }
 
     @Override
-    public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
+    public void handleRequest(GameSession gameSession, Game game, SocketRequest request) {
         int turn = (int) request.getRequest();
 
         if(turn == STAND_SELECTION) {

@@ -26,7 +26,7 @@ public class InitTableService implements TableService {
     }
 
     @Override
-    public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
+    public void handleRequest(GameSession gameSession, Game game, SocketRequest request) {
         int bettingChip = (int) request.getRequest();
         game.initializeGame();
         game.init(bettingChip);

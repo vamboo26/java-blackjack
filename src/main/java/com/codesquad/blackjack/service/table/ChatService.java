@@ -21,7 +21,7 @@ public class ChatService implements TableService {
     }
 
     @Override
-    public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
+    public void handleRequest(GameSession gameSession, Game game, SocketRequest request) {
         messageService.sendToAll(new SocketResponse<>(CHAT, request.getRequest()), gameSession);
     }
 

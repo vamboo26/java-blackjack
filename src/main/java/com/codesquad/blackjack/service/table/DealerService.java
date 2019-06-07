@@ -24,7 +24,7 @@ public class DealerService implements TableService {
     }
 
     @Override
-    public void handleTurn(GameSession gameSession, Game game, SocketRequest request) {
+    public void handleRequest(GameSession gameSession, Game game, SocketRequest request) {
         game.dealerTurn();
 
         GameDto gameDto = (game.isBurst())

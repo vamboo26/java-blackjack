@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface TableService {
 
-    void handleTurn(GameSession gameSession, Game game, SocketRequest request);
+    void handleRequest(GameSession gameSession, Game game, SocketRequest request);
 
 }
