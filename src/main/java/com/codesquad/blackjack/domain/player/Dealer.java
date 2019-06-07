@@ -2,10 +2,11 @@ package com.codesquad.blackjack.domain.player;
 
 import com.codesquad.blackjack.domain.card.Card;
 import com.codesquad.blackjack.domain.card.Cards;
+import com.codesquad.blackjack.domain.card.Deck;
 import lombok.Getter;
 
 @Getter
-public class Dealer implements Player {
+public class Dealer implements Player, DealerRole {
 
     private static final String DEALER_NAME = "DEALER";
 
@@ -41,6 +42,13 @@ public class Dealer implements Player {
     @Override
     public boolean isBlackjack() {
         return this.cards.isBlackjack();
+    }
+
+    @Override
+    public void processTurn(Deck deck) {
+        while (cards.getTotal() < 17) {
+            cards.add(deck.draw());
+        }
     }
 
 }

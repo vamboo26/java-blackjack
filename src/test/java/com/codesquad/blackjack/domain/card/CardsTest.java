@@ -40,7 +40,7 @@ public class CardsTest extends BaseTest {
         cards.add(new Card(Rank.ACE, Suit.DIAMOND));
         cards.add(new Card(Rank.TEN, Suit.DIAMOND));
 
-        softly.assertThat(cards.hand()).isEqualTo(Cards.Hand.BLACKJACK);
+        softly.assertThat(cards.getHand()).isEqualTo(Cards.Hand.BLACKJACK);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class CardsTest extends BaseTest {
         cards.add(new Card(Rank.SEVEN, Suit.DIAMOND));
         cards.add(new Card(Rank.QUEEN, Suit.DIAMOND));
 
-        softly.assertThat(cards.hand()).isEqualTo(Cards.Hand.BURST);
+        softly.assertThat(cards.getHand()).isEqualTo(Cards.Hand.BUST);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class CardsTest extends BaseTest {
         cards.add(new Card(Rank.FOUR, Suit.DIAMOND));
         cards.add(new Card(Rank.SIX, Suit.DIAMOND));
 
-        softly.assertThat(cards.hand()).isEqualTo(Cards.Hand.NORMAL);
+        softly.assertThat(cards.getHand()).isEqualTo(Cards.Hand.NORMAL);
     }
 
 }

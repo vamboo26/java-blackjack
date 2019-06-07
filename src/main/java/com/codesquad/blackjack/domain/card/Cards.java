@@ -31,6 +31,18 @@ public class Cards {
         return sum;
     }
 
+    public Hand getHand() {
+        if(getTotal() == 21) {
+            return Hand.BLACKJACK;
+        }
+
+        if(getTotal() > 21) {
+            return Hand.BUST;
+        }
+
+        return Hand.NORMAL;
+    }
+
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
@@ -55,21 +67,9 @@ public class Cards {
         return getTotal() > target.getTotal();
     }
 
-    public Hand hand() {
-        if(getTotal() == 21) {
-            return Hand.BLACKJACK;
-        }
-
-        if(getTotal() > 21) {
-            return Hand.BURST;
-        }
-
-        return Hand.NORMAL;
-    }
-
     public enum Hand {
         BLACKJACK,
-        BURST,
+        BUST,
         NORMAL
     }
 
