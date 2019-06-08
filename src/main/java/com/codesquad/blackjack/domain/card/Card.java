@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.domain.card;
 
 import com.codesquad.blackjack.domain.Suit;
+import com.google.common.base.MoreObjects;
 import lombok.Getter;
 
 @Getter
@@ -22,6 +23,14 @@ public class Card {
 
     boolean isAce() {
         return this.rank.equals(Rank.ACE);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("rank", rank)
+                .add("suit", suit)
+                .toString();
     }
 
 }

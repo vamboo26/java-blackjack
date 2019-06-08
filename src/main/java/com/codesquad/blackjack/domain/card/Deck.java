@@ -1,6 +1,7 @@
 package com.codesquad.blackjack.domain.card;
 
 import com.codesquad.blackjack.domain.Suit;
+import lombok.Getter;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import static com.codesquad.blackjack.domain.Chip.ZERO;
 
+@Getter
 public class Deck {
 
     private List<Card> deck;
